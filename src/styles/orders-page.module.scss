@@ -1,0 +1,109 @@
+.container {
+  padding: 20px;
+  h1 {
+    font-family: "Gilroy-Bold";
+    font-size: 24px;
+    @media (max-width: 768px) {
+      font-size: 18px;
+    }
+  }
+
+  .orderList {
+    margin: 0 auto;
+    max-width: 750px;
+    padding: 0;
+    .orderItem {
+      border: 2px solid #dadada;
+      border-radius: 30px;
+      margin-bottom: 20px;
+      // padding: 20px 30px;
+      display: flex;
+      flex-direction: column;
+      .orderInfo {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 20px 30px;
+        @media (max-width: 768px) {
+          font-size: 14px;
+        }
+        .orderId,
+        .orderDate,
+        .orderStatus {
+          font-family: "Gilroy-Bold";
+          font-size: 24px;
+          color: #575757;
+          @media (max-width: 768px) {
+            font-size: 18px;
+          }
+          .value {
+            color: var(--primary-color);
+          }
+        }
+      }
+    }
+    .productList {
+      list-style: none;
+      border-top: 2px solid #dadada;
+      border-bottom: 2px solid #dadada;
+      padding: 20px 30px;
+      .productItem {
+        display: flex;
+        border-bottom: 2px solid #dadada;
+        align-items: center;
+        gap: 20px;
+        padding-bottom: 25px;
+        margin-top: 20px;
+        @media (max-width: 768px) {
+          font-size: 16px;
+        }
+        .productImage {
+          width: 127px;
+          height: auto;
+          border-radius: 20px;
+        }
+        .productDetails {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          font-size: 20px;
+          @media (max-width: 768px) {
+            font-size: 18px;
+          }
+          .productName {
+            font-family: "Gilroy-Regular";
+          }
+          .productPrice {
+            font-family: "Gilroy-Black";
+          }
+        }
+      }
+    }
+    .totalPrice {
+      margin: 20px 30px;
+      font-family: "Gilroy-Bold";
+      font-size: 24px;
+      color: #575757;
+      @media (max-width: 768px) {
+        font-size: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .value {
+        background: linear-gradient(90deg, #1869ff 56%, #0e3f99 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+      }
+    }
+  }
+}
+
+.loader,
+.error,
+.empty {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 18px;
+}

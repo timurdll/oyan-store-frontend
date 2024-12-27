@@ -1,0 +1,102 @@
+.dropzone {
+  border: 2px solid #007bff;
+  padding: 20px;
+  margin-bottom: 1rem;
+  border-radius: 30px;
+  background-color: #f8f9fa;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  margin-top: 20px;
+  height: 166px;
+  width: 383px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &.active {
+    background-color: #e7f1ff;
+  }
+
+  &.reject {
+    background-color: #f8d7da;
+  }
+}
+
+.text {
+  font-size: 14px;
+
+  &.defaultText {
+    color: #495057;
+  }
+
+  &.errorText {
+    color: #721c24;
+  }
+}
+
+.icon {
+  margin-top: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+.errorMessage {
+  color: #721c24;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.filesPreview {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  max-height: 100px; /* Limit the height of the preview area */
+  overflow-y: auto; /* Enable vertical scrolling if there are too many files */
+}
+
+.filesPreview ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.fileItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.fileItem span {
+  font-size: 14px;
+  color: #495057;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.previewImage {
+  max-width: 50px;
+  max-height: 50px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.previewIcon {
+  width: 40px;
+  height: 40px;
+  background-color: #007bff;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}

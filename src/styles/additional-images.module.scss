@@ -1,0 +1,79 @@
+.container {
+  position: relative; /* Для позиционирования кнопок прокрутки */
+  overflow: hidden; /* Скрываем все полосы прокрутки */
+}
+
+.additionalImages {
+  display: flex;
+  gap: 33px;
+  overflow-x: auto; /* Горизонтальная прокрутка */
+  padding-bottom: 10px; /* Дополнительное пространство при прокрутке */
+  scroll-snap-type: x mandatory; /* Для улучшенной прокрутки */
+  -webkit-overflow-scrolling: touch; /* Для плавной прокрутки на устройствах iOS */
+  max-width: 600px;
+  padding: 20px 0;
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+
+  @media (max-width: 768px) {
+    justify-content: space-between;
+  }
+
+  /* Скрыть скроллбар */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    display: none;
+  }
+
+  .additionalImage {
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    padding: 10px;
+
+    @media (max-width: 768px) {
+      width: 70px;
+      height: 70px;
+    }
+  }
+}
+
+.scrollButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+  display: none; /* Скрыть кнопки по умолчанию */
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  &.left {
+    left: 0;
+  }
+
+  &.right {
+    right: 0;
+  }
+}
+
+.container:hover .scrollButton {
+  display: flex; /* Показать кнопки при ховере на контейнер */
+}

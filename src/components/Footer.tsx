@@ -1,0 +1,86 @@
+import styles from "@styles/footer.module.scss";
+import instagram from "@assets/images/instagram.svg";
+import whatsapp from "@assets/images/whatsapp.svg";
+import telegram from "@assets/images/telegram.svg";
+import { Link } from "react-router-dom";
+
+const Footer: React.FC = () => {
+  return (
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        <div className={styles.links}>
+          <div className={styles.menu}>
+            <div className={styles.group}>
+              <h6 className={styles.title}>Компания:</h6>
+              <ul className={styles.submenu}>
+                <li>
+                  <Link to="/about-us">О нас</Link>
+                </li>
+                <li>
+                  <Link to="/">Товары</Link>
+                </li>
+                <li>
+                  <Link to="/">Услуги</Link>
+                </li>
+              </ul>
+            </div>
+            <div className={styles.group}>
+              <h6 className={styles.title}>Клиентам:</h6>
+              <ul className={styles.submenu}>
+                <li>
+                  <Link to="/">Доставка</Link>
+                </li>
+                <li>
+                  <Link to="/">Помощь</Link>
+                </li>
+                <li>
+                  <Link to="/">Условия гарантии</Link>
+                </li>
+                <li>
+                  <Link to="/">Как оформить заказ</Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className={styles.contacts}>
+            <h6 className={styles.title}>Оставайтесь на связи:</h6>
+
+            <div className={styles.contactItem}>
+              <p>График работы</p>
+            </div>
+            <div className={styles.contactItem}>
+              <p>8-800-555-35-35</p>
+            </div>
+            <div className={styles.contactItem}>
+              <p>Астана, ул. Б. Майлина 37, 4 этаж, 412 каб.</p>
+            </div>
+            <ul className={styles.socials}>
+              <li>
+                <a>
+                  <img src={telegram} />
+                </a>
+              </li>
+              <li>
+                <a>
+                  <img src={instagram} />
+                </a>
+              </li>
+
+              <li>
+                <a>
+                  <img src={whatsapp} />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <span className={styles.copyright}>
+          Интернет-магазин Oyan Store. Oyan® Все права защищены{" "}
+        </span>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

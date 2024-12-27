@@ -1,0 +1,83 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border: 2px solid #dadada;
+  width: 100%;
+  border-radius: 30px;
+  max-width: 334px;
+  padding: 24px;
+  height: fit-content;
+  @media (max-width: 768px) {
+    width: auto;
+  }
+
+  .total {
+    font-family: "Gilroy-Bold";
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 16px;
+    align-items: center;
+    @media (max-width: 768px) {
+      font-size: 16px;
+    }
+    .price {
+      font-family: "Gilroy-Black";
+      font-size: 24px;
+      font-weight: bold;
+      background: linear-gradient(90deg, #1869ff 56%, #0e3f99 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      @media (max-width: 768px) {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .checkList {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    padding: 12px 0;
+    border-top: 1px dashed #626262;
+    border-bottom: 1px dashed #626262;
+
+    .checkItem {
+      display: flex;
+      justify-content: space-between;
+      font-family: "Gilroy-Regular";
+      font-size: 18px;
+      @media (max-width: 768px) {
+        font-size: 14px;
+        gap: 10px;
+      }
+    }
+  }
+
+  .checkoutButton {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #1869ff 56%, #0e3f99 100%);
+    border: none;
+    color: #fff;
+    font-family: "Gilroy-Bold";
+    font-size: 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    &:hover {
+      background: linear-gradient(90deg, #0e3f99 56%, #1869ff 100%);
+    }
+  }
+}

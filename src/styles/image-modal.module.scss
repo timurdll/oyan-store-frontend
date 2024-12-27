@@ -1,0 +1,120 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Darkened background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure the modal appears above other content */
+}
+
+.modal {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+  width: 80%; /* To give more room for controls */
+  max-width: 800px;
+  // max-height: 100%;
+  height: fit-content;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.imageWrapper {
+  width: 100%;
+  height: 500px; /* Adjust height for better proportion */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.controls {
+  display: flex;
+  width: 95%;
+  position: absolute;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Ensure the image fits well */
+}
+
+.prevButton,
+.nextButton {
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s ease;
+  background: none;
+  height: 24px;
+}
+
+.prevButton {
+  transform: rotate(180deg); /* Rotate 180 degrees */
+}
+
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: none;
+  cursor: pointer;
+  background: none;
+}
+
+.thumbnailContainer {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 10px;
+  overflow-x: auto; /* Allow scrolling if there are too many thumbnails */
+  padding-bottom: 10px;
+  width: 100%;
+  height: 90px;
+  align-items: center;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--container-color);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary-gray);
+    border-radius: 10px;
+  }
+}
+
+.thumbnail {
+  width: 50px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.activeThumbnail {
+  border: 2px solid var(--primary-color); /* Blue border for active thumbnail */
+  transform: scale(1.2); /* Slightly larger for emphasis */
+}

@@ -1,0 +1,127 @@
+.container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  h1 {
+    font-family: "Gilroy-Bold";
+    font-size: 24px;
+  }
+
+  .basket {
+    display: flex;
+    justify-content: space-between;
+    gap: 26px;
+
+    .products {
+      display: flex;
+      flex-direction: column;
+      border: 2px solid #dadada;
+      border-radius: 30px;
+      list-style: none;
+      padding: 0;
+      width: 100%;
+
+      .message {
+        text-align: center;
+      }
+
+      .list {
+        list-style: none;
+        padding: 20px;
+
+        .item {
+          display: flex;
+          justify-content: space-between;
+          border-bottom: 2px solid #dadada;
+          padding-bottom: 20px;
+          align-items: center;
+
+          .left {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            img {
+              width: 200px;
+              height: auto;
+              object-fit: cover;
+              border-radius: 10px;
+              cursor: pointer;
+              margin-top: 20px;
+            }
+            .info {
+              display: flex;
+              flex-direction: column;
+              gap: 7px;
+              font-size: 20px;
+              align-self: center;
+              .name {
+                font-family: "Gilroy-Medium";
+              }
+              .price {
+                font-family: "Gilroy-Black";
+                font-size: 24px;
+                font-weight: bold;
+                background: linear-gradient(90deg, #1869ff 56%, #0e3f99 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                color: transparent;
+              }
+            }
+          }
+          .right {
+            display: flex;
+            gap: 14px;
+            .bucket {
+              width: 20px;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Медиазапросы для мобильной адаптации
+  @media (max-width: 768px) {
+    .basket {
+      flex-direction: column;
+      gap: 16px; // Уменьшаем расстояние между элементами
+    }
+
+    .products {
+      width: auto !important;
+      .list {
+        padding: 10px; // Уменьшаем отступы для мобильных
+
+        .item {
+          flex-direction: column; // Элементы располагаются по вертикали
+          gap: 10px; // Добавляем расстояние между блоками
+
+          .left {
+            flex-direction: column; // Картинка и информация идут по вертикали
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            img {
+              width: 120px; // Уменьшаем размер изображения
+            }
+            .info {
+              font-size: 16px; // Уменьшаем размер шрифта
+              text-align: center;
+              .price {
+                font-size: 20px; // Уменьшаем размер шрифта цены
+              }
+            }
+          }
+          .right {
+            justify-content: center; // Центрируем кнопки
+            gap: 10px; // Уменьшаем расстояние между кнопками
+          }
+        }
+      }
+    }
+  }
+}

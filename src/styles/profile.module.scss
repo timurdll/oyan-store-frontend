@@ -1,0 +1,32 @@
+.profile {
+  position: relative;
+  max-width: 1080px;
+  min-height: 472px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px #0000001a;
+  margin-bottom: 16px;
+  font-family: "Gilroy-Regular";
+  margin: 0 auto;
+  width: 100%;
+  margin-top: 20px;
+  .settings {
+    position: relative;
+    padding: 32px;
+    display: flex;
+    min-height: 480px;
+    height: 100%;
+    gap: 32px;
+    flex-direction: column;
+  }
+  .userInfo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .bottom {
+  }
+}

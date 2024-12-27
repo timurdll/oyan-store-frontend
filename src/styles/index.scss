@@ -1,0 +1,186 @@
+// colors
+$primary-color: #1869ff;
+$primary-color-dark: #ffffff;
+$primary-black: #212121;
+$primary-white: #ffffff;
+$primary-gray: #979da5;
+$background-dark: #212121;
+$background-light: #ffffff;
+$container-color: #e8e8e8;
+$container-color-dark: #424242;
+
+// fonts
+@font-face {
+  font-family: "Gilroy-Light";
+  src: url("../assets/fonts/Gilroy-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy-Regular";
+  src: url("../assets/fonts/Gilroy-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy-Medium";
+  src: url("../assets/fonts/Gilroy-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy-Semibold";
+  src: url("../assets/fonts/Gilroy-Semibold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy-Bold";
+  src: url("../assets/fonts/Gilroy-Extrabold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy-Extrabold";
+  src: url("../assets/fonts/Gilroy-Bold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy-Black";
+  src: url("../assets/fonts/Gilroy-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+// styles
+html,
+// Scrollbar Styles
+body {
+  &::-webkit-scrollbar {
+    width: 5px; // Ширина скроллбара
+    height: 5px; // Высота для горизонтального скроллбара
+  }
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar-track {
+    // background: var(--container-color); // Цвет трека
+    background: transparent;
+    border-radius: 10px; // Скругленные края трека
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary-color); // Цвет ползунка
+    border-radius: 10px; // Скругленные края ползунка
+    // border: 2px solid var(--container-color); // Промежуток между треком и ползунком
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    // background: var(--primary-color-dark); // Цвет при наведении
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: var(
+      --background-dark
+    ); // Цвет в углу, где встречаются горизонтальный и вертикальный скроллбары
+  }
+}
+
+// Dark Theme Adjustments
+body.dark {
+  &::-webkit-scrollbar-track {
+    background: var(--background-dark);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary-gray);
+    border: 2px solid var(--background-dark);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-white);
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: var(--background-light);
+  }
+}
+
+:root {
+  display: flex;
+  flex-direction: column;
+
+  // Primary Colors
+  --primary-color: #{$primary-color};
+  --primary-color-dark: #{$primary-color-dark};
+  --primary-black: #{$primary-black};
+  --primary-white: #{$primary-white};
+  --primary-gray: #{$primary-gray};
+
+  // Backgrounds
+  --background-light: #{$background-light};
+  --background-dark: #{$background-dark};
+  --body-background: var(--background-light);
+
+  // Text
+  --text-color: var(--primary-black);
+
+  // Containers
+  --container-color: #{$container-color};
+}
+
+body {
+  color: var(--text-color-light);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-family: "Gilroy-Regular", sans-serif;
+  background-color: var(--body-background);
+  &.dark {
+    --body-background: var(--background-dark);
+    --text-color: var(--primary-white);
+    --container-color: #{$container-color-dark};
+    color: var(--text-color-dark);
+    background-color: var(--body-background);
+  }
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Гарантирует, что контейнер занимает всю высоту экрана */
+  margin-top: 72px;
+  @media (max-width: 768px) {
+    margin-top: 116px;
+  }
+}
+
+.content {
+  flex-grow: 1; /* Заставляет контент заполнять оставшееся пространство */
+  padding: 20px; /* Для отступов */
+  max-width: 1440px;
+  margin: 0 auto;
+  margin-bottom: 100px;
+
+  width: 100%;
+  @media (max-width: 1440px) {
+    width: auto;
+    margin: 0;
+    margin-bottom: 100px;
+  }
+}
+
+.container {
+  flex-grow: 1; /* Динамическая высота для заполнения */
+  display: flex;
+  flex-direction: column;
+  padding: 0 25px;
+  padding-bottom: 40px;
+}

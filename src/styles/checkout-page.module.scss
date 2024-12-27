@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  h1 {
+    color: var(--primary-color);
+    font-family: "Gilroy-Bold";
+    font-size: 24px;
+  }
+
+  .order {
+    display: flex;
+    justify-content: space-between;
+    gap: 96px;
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      border-radius: 30px;
+      list-style: none;
+      padding: 0;
+      width: 100%;
+      position: relative;
+      margin-bottom: 50px;
+    }
+  }
+
+  // Адаптация для мобильных устройств
+  @media (max-width: 768px) {
+    .order {
+      flex-direction: column-reverse; // Вертикальное расположение на мобильных
+      gap: 24px; // Уменьшение расстояния между элементами
+
+      .form {
+        margin-bottom: 30px; // Уменьшение нижнего отступа
+      }
+    }
+
+    h1 {
+      font-size: 20px; // Уменьшение размера заголовка
+    }
+  }
+}

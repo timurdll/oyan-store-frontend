@@ -1,0 +1,93 @@
+.header {
+  background-color: var(--body-background);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  width: 100%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 15px 40px;
+    font-family: "Gilroy-Semibold";
+
+    @media (max-width: 768px) {
+      flex-wrap: wrap; /* Позволяем перенос элементов */
+      justify-content: space-between; /* Распределение элементов */
+      padding: 14px 20px;
+      gap: 10px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      margin-right: auto;
+      cursor: pointer;
+      width: 200px;
+
+      img {
+        display: block;
+        height: 30px;
+        object-fit: contain;
+      }
+
+      @media (max-width: 768px) {
+        width: auto;
+        margin-right: 0;
+        align-self: center;
+      }
+    }
+
+    .search {
+      margin-right: auto; /* Перемещаем поиск к правому краю */
+      max-width: 500px;
+      overflow: visible;
+      @media (max-width: 768px) {
+        width: 100%; /* Полная ширина на мобильных устройствах */
+        margin-right: 0;
+        margin-top: 10px; /* Добавляем отступ сверху для разделения */
+        order: 2; /* Перемещаем поиск ниже логотипа */
+        height: fit-content;
+        overflow: hidden;
+      }
+    }
+
+    .navigation {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      @media (max-width: 950px) {
+        display: none;
+      }
+
+      .divider {
+        background: #efefef;
+        width: 1.5px;
+        height: 24px;
+      }
+
+      span {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px;
+        cursor: pointer;
+        font-family: "Gilroy-Regular";
+        color: var(--text-color);
+      }
+    }
+  }
+}

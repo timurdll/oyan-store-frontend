@@ -1,0 +1,208 @@
+.step {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .button {
+    margin-top: 30px;
+    display: flex;
+    gap: 10px;
+  }
+  .info {
+    display: flex;
+    gap: 16px;
+    font-family: "Gilroy-Bold";
+    align-items: center;
+
+    .number {
+      border-radius: 19px;
+      background: linear-gradient(90deg, #1869ff 0%, #0e3f99 100%);
+      font-size: 24px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+    }
+
+    .text {
+      color: #575757;
+      font-size: 20px;
+    }
+  }
+
+  .inputs {
+    display: flex;
+    margin-left: 24px;
+    position: relative;
+    flex-direction: column;
+    .button {
+      margin-top: 30px;
+      display: flex;
+      gap: 10px;
+    }
+    .fields {
+      width: 100%;
+      border-left: 2px solid #575757;
+      padding-left: 48px;
+      @media (max-width: 768px) {
+        width: auto;
+      }
+
+      .fieldGroup {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+        display: flex;
+        border: 2px solid #dadada;
+        border-radius: 20px;
+        padding: 20px 30px;
+        gap: 10px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+        max-width: 509px;
+        @media (max-width: 768px) {
+          width: calc(100% - 80px);
+        }
+        .field {
+          margin: 0;
+          padding: 0;
+          border: 0px;
+          width: 100%;
+        }
+
+        .field_street {
+          max-width: 308px;
+        }
+
+        .field_house {
+          max-width: 90px;
+        }
+
+        .field_enternane {
+          max-width: 90px;
+        }
+
+        .field_apartament {
+          max-width: 90px;
+        }
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        border: 2px solid #dadada;
+        border-radius: 20px;
+        padding: 20px 30px;
+        gap: 17px;
+        margin-top: 20px;
+        max-width: 509px;
+
+        @media (max-width: 768px) {
+          width: calc(100% - 80px);
+        }
+
+        label {
+          font-family: "Gilroy-Bold";
+          color: #575757;
+          font-size: 20px;
+          @media (max-width: 768px) {
+            font-size: 14px;
+          }
+        }
+
+        input {
+          border: 2px solid #dadada;
+          border-radius: 100px;
+          padding: 8px 15px;
+          font-family: "Gilroy-Regular";
+          @media (max-width: 768px) {
+            font-size: 14px;
+          }
+        }
+      }
+      .field_street {
+        width: 308px;
+      }
+      .field_house,
+      .field_entrance,
+      .field_apartment {
+        max-width: 90px; // Более гибкая ширина
+      }
+    }
+  }
+
+  .inputs_3 {
+    display: flex;
+    margin-left: 24px;
+    position: relative;
+
+    .fields {
+      width: 100%;
+      margin-left: 48px;
+      @media (max-width: 768px) {
+        margin-left: 24px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        border: 2px solid #dadada;
+        border-radius: 20px;
+        padding: 20px 30px;
+        gap: 17px;
+        margin-top: 20px;
+        max-width: 590px;
+        @media (max-width: 768px) {
+          width: calc(100% - 80px);
+        }
+
+        label {
+          font-family: "Gilroy-Bold";
+          color: #575757;
+          font-size: 20px;
+          @media (max-width: 768px) {
+            font-size: 16px;
+          }
+        }
+
+        input {
+          border: 2px solid #dadada;
+          border-radius: 100px;
+          padding: 8px 15px;
+          font-family: "Gilroy-Regular";
+        }
+        .checkboxGroup {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .checkbox {
+          display: flex;
+          gap: 10px;
+          label {
+            font-family: "Gilroy-Regular";
+            font-size: 20px;
+            @media (max-width: 768px) {
+              font-size: 14px;
+            }
+          }
+          input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  // .buttons {
+  //   margin-top: 20px;
+  //   margin-left: 72px;
+  //   display: flex;
+  //   gap: 20px;
+  //   @media (max-width: 768px) {
+  //     margin-left: 50px;
+  //   }
+  // }
+}

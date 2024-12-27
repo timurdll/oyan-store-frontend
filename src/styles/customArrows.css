@@ -1,0 +1,67 @@
+/* Контейнер слайдера */
+.slider-container {
+  position: relative;
+  max-width: 100%; /* Уменьшаем ширину на 100px */
+  margin: 0 auto; /* Центрируем слайдер */
+  overflow: hidden; /* Чтобы кнопки не выходили за границы */
+}
+
+/* Элемент слайдера */
+.slider-item img {
+  width: calc(100% - 70px);
+  height: auto;
+  margin: 0 auto;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+/* Кастомные стрелки */
+.custom-next-arrow,
+.custom-prev-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.custom-next-arrow:hover,
+.custom-prev-arrow:hover {
+  background-color: rgba(179, 176, 176, 0.822);
+  color: black;
+}
+
+.custom-prev-arrow {
+  left: 0px; /* Расположение стрелки слева */
+}
+
+.custom-next-arrow {
+  right: 1.5px; /* Расположение стрелки справа */
+}
+
+/* Обновляем точки */
+.slick-dots {
+  bottom: 10px;
+}
+
+.slick-dots li button:before {
+  font-size: 12px;
+  color: gray;
+}
+
+.slick-dots li.slick-active button:before {
+  color: black;
+}

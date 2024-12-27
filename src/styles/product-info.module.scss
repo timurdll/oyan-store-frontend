@@ -1,0 +1,57 @@
+// product-info.module.scss
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: calc(100% - 40px);
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.heading {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.input {
+  font-size: 1rem;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 90%;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+  }
+}
+
+.textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.errorMessage {
+  font-size: 0.875rem;
+  color: #d9534f;
+  margin-top: 4px;
+}

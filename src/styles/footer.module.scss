@@ -1,0 +1,285 @@
+.footer {
+  margin-top: auto; /* Гарантирует размещение внизу */
+  margin: 30px 0 0;
+  padding: 0;
+  padding-bottom: 15px;
+  font-size: 16px;
+  background-color: #333;
+  .container {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 16px;
+    padding-top: 42px;
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .links {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      .menu {
+        display: flex;
+        flex-wrap: wrap;
+        .group {
+          margin-right: 60px;
+          margin-bottom: 32px;
+          min-width: 246px;
+          .title {
+            display: block;
+            padding: 0 0 10px;
+            color: #999;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 16px;
+            margin: 0 0 10px;
+          }
+          .submenu {
+            font-size: 16px;
+            transition: height 0.3s;
+            overflow: hidden;
+            padding: 0;
+            list-style-type: none;
+            li {
+              margin-bottom: 12px;
+              color: #fff;
+              a {
+                cursor: pointer;
+                text-decoration: none;
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+
+      .contacts {
+        width: 297px;
+        .title {
+          display: block;
+          padding: 0 0 10px;
+          color: #999;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 16px;
+          margin: 0 0 10px;
+        }
+        .socials {
+          display: flex;
+          list-style-type: none;
+          padding: 0;
+          gap: 14px;
+          a {
+            cursor: pointer;
+            text-decoration: none;
+          }
+        }
+        .contactItem {
+          display: flex;
+          align-items: center;
+          margin-bottom: 12px;
+          gap: 6px;
+          img {
+            width: 20px;
+            height: 20px;
+          }
+
+          p {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #fff;
+            // background: linear-gradient(to right, #1869ff, #0e3f99);
+            // -webkit-background-clip: text;
+            // -webkit-text-fill-color: transparent;
+            // width: fit-content;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .copyright {
+      padding: 16px 0;
+      font-size: 14px;
+      color: #999;
+      line-height: 20px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    margin-top: auto; /* Гарантирует размещение внизу */
+    margin: 30px 0 0;
+    padding: 0;
+    font-size: 16px;
+    background-color: #333;
+
+    @media (max-width: 768px) {
+      margin: 0;
+      margin-bottom: 75px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 16px;
+      padding-top: 42px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 20px;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 10px; /* Уменьшено */
+        padding: 0;
+        margin-top: 15px; /* Уменьшено */
+        align-items: center;
+      }
+
+      .links {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        flex-wrap: wrap;
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+          align-items: center;
+          gap: 15px; /* Уменьшено */
+        }
+
+        .menu {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 15px; /* Уменьшено */
+
+          @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+          }
+
+          .group {
+            margin-right: 30px; /* Уменьшено */
+            margin-bottom: 20px; /* Уменьшено */
+            min-width: 200px; /* Уменьшено */
+
+            @media (max-width: 768px) {
+              margin: 0;
+              flex-direction: column;
+              align-items: center;
+              width: 100%;
+            }
+
+            .title {
+              display: block;
+              padding: 0 0 5px; /* Уменьшено */
+              color: #999;
+              font-weight: 700;
+              font-size: 14px; /* Уменьшено */
+              line-height: 14px; /* Уменьшено */
+              margin: 0 0 5px; /* Уменьшено */
+              text-align: center;
+            }
+
+            .submenu {
+              font-size: 14px; /* Уменьшено */
+              transition: height 0.3s;
+              overflow: hidden;
+              padding: 0;
+              list-style-type: none;
+              text-align: center;
+
+              li {
+                margin-bottom: 8px; /* Уменьшено */
+                color: #fff;
+
+                a {
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+
+        .contacts {
+          width: 100%; /* Уменьшено */
+
+          @media (max-width: 768px) {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px; /* Уменьшено */
+          }
+
+          .title {
+            display: block;
+            padding: 0 0 5px; /* Уменьшено */
+            color: #999;
+            font-weight: 700;
+            font-size: 14px; /* Уменьшено */
+            line-height: 14px; /* Уменьшено */
+            margin: 0 0 5px; /* Уменьшено */
+            text-align: center;
+          }
+
+          .socials {
+            display: flex;
+            list-style-type: none;
+            padding: 0;
+            gap: 10px; /* Уменьшено */
+            justify-content: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+          }
+
+          .contactItem {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px; /* Уменьшено */
+            gap: 4px; /* Уменьшено */
+
+            img {
+              width: 18px; /* Уменьшено */
+              height: 18px; /* Уменьшено */
+            }
+
+            p {
+              margin: 0;
+              font-size: 14px; /* Уменьшено */
+              font-weight: 400;
+              line-height: 1.4;
+              color: #fff;
+              // background: linear-gradient(to right, #1869ff, #0e3f99);
+              // -webkit-background-clip: text;
+              // -webkit-text-fill-color: transparent;
+              // width: fit-content;
+              cursor: pointer;
+              text-align: center;
+            }
+          }
+        }
+      }
+
+      .copyright {
+        padding: 10px 0; /* Уменьшено */
+        font-size: 12px; /* Уменьшено */
+        color: #999;
+        line-height: 16px; /* Уменьшено */
+        text-align: center;
+
+        @media (max-width: 768px) {
+          padding-top: 0;
+        }
+      }
+    }
+  }
+}

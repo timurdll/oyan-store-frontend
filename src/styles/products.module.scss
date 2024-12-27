@@ -1,0 +1,20 @@
+.products {
+  display: flex;
+  flex-direction: column;
+
+  .products_container {
+    display: flex;
+    gap: 37px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+    @media (max-width: 768px) {
+      align-items: center;
+      justify-content: center;      
+    }
+  }
+  .title {
+    margin: 32px 0;
+    font-size: 24px;
+    font-family: "Gilroy-Bold";
+  }
+}
