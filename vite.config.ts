@@ -48,6 +48,10 @@ export default defineConfig({
     }),
     svgr(),
   ],
+  server: {
+    host: true,
+    port: 4000,
+  },
   resolve: {
     alias: {
       "@styles": path.resolve("src/styles"),
