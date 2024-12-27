@@ -11,7 +11,7 @@ function App() {
   const isMobile = useIsMobile();
 
   return (
-    <Suspense fallback={<div>HUI...</div>}>
+    <Suspense fallback={<div>Загрузка...</div>}>
       <BrowserRouter>
         <div className="app-container">
           <Header />

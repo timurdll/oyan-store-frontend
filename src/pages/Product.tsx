@@ -112,7 +112,7 @@ const ProductPage: React.FC = () => {
       <div className={styles.product}>
         <motion.img
           className={styles.image}
-          src={`http://localhost:3000${product.cover_image}`}
+          src={`${import.meta.env.VITE_API_URL}${product.cover_image}`}
           alt={product.name}
           onClick={() => openModal(0)} // Open modal on click
           initial={{ opacity: 0 }}

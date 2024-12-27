@@ -91,7 +91,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
       )}
       <div className={styles.content}>
         <img
-          src={`http://localhost:3000${product.cover_image}`}
+          src={`${import.meta.env.VITE_API_URL}${product.cover_image}`}
           alt={product.name}
           className={styles.cover_image}
           onClick={handleRedirect} // Redirect on image click
