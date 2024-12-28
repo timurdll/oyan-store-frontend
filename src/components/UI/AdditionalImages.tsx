@@ -57,7 +57,7 @@ const AdditionalImages: React.FC<AdditionalImagesProps> = ({
         {images.map((image, index) => (
           <motion.img
             key={index}
-            src={`http://localhost:3000${image}`}
+            src={`${import.meta.env.VITE_API_URL}${image}`}
             alt={`Product image ${index + 1}`}
             className={styles.additionalImage}
             onClick={() => openModal(index)} // Открытие модального окна по клику
