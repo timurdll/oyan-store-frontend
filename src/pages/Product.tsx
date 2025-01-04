@@ -14,6 +14,7 @@ import arrow from "@assets/images/arrow.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { openAuthModal } from "@redux/slices/authModalSlice";
 import AdditionalImages from "@components/UI/AdditionalImages"; // Import the new component
+import { Skeleton } from "@mui/material";
 
 const ProductPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -37,7 +38,59 @@ const ProductPage: React.FC = () => {
 
   const { isLoading: isLoadingBasket, handleAddToBasket } = useAddToBasket();
 
-  if (isLoading) return <div>Загрузка...</div>;
+  if (isLoading) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.product}>
+          <Skeleton
+            variant="rectangular"
+            width="100%"
+            height="auto"
+            sx={{ minHeight: "233px", borderRadius: "30px" }}
+          />
+          <div className={styles.info}>
+            <Skeleton variant="text" width="80%" height={48} />
+            <Skeleton variant="text" width="60%" height={36} />
+            <div className={styles.buttons}>
+              <Skeleton
+                variant="rectangular"
+                width="100%"
+                height={28}
+                sx={{ borderRadius: "30px" }}
+              />
+            </div>
+            <div className={styles.images}>
+              <Skeleton
+                variant="rectangular"
+                width={124}
+                height={124}
+                sx={{ borderRadius: "30px" }}
+              />
+              <Skeleton
+                variant="rectangular"
+                width={124}
+                height={124}
+                sx={{ borderRadius: "30px" }}
+              />
+              <Skeleton
+                variant="rectangular"
+                width={124}
+                height={124}
+                sx={{ borderRadius: "30px" }}
+              />
+            </div>
+          </div>
+        </div>
+        <div className={styles.sectionButtons}>
+          <Skeleton variant="text" width={120} height={30} />
+          <Skeleton variant="text" width={120} height={30} />
+        </div>
+        <div className={styles.sectionContent}>
+          <Skeleton variant="text" width="100%" height={200} />
+        </div>
+      </div>
+    );
+  }
 
   if (error) {
     const errorMessage =

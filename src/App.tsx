@@ -2,6 +2,7 @@ import Footer from "@components/Footer";
 import Header from "@components/Header";
 import useIsMobile from "@components/Hooks/UseIsMobile";
 import MobileMenu from "@components/MobileMenu";
+import Loader from "@components/UI/Loader";
 import Auth from "@pages/Auth";
 import AppRouter from "@routes/AppRouter";
 import { Suspense } from "react";
@@ -11,7 +12,13 @@ function App() {
   const isMobile = useIsMobile();
 
   return (
-    <Suspense fallback={<div>Загрузка...</div>}>
+    <Suspense
+      fallback={
+        <div>
+          <Loader />
+        </div>
+      }
+    >
       <BrowserRouter>
         <div className="app-container">
           <Header />

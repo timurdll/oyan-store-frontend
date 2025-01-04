@@ -13,8 +13,10 @@
   .line {
     width: 100%;
     height: 2px;
-    background-color: var(--text-color);
+    background-color: black;
     transition: transform 0.3s ease, opacity 0.3s ease;
+    -webkit-transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: none; // Убедитесь, что transform задаётся корректно
   }
 
   .open:nth-child(1) {

@@ -1,0 +1,42 @@
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #ffffff;
+  gap: 40px;
+  .switch {
+    width: 100px;
+    height: 60px;
+    background-color: #007aff;
+    border-radius: 30px;
+    position: relative;
+    margin-bottom: 20px;
+
+    .circle {
+      width: 45px;
+      height: 45px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+
+  //   .spinner {
+  //     margin-bottom: 20px;
+  //   }
+
+  .text {
+    font-size: 18px;
+    text-align: center;
+    color: #000000;
+
+    .bold {
+      font-weight: bold;
+    }
+  }
+}

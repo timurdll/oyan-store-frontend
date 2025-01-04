@@ -63,11 +63,11 @@ $container-color-dark: #424242;
 html,
 // Scrollbar Styles
 body {
+  backface-visibility: hidden;
   &::-webkit-scrollbar {
     width: 5px; // Ширина скроллбара
     height: 5px; // Высота для горизонтального скроллбара
   }
-  overflow-x: hidden;
 
   &::-webkit-scrollbar-track {
     // background: var(--container-color); // Цвет трека
@@ -152,10 +152,16 @@ body {
   }
 }
 
+body,
+.app-container,
+.content {
+  -webkit-overflow-scrolling: touch;
+}
+
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Гарантирует, что контейнер занимает всю высоту экрана */
+  min-height: 100dvh; /* Гарантирует, что контейнер занимает всю высоту экрана */
   margin-top: 72px;
   @media (max-width: 768px) {
     margin-top: 116px;

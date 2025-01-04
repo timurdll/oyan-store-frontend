@@ -58,6 +58,19 @@
         gap: 16px;
       }
 
+      .images {
+        display: flex;
+        gap: 33px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        max-width: 600px;
+        padding: 20px 0;
+        position: relative;
+        scrollbar-width: thin;
+        scrollbar-color: transparent transparent;
+      }
+
       .name {
         font-family: "Gilroy-Medium";
       }

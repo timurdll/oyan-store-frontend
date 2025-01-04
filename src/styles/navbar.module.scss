@@ -23,21 +23,6 @@
     background: transparent; /* Скрывает фон скроллбара */
   }
 
-  .catalogButton {
-    background: linear-gradient(90deg, #1869ff 0%, #0c4cc1 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: fit-content;
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-    padding: 9px 12px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-  }
-
   .categoryButton {
     color: var(--text-color);
     background-color: transparent;

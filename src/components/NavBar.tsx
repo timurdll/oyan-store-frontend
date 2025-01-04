@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useFetchTypesQuery } from "@redux/services";
+import { Skeleton } from "@mui/material";
 import styles from "@styles/navbar.module.scss";
 
 interface Type {
@@ -18,7 +19,78 @@ const Navbar: React.FC<{ onTypeSelect: (typeId: number | null) => void }> = ({
     onTypeSelect(typeId); // Передаем в родительский компонент
   };
 
-  if (isLoading) return <div>Loading types...</div>;
+  if (isLoading)
+    return (
+      <nav className={styles.buttons}>
+        <Skeleton
+          variant="rectangular"
+          width={120}
+          height={22}
+          sx={{
+            borderRadius: "20px",
+            fontSize: "14px",
+            padding: "9px 12px",
+            cursor: "pointer",
+            minWidth: "120px",
+          }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width={120}
+          height={22}
+          sx={{
+            borderRadius: "20px",
+            padding: "9px 12px",
+            cursor: "pointer",
+            minWidth: "120px",
+          }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width={120}
+          height={22}
+          sx={{
+            borderRadius: "20px",
+            padding: "9px 12px",
+            cursor: "pointer",
+            minWidth: "120px",
+          }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width={120}
+          height={22}
+          sx={{
+            borderRadius: "20px",
+            padding: "9px 12px",
+            cursor: "pointer",
+            minWidth: "120px",
+          }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width={120}
+          height={22}
+          sx={{
+            borderRadius: "20px",
+            padding: "9px 12px",
+            cursor: "pointer",
+            minWidth: "120px",
+          }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width={120}
+          height={22}
+          sx={{
+            borderRadius: "20px",
+            padding: "9px 12px",
+            cursor: "pointer",
+            minWidth: "120px",
+          }}
+        />
+      </nav>
+    );
   if (error) return <div>Error loading types</div>;
 
   return (

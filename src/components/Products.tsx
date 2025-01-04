@@ -4,6 +4,7 @@ import styles from "@styles/products.module.scss";
 import { Product } from "types/types";
 import { useFetchProductsQuery } from "@redux/services";
 import { motion, AnimatePresence } from "framer-motion";
+import { SkeletonCard } from "./UI/SkeletonCard";
 
 interface ProductListProps {
   selectedType: number | null; // Ensure the type is number | null
@@ -25,7 +26,17 @@ const ProductList: React.FC<ProductListProps> = ({ selectedType }) => {
     }
   }, [selectedType, products]);
 
-  if (isLoading) return <div>Загрузка...</div>;
+  if (isLoading) {
+    return (
+      <div className={styles.products}>
+        <div className={styles.products_container}>
+          {[...Array(6)].map((_, index) => (
+            <SkeletonCard key={index} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   if (error) {
     const errorMessage =

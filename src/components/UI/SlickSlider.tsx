@@ -1,5 +1,10 @@
 import Slider from "react-slick";
-import oyan from "@assets/images/x14lBan.svg?url";
+import { useState } from "react";
+import Skeleton from "@mui/material/Skeleton";
+import x14 from "@assets/images/x14lBan.svg?url";
+import x15 from "@assets/images/x15.svg?url";
+import ktab from "@assets/images/ktabfix.svg?url";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "@styles/customArrows.css";
@@ -24,6 +29,16 @@ function SamplePrevArrow(props: any) {
 }
 
 function Fade() {
+  const [loadedImages, setLoadedImages] = useState({
+    x14: false,
+    x15: false,
+    ktab: false,
+  });
+
+  const handleImageLoad = (key: string) => {
+    setLoadedImages((prev) => ({ ...prev, [key]: true }));
+  };
+
   const settings = {
     dots: true,
     fade: true,
@@ -40,13 +55,63 @@ function Fade() {
     <div className="slider-container">
       <Slider {...settings}>
         <div className="slider-item">
-          <img src={oyan} alt="Slide 1" />
+          {!loadedImages.x14 && (
+            <Skeleton
+              variant="rectangular"
+              animation="pulse"
+              width="100%"
+              sx={{
+                borderRadius: "15px",
+
+                height: "calc(100vw * 0.396)", // Автоматический расчет высоты на основе ширины экрана
+              }}
+            />
+          )}
+          <img
+            src={x14}
+            alt="Slide 1"
+            onLoad={() => handleImageLoad("x14")}
+            style={{ display: loadedImages.x14 ? "block" : "none" }}
+          />
         </div>
         <div className="slider-item">
-          <img src={oyan} alt="Slide 2" />
+          {!loadedImages.x15 && (
+            <Skeleton
+              variant="rectangular"
+              animation="pulse"
+              width="100%"
+              sx={{
+                borderRadius: "15px",
+
+                height: "calc(100vw * 0.396)", // Автоматический расчет высоты на основе ширины экрана
+              }}
+            />
+          )}
+          <img
+            src={x15}
+            alt="Slide 2"
+            onLoad={() => handleImageLoad("x15")}
+            style={{ display: loadedImages.x15 ? "block" : "none" }}
+          />
         </div>
         <div className="slider-item">
-          <img src={oyan} alt="Slide 3" />
+          {!loadedImages.ktab && (
+            <Skeleton
+              variant="rectangular"
+              animation="pulse"
+              width="100%"
+              sx={{
+                borderRadius: "15px",
+                height: "calc(100vw * 0.396)", // Автоматический расчет высоты на основе ширины экрана
+              }}
+            />
+          )}
+          <img
+            src={ktab}
+            alt="Slide 3"
+            onLoad={() => handleImageLoad("ktab")}
+            style={{ display: loadedImages.ktab ? "block" : "none" }}
+          />
         </div>
       </Slider>
     </div>

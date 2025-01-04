@@ -11,9 +11,7 @@ import styles from "@styles/header.module.scss";
 import logo from "@assets/images/oyanlogo.svg";
 import BurgerMenu from "./UI/BurgerMenu";
 
-type HeaderProps = {};
-
-const Header: React.FC<HeaderProps> = () => {
+const Header = () => {
   const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn);
   const { data } = useGetUserBonusesQuery(undefined, { skip: !isLoggedIn });
   const isMobile = useIsMobile();
