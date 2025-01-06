@@ -24,9 +24,7 @@ function App() {
         <ScrollToTopWrapper>
           <div className="app-container">
             <Header />
-            <main className="content">
-              <AppRouter />
-            </main>
+            <AppRouter />
             {isMobile ? <MobileMenu /> : <></>}
             <Auth />
             <Footer />
