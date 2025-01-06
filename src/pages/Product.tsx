@@ -100,7 +100,7 @@ const ProductPage: React.FC = () => {
     return <div>Error: {errorMessage}</div>;
   }
 
-  if (!product) return <div>Product not found</div>;
+  if (!product) return <div>Товар не найден</div>;
 
   const openModal = (index: number) => {
     setCurrentImageIndex(index);

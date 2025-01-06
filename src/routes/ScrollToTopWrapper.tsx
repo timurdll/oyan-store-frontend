@@ -11,7 +11,6 @@ const ScrollToTopWrapper: React.FC<ScrollToTopWrapperProps> = ({
   const { pathname } = useLocation();
 
   useEffect(() => {
-    console.log("Manually scrolling to top:", pathname);
     window.history.scrollRestoration = "manual"; // Disable scroll restoration
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [pathname]);

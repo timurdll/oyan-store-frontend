@@ -55,7 +55,9 @@ const Orders = () => {
               {order.products.map((product) => (
                 <li key={product.id} className={styles.productItem}>
                   <img
-                    src={`http://localhost:3000${product.product.cover_image}`}
+                    src={`${import.meta.env.VITE_API_URL}${
+                      product.product.cover_image
+                    }`}
                     alt={product.product.name}
                     className={styles.productImage}
                   />

@@ -5,6 +5,7 @@ import MobileMenu from "@components/MobileMenu";
 import Loader from "@components/UI/Loader";
 import Auth from "@pages/Auth";
 import AppRouter from "@routes/AppRouter";
+import ScrollToTopWrapper from "@routes/ScrollToTopWrapper";
 import { Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
 
@@ -20,15 +21,17 @@ function App() {
       }
     >
       <BrowserRouter>
-        <div className="app-container">
-          <Header />
-          <main className="content">
-            <AppRouter />
-          </main>
-          {isMobile ? <MobileMenu /> : <></>}
-          <Auth />
-          <Footer />
-        </div>
+        <ScrollToTopWrapper>
+          <div className="app-container">
+            <Header />
+            <main className="content">
+              <AppRouter />
+            </main>
+            {isMobile ? <MobileMenu /> : <></>}
+            <Auth />
+            <Footer />
+          </div>
+        </ScrollToTopWrapper>
       </BrowserRouter>
     </Suspense>
   );

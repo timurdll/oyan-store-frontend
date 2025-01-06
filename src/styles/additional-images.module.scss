@@ -11,13 +11,14 @@
   scroll-snap-type: x mandatory; /* Для улучшенной прокрутки */
   -webkit-overflow-scrolling: touch; /* Для плавной прокрутки на устройствах iOS */
   max-width: 600px;
-  padding: 20px 0;
+  padding: 20px 10px;
   position: relative;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 
   @media (max-width: 768px) {
     justify-content: space-between;
+    padding: 20px 0;
   }
 
   /* Скрыть скроллбар */
