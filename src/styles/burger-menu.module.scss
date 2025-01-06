@@ -1,35 +1,9 @@
 .burgerButton {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 16px;
   background: none;
   border: none;
   cursor: pointer;
   z-index: 300;
-
-  .line {
-    width: 100%;
-    height: 2px;
-    background-color: black;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    -webkit-transition: transform 0.3s ease, opacity 0.3s ease;
-    transform: none; // Убедитесь, что transform задаётся корректно
-  }
-
-  .open:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
-  }
-
-  .open:nth-child(2) {
-    opacity: 0;
-  }
-
-  .open:nth-child(3) {
-    transform: translateY(-4.1px) rotate(-45deg);
-  }
 }
 
 .overlay {

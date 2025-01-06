@@ -5,6 +5,7 @@ import styles from "@styles/burger-menu.module.scss";
 import { useGetUserBonusesQuery } from "@redux/services/userApi";
 import { useSelector } from "react-redux";
 import LanguageSelector from "./LanguageSelector";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const BurgerMenu: React.FC = () => {
   const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn);
@@ -43,9 +44,7 @@ const BurgerMenu: React.FC = () => {
         onClick={toggleMenu}
         aria-label="Toggle menu"
       >
-        <div className={`${styles.line} ${isOpen ? styles.open : ""}`} />
-        <div className={`${styles.line} ${isOpen ? styles.open : ""}`} />
-        <div className={`${styles.line} ${isOpen ? styles.open : ""}`} />
+        <MenuIcon />
       </button>
 
       {/* Фоновая затемненная область */}
