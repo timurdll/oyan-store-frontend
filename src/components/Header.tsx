@@ -16,12 +16,12 @@ const Header = () => {
   const { data } = useGetUserBonusesQuery(undefined, { skip: !isLoggedIn });
   const isMobile = useIsMobile();
 
-  const [showSearch, setShowSearch] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     if (!isMobile) {
-      setShowSearch(true); // Всегда показываем строку поиска на десктопе
+      setIsVisible(true); // Всегда показываем хедер на десктопе
       return;
     }
 
@@ -29,19 +29,25 @@ const Header = () => {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        setShowSearch(false); // Скролл вниз
+        setIsVisible(false); // Скролл вниз
       } else if (currentScrollY < lastScrollY || currentScrollY <= 50) {
-        setShowSearch(true); // Скролл вверх или на самом верху
+        setIsVisible(true); // Скролл вверх или на самом верху
       }
 
       setLastScrollY(currentScrollY);
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY, isMobile]);
 
   return (
-    <header className={styles.header}>
+    <motion.header
+      className={styles.header}
+      initial={{ y: 0 }}
+      animate={isVisible ? { y: 0 } : { y: "-100%" }}
+      transition={{ duration: 0.3 }}
+    >
       <div className={styles.content}>
         {isMobile ? (
           <div className={styles.top}>
@@ -65,7 +71,7 @@ const Header = () => {
           className={styles.search}
           initial={{ height: 0, opacity: 0 }}
           animate={
-            showSearch || !isMobile // Логика для десктопа
+            isVisible || !isMobile // Логика для десктопа
               ? { height: "auto", opacity: 1 }
               : { height: 0, opacity: 0 }
           }
@@ -86,7 +92,7 @@ const Header = () => {
           <UserMenu />
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 };
 
