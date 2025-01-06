@@ -2,7 +2,7 @@ import Slider from "react-slick";
 import { useState } from "react";
 import Skeleton from "@mui/material/Skeleton";
 import x14 from "@assets/images/x14lBan.svg?url";
-import x15 from "@assets/images/x15.svg?url";
+import x15 from "@assets/images/x15.png?url";
 import ktab from "@assets/images/ktabfix.svg?url";
 
 import "slick-carousel/slick/slick.css";
