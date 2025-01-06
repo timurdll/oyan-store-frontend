@@ -44,7 +44,7 @@ const BurgerMenu: React.FC = () => {
         onClick={toggleMenu}
         aria-label="Toggle menu"
       >
-        <MenuIcon />
+        <MenuIcon color="primary" />
       </button>
 
       {/* Фоновая затемненная область */}
