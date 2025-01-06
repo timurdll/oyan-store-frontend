@@ -1,9 +1,7 @@
 import { VitePWA } from "vite-plugin-pwa";
 import { defineConfig } from "vite";
-import svgr from "vite-plugin-svgr";
 import react from "@vitejs/plugin-react";
 import path from "path-browserify";
-import svg from "vite-plugin-svgo";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -19,21 +17,6 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    svg({
-      multipass: true,
-      plugins: [
-        {
-          name: "preset-default",
-          params: {
-            overrides: {
-              convertColors: {
-                currentColor: true,
-              },
-            },
-          },
-        },
-      ],
-    }),
     VitePWA({
       registerType: "prompt",
       injectRegister: false,
@@ -63,7 +46,6 @@ export default defineConfig({
         type: "module",
       },
     }),
-    svgr(),
   ],
   server: {
     host: true,
