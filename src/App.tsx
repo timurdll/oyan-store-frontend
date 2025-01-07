@@ -22,15 +22,15 @@ function App() {
     >
       <BrowserRouter>
         <ScrollToTopWrapper>
-          {/* <div className="app-container"> */}
-          <Header />
-          {/* <main className="content"> */}
-          <AppRouter />
-          {/* </main> */}
-          {isMobile ? <MobileMenu /> : <></>}
-          <Auth />
-          <Footer />
-          {/* </div> */}
+          <div className="app-container">
+            {/* <Header /> */}
+            <main className="content">
+              <AppRouter />
+            </main>
+            {isMobile ? <MobileMenu /> : <></>}
+            <Auth />
+            <Footer />
+          </div>
         </ScrollToTopWrapper>
       </BrowserRouter>
     </Suspense>
