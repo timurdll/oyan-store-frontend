@@ -38,15 +38,20 @@ const Header = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY, isMobile]);
+
+    // Блокируем скролл, если хедер скрыт
+    document.body.style.overflow = isVisible ? "visible" : "hidden";
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.body.style.overflow = "visible"; // Сбрасываем стиль при размонтировании
+    };
+  }, [lastScrollY, isMobile, isVisible]);
 
   return (
     <motion.header
       className={styles.header}
-      initial={{ y: 0 }}
-      animate={isVisible ? { y: 0 } : { y: "-100%" }}
-      transition={{ duration: 0.3 }}
+      style={{ transform: isVisible ? "translateY(0)" : "translateY(-100%)" }} // Без анимации
     >
       <div className={styles.content}>
         {isMobile ? (
