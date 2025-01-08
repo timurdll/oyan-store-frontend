@@ -1,12 +1,14 @@
 import React from "react";
 import styles from "@styles/steps.module.scss";
 import Button from "@components/UI/Button";
+import { CircularProgress } from "@mui/material";
 
 interface StepPaymentProps {
   paymentMethod: string[];
   setPaymentMethod: React.Dispatch<React.SetStateAction<string[]>>; // Update here
   handleOrderSubmit: () => void;
   completed: boolean;
+  isLoading: boolean; // Новое свойство
 }
 
 const StepPayment: React.FC<StepPaymentProps> = ({
@@ -14,6 +16,7 @@ const StepPayment: React.FC<StepPaymentProps> = ({
   setPaymentMethod,
   handleOrderSubmit,
   completed,
+  isLoading,
 }) => {
   const paymentOptions = [
     { id: "credit_card", label: "Kaspi удаленный счет на оплату" },
@@ -57,8 +60,15 @@ const StepPayment: React.FC<StepPaymentProps> = ({
         <div className={styles.button}>
           <Button
             onClick={handleOrderSubmit}
-            label="Оформить заказ"
+            label={
+              isLoading ? (
+                <CircularProgress size={20} color="inherit" />
+              ) : (
+                "Оформить заказ"
+              )
+            }
             variant="filled"
+            disabled={isLoading} // Отключаем кнопку во время загрузки
           />
         </div>
       )}

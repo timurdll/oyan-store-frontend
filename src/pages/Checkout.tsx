@@ -39,6 +39,8 @@ const CheckOut = () => {
   const [entrance, setEntrance] = useState("");
   const [apartment, setApartment] = useState("");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   // Payment information states
   const [paymentMethod, setPaymentMethod] = useState<string[]>([]);
   const [orderSuccess, setOrderSuccess] = useState(false);
@@ -116,6 +118,7 @@ const CheckOut = () => {
   };
 
   const handleOrderSubmit = async () => {
+    setIsLoading(true); // Устанавливаем загрузку
     const orderData = {
       phoneNumber,
       fullName,
@@ -141,9 +144,11 @@ const CheckOut = () => {
     try {
       await createOrder(orderData).unwrap();
       navigate("/order-success");
-      clearBasket({}); // Clear the basket after the order is successfully created
+      clearBasket({});
     } catch (err) {
       console.error("Error creating order:", err);
+    } finally {
+      setIsLoading(false); // Отключаем загрузку
     }
   };
 
@@ -213,6 +218,7 @@ const CheckOut = () => {
                 setPaymentMethod={setPaymentMethod}
                 handleOrderSubmit={handleOrderSubmit}
                 completed={completedSteps[2]}
+                isLoading={isLoading}
               />
             </motion.div>
           )}
