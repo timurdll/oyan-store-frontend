@@ -1,5 +1,5 @@
 import Footer from "@components/Footer";
-// import Header from "@components/Header";
+import Header from "@components/Header";
 import useIsMobile from "@components/Hooks/UseIsMobile";
 import MobileMenu from "@components/MobileMenu";
 import Loader from "@components/UI/Loader";
@@ -23,7 +23,7 @@ function App() {
       <BrowserRouter>
         <ScrollToTopWrapper>
           <div className="app-container">
-            {/* <Header /> */}
+            <Header />
             <main className="content">
               <AppRouter />
             </main>
