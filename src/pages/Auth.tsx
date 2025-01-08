@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "@styles/auth.module.scss";
-import google from "@assets/images/google.svg";
+// import google from "@assets/images/google.svg";
 import logo from "@assets/images/tumbler.svg";
 import closeIcon from "@assets/images/close.svg";
 import { useDispatch, useSelector } from "react-redux";
@@ -217,15 +217,15 @@ const Auth: React.FC = () => {
                     onClick={isRegistering ? onRegister : onSubmitPassword}
                     className={styles.primaryButton}
                   >
-                    {isRegistering ? "Зарегистрироваться или Войти" : "Войти"}
+                    {isRegistering ? "Зарегистрироваться" : "Войти"}
                   </button>
                 </>
               )}
-              <div className={styles.orText}>Или</div>
+              {/* <div className={styles.orText}>Или</div>
               <button className={styles.googleButton}>
                 <img src={google} alt="google" />
                 <span>Войти с помощью Google</span>
-              </button>
+              </button> */}
               <p className={styles.termsText}>
                 Сохраняйте в тайне свое имя пользователя и пароль! Продолжая, вы
                 принимаете{" "}

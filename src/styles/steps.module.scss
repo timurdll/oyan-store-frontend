@@ -107,7 +107,7 @@
           color: #575757;
           font-size: 20px;
           @media (max-width: 768px) {
-            font-size: 14px;
+            font-size: 16px; /* Минимальный размер шрифта для предотвращения зума */
           }
         }
 
@@ -117,7 +117,7 @@
           padding: 8px 15px;
           font-family: "Gilroy-Regular";
           @media (max-width: 768px) {
-            font-size: 14px;
+            font-size: 16px; /* Минимальный размер шрифта для предотвращения зума */
           }
         }
       }
@@ -184,7 +184,7 @@
             font-family: "Gilroy-Regular";
             font-size: 20px;
             @media (max-width: 768px) {
-              font-size: 14px;
+              font-size: 16px; /* Минимальный размер шрифта для предотвращения зума */
             }
           }
           input[type="checkbox"] {
