@@ -17,41 +17,16 @@ const Header = () => {
   const isMobile = useIsMobile();
 
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
-    if (!isMobile) {
-      setIsVisible(true); // Всегда показываем хедер на десктопе
-      return;
-    }
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        setIsVisible(false); // Скролл вниз
-      } else if (currentScrollY < lastScrollY || currentScrollY <= 50) {
-        setIsVisible(true); // Скролл вверх или на самом верху
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    // Блокируем скролл, если хедер скрыт
-    document.body.style.overflow = isVisible ? "visible" : "hidden";
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      document.body.style.overflow = "visible"; // Сбрасываем стиль при размонтировании
-    };
-  }, [lastScrollY, isMobile, isVisible]);
+    // Хедер всегда видим
+    setIsVisible(true);
+  }, []);
 
   return (
     <motion.header
       className={styles.header}
-      style={{ transform: isVisible ? "translateY(0)" : "translateY(-100%)" }} // Без анимации
+      style={{ transform: isVisible ? "translateY(0)" : "translateY(-100%)" }} // Убедитесь, что хедер всегда виден
     >
       <div className={styles.content}>
         {isMobile ? (
@@ -71,7 +46,6 @@ const Header = () => {
           </div>
         )}
 
-        {/* Поисковая строка */}
         <motion.div
           className={styles.search}
           initial={{ height: 0, opacity: 0 }}
