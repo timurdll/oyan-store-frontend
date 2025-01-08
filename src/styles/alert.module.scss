@@ -32,8 +32,11 @@
     top: 80px; /* Сдвигаем ниже */
     padding: 8px 16px; /* Уменьшаем отступы */
     font-size: 12px; /* Уменьшаем размер шрифта */
-    max-width: calc(100% - 40px); /* Ограничиваем ширину */
+    max-width: calc(300px); /* Ограничиваем ширину */
+    text-align: end;
+    width: fit-content;
     border-radius: 4px; /* Уменьшаем радиус скругления */
+    right: 0px;
   }
 
   @media (max-width: 480px) {
@@ -41,7 +44,6 @@
     font-size: 11px; /* Ещё меньше текст */
     padding: 6px 12px; /* Ещё меньше отступы */
     right: 5px; /* Минимальный отступ справа */
-    left: 5px; /* Минимальный отступ слева */
   }
 }
 
