@@ -23,6 +23,10 @@
   overflow: hidden;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.3s ease-out;
+  @media (max-width: 768px) {
+    padding: 0px 0px;
+    width: auto;
+  }
 }
 
 @keyframes fadeIn {
@@ -50,12 +54,18 @@
   position: absolute;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 }
 
 .image {
   width: 100%;
   height: 100%;
   object-fit: contain; /* Ensure the image fits well */
+  @media (max-width: 768px) {
+    width: calc(100% - 30px);
+  }
 }
 
 .prevButton,
@@ -88,7 +98,6 @@
   margin-top: 10px;
   overflow-x: auto; /* Allow scrolling if there are too many thumbnails */
   padding-bottom: 10px;
-  width: 100%;
   height: 90px;
   align-items: center;
 

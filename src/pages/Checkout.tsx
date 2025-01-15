@@ -39,7 +39,18 @@ const CheckOut = () => {
   const [entrance, setEntrance] = useState("");
   const [apartment, setApartment] = useState("");
 
+  // Legal entity state
+  const [isLegalEntity, setIsLegalEntity] = useState(false);
+  const [companyName, setCompanyName] = useState("");
+  const [bin, setBin] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const [companyAddress, setCompanyAddress] = useState("");
+  const [companyPhone, setCompanyPhone] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [iik, setIik] = useState("");
+  const [bik, setBik] = useState("");
+  const [bankName, setBankName] = useState("");
 
   // Payment information states
   const [paymentMethod, setPaymentMethod] = useState<string[]>([]);
@@ -97,10 +108,28 @@ const CheckOut = () => {
     phoneNumber: string;
     fullName: string;
     email: string;
+    companyName?: string;
+    bin?: string;
+    companyAddress?: string;
+    companyPhone?: string;
+    postalCode?: string;
+    iik?: string;
+    bik?: string;
+    bankName?: string;
   }) => {
     setPhoneNumber(values.phoneNumber);
     setFullName(values.fullName);
     setEmail(values.email);
+    if (isLegalEntity) {
+      setCompanyName(values.companyName || "");
+      setBin(values.bin || "");
+      setCompanyAddress(values.companyAddress || "");
+      setCompanyPhone(values.companyPhone || "");
+      setPostalCode(values.postalCode || "");
+      setIik(values.iik || "");
+      setBik(values.bik || "");
+      setBankName(values.bankName || "");
+    }
   };
 
   const handleSubmitAddressData = (values: {
@@ -118,11 +147,23 @@ const CheckOut = () => {
   };
 
   const handleOrderSubmit = async () => {
-    setIsLoading(true); // Устанавливаем загрузку
+    setIsLoading(true);
     const orderData = {
       phoneNumber,
       fullName,
       email,
+      ...(isLegalEntity && {
+        legalEntityInfo: {
+          companyName,
+          bin,
+          companyAddress,
+          companyPhone,
+          postalCode,
+          iik,
+          bik,
+          bankName,
+        },
+      }),
       address: {
         city,
         street,
@@ -148,7 +189,7 @@ const CheckOut = () => {
     } catch (err) {
       console.error("Error creating order:", err);
     } finally {
-      setIsLoading(false); // Отключаем загрузку
+      setIsLoading(false);
     }
   };
 
@@ -162,6 +203,25 @@ const CheckOut = () => {
       <h1>Оформление заказа</h1>
       <div className={styles.order}>
         <div className={styles.form}>
+          <div className={styles.toggleButtons}>
+            <button
+              className={`${styles.toggleButton} ${
+                !isLegalEntity ? styles.active : ""
+              }`}
+              onClick={() => setIsLegalEntity(false)}
+            >
+              Физическое лицо
+            </button>
+            <button
+              className={`${styles.toggleButton} ${
+                isLegalEntity ? styles.active : ""
+              }`}
+              onClick={() => setIsLegalEntity(true)}
+            >
+              Юридическое лицо
+            </button>
+          </div>
+
           {currentStep >= 1 && (
             <motion.div
               ref={stepRefs[0]}
@@ -172,10 +232,17 @@ const CheckOut = () => {
               variants={stepVariants}
             >
               <StepUserData
-                initialValues={{ phoneNumber, fullName, email }}
+                initialValues={{
+                  phoneNumber,
+                  fullName,
+                  email,
+                  companyName,
+                  bin,
+                }}
                 nextStep={nextStep}
                 completed={completedSteps[0]}
                 onSubmit={handleSubmitUserData}
+                isLegalEntity={isLegalEntity}
               />
             </motion.div>
           )}

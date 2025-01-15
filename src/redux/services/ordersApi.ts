@@ -2,7 +2,6 @@ import { baseApi } from "./baseApi";
 
 export const ordersApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // Создание заказа
     createOrder: builder.mutation({
       query: (orderData: {
         product: {
@@ -27,41 +26,47 @@ export const ordersApi = baseApi.injectEndpoints({
         method: "POST",
         body: orderData,
       }),
-      invalidatesTags: ["Orders"],
+      invalidatesTags: [{ type: "Orders", id: "LIST" }], // Инвалидируем список заказов
     }),
 
-    // Получение заказов пользователя
     getUserOrders: builder.query({
       query: () => `/orders`,
       providesTags: (result) =>
         result
-          ? result.map((order: { id: number }) => ({
-              type: "Orders",
-              id: order.id,
-            }))
-          : ["Orders"],
+          ? [
+              ...result.map((order: { id: number }) => ({
+                type: "Orders" as const,
+                id: order.id,
+              })),
+              { type: "Orders", id: "LIST" }, // Общий тег для списка заказов
+            ]
+          : [{ type: "Orders", id: "LIST" }],
     }),
 
-    // Получение всех заказов (для админов)
     getAllOrders: builder.query({
-      query: () => `/orders/all`, // Endpoint for fetching all orders
+      query: () => `/orders/all`,
       providesTags: (result) =>
         result
-          ? result.map((order: { id: number }) => ({
-              type: "Orders",
-              id: order.id,
-            }))
-          : ["Orders"],
+          ? [
+              ...result.map((order: { id: number }) => ({
+                type: "Orders" as const,
+                id: order.id,
+              })),
+              { type: "Orders", id: "LIST" }, // Общий тег
+            ]
+          : [{ type: "Orders", id: "LIST" }],
     }),
 
-    // Обновление статуса заказа (административный функционал)
     updateOrderStatus: builder.mutation({
       query: ({ orderId, status }: { orderId: number; status: string }) => ({
         url: `/orders/${orderId}/status`,
         method: "PATCH",
         body: { status },
       }),
-      invalidatesTags: ["Orders"],
+      invalidatesTags: ({ orderId }) => [
+        { type: "Orders", id: orderId }, // Инвалидируем конкретный заказ
+        { type: "Orders", id: "LIST" }, // Также обновляем общий список
+      ],
     }),
   }),
   overrideExisting: false,

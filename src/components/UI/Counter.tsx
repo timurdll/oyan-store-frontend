@@ -5,14 +5,18 @@ import styles from "@styles/counter.module.scss";
 
 interface CounterProps {
   value: number;
+  stock: number;
   onIncrement: () => void;
   onDecrement: () => void;
+  onLimitReached?: (message: string) => void;
 }
 
 const Counter: React.FC<CounterProps> = ({
   value,
+  stock,
   onIncrement,
   onDecrement,
+  onLimitReached,
 }) => {
   return (
     <div className={styles.counter}>
@@ -20,7 +24,17 @@ const Counter: React.FC<CounterProps> = ({
         <img src={minusIcon} alt="Decrease quantity" />
       </button>
       {value}
-      <button onClick={onIncrement}>
+      <button
+        onClick={() => {
+          if (value + 1 > stock) {
+            if (onLimitReached) {
+              onLimitReached(`Максимальное количество: ${stock}`);
+            }
+            return;
+          }
+          onIncrement();
+        }}
+      >
         <img src={plusIcon} alt="Increase quantity" />
       </button>
     </div>

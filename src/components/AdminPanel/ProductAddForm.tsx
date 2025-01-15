@@ -47,6 +47,7 @@ const ProductAddForm = () => {
         name: "",
         price: "",
         typeId: "",
+        stock: "", // Добавлено поле stock
         coverImage: null,
         images: [],
         productInfo: { title: "", description: "" },
@@ -60,6 +61,9 @@ const ProductAddForm = () => {
         formData.append("name", values.name);
         formData.append("price", values.price.toString());
         formData.append("typeId", values.typeId);
+
+        // Преобразование stock в число перед отправкой
+        formData.append("stock", values.stock);
 
         // Append cover image
         if (values.coverImage) {
@@ -86,6 +90,7 @@ const ProductAddForm = () => {
             char.description
           );
         });
+        console.log(values);
 
         try {
           // Call the addProduct mutation with formData
@@ -114,6 +119,16 @@ const ProductAddForm = () => {
             <Field name="price" type="number" />
             <ErrorMessage
               name="price"
+              component="div"
+              className={styles.errorMessage}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="stock">Количество на складе</label>
+            <Field name="stock" type="number" />
+            <ErrorMessage
+              name="stock"
               component="div"
               className={styles.errorMessage}
             />

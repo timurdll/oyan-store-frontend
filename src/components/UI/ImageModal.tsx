@@ -10,7 +10,7 @@ interface ImageModalProps {
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
-  onSelect: (index: number) => void; // New handler for selecting an image
+  onSelect: (index: number) => void;
 }
 
 const ImageModal: React.FC<ImageModalProps> = ({
@@ -29,7 +29,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
-        onClick={(e) => e.stopPropagation()} // Prevent the modal from closing when clicked inside
+        onClick={(e) => e.stopPropagation()}
       >
         <div className={styles.imageWrapper}>
           <motion.img
@@ -56,7 +56,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
               className={`${styles.thumbnail} ${
                 index === currentImageIndex ? styles.activeThumbnail : ""
               }`}
-              onClick={() => onSelect(index)} // Select image on click
+              onClick={() => onSelect(index)}
             />
           ))}
         </div>

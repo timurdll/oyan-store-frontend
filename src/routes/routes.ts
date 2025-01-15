@@ -10,6 +10,7 @@ import Orders from "@pages/Orders";
 import AdminOrders from "@components/AdminPanel/AdminOrders";
 import OrderSuccessPage from "@pages/OrderSuccessPage";
 import AboutUsPage from "@pages/AboutUs";
+import StockManagement from "@components/AdminPanel/StockManagment";
 
 export const publicRoutes = [
   { path: "/", Component: Home },
@@ -56,5 +57,9 @@ export const adminRoutes = [
   {
     path: "/admin/orders",
     Component: AdminOrders,
+  },
+  {
+    path: "/admin/stock",
+    Component: StockManagement,
   },
 ];

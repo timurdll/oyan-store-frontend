@@ -33,8 +33,8 @@ const StepAddress: React.FC<StepAddressProps> = ({
     city: Yup.string().required("Город обязателен для заполнения"),
     street: Yup.string().required("Улица обязательна для заполнения"),
     houseNumber: Yup.string().required("Дом обязателен для заполнения"),
-    entrance: Yup.string().required("Подъезд обязателен для заполнения"),
-    apartment: Yup.string().required("Квартира обязательна для заполнения"),
+    entrance: Yup.string(),
+    apartment: Yup.string(),
   });
 
   const handleFormSubmit = (values: {
@@ -64,12 +64,7 @@ const StepAddress: React.FC<StepAddressProps> = ({
             <div className={styles.fields}>
               <div className={styles.field}>
                 <label htmlFor="city">Город:</label>
-                <Field
-                  type="text"
-                  id="city"
-                  name="city"
-                  placeholder="Введите город"
-                />
+                <Field type="text" id="city" name="city" />
                 <ErrorMessage
                   name="city"
                   component="div"

@@ -1,3 +1,4 @@
+import { useState } from "react"; // Для управления состоянием алерта
 import { useSelector } from "react-redux"; // Для доступа к состоянию Redux
 import {
   useGetBasketQuery,
@@ -10,12 +11,16 @@ import Counter from "@components/UI/Counter";
 import { formatPrice } from "@components/Functions/formatPrice";
 import Receipt from "@components/UI/Receipt";
 import { RootState } from "@redux/store"; // Убедитесь, что правильно импортируете RootState
+import AlertComponent from "@components/AlertComponent";
 
 const BasketPage = () => {
-  // Получаем статус входа пользователя
+  const [alert, setAlert] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
+
   const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
 
-  // Если пользователь не вошел в систему, можно перенаправить на страницу входа
   if (!isLoggedIn) {
     return (
       <div className={styles.message}>
@@ -24,15 +29,11 @@ const BasketPage = () => {
     );
   }
 
-  // Теперь вызываем запрос корзины только если пользователь вошел в систему
   const {
     data: basketProducts,
     isLoading,
     isError,
-  } = useGetBasketQuery(
-    undefined,
-    { skip: !isLoggedIn } // Этот параметр пропускает запрос, если пользователь не авторизован
-  );
+  } = useGetBasketQuery(undefined, { skip: !isLoggedIn });
   const [removeFromBasket] = useRemoveFromBasketMutation();
   const [updateBasketQuantity] = useUpdateBasketProductQuantityMutation();
 
@@ -46,9 +47,17 @@ const BasketPage = () => {
 
   const handleQuantityChange = async (
     productId: number,
-    newQuantity: number
+    newQuantity: number,
+    stock: number
   ) => {
-    if (newQuantity < 1) return; // Предотвратить установку количества меньше 1
+    if (newQuantity < 1) return;
+    if (newQuantity > stock) {
+      setAlert({
+        message: `Вы не можете добавить больше ${stock} единиц товара.`,
+        type: "error",
+      });
+      return;
+    }
     try {
       await updateBasketQuantity({ productId, quantity: newQuantity }).unwrap();
     } catch (error) {
@@ -59,7 +68,7 @@ const BasketPage = () => {
   const totalSum: number =
     basketProducts?.reduce((sum: number, item) => {
       return sum + item.product.price * item.quantity;
-    }, 0) ?? 0; // Обработка undefined
+    }, 0) ?? 0;
 
   if (isLoading) {
     return <div className={styles.loader}>Загрузка...</div>;
@@ -72,6 +81,7 @@ const BasketPage = () => {
   return (
     <div className={styles.container}>
       <h1>Корзина</h1>
+      <AlertComponent alert={alert} onClose={() => setAlert(null)} />
       <div className={styles.basket}>
         <div className={styles.products}>
           {basketProducts && basketProducts.length > 0 ? (
@@ -107,18 +117,24 @@ const BasketPage = () => {
                       />
                       <Counter
                         value={product.quantity}
+                        stock={product.product.stock}
                         onIncrement={() =>
                           handleQuantityChange(
                             product.product_id,
-                            product.quantity + 1
+                            product.quantity + 1,
+                            product.product.stock
                           )
                         }
                         onDecrement={() =>
                           handleQuantityChange(
                             product.product_id,
-                            product.quantity - 1
+                            product.quantity - 1,
+                            product.product.stock
                           )
                         }
+                        onLimitReached={(message) =>
+                          setAlert({ message, type: "error" })
+                        } // Устанавливаем алерт
                       />
                     </div>
                   </li>
@@ -130,7 +146,7 @@ const BasketPage = () => {
           )}
         </div>
         <Receipt
-          basketProducts={basketProducts ?? []} // Pass an empty array if undefined
+          basketProducts={basketProducts ?? []}
           totalSum={totalSum}
           showCheckoutButton={true}
         />

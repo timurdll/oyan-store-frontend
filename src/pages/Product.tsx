@@ -176,17 +176,32 @@ const ProductPage: React.FC = () => {
           <span className={styles.name}>{product.name}</span>
           <span className={styles.price}>₸ {formatPrice(product.price)}</span>
           <div className={styles.buttons}>
-            <Button
-              label={
-                isLoadingBasket
-                  ? "Добавляется..."
-                  : isInBasket
-                  ? "Перейти в корзину"
-                  : "Добавить в корзину"
-              }
-              onClick={handleButtonClick}
-              variant={isInBasket ? "outlined" : "filled"}
-            />
+            {product.stock === 0 ? (
+              <Button
+                label="Товар закончился"
+                variant="outlined"
+                disabled // Disable button if stock is 0
+              />
+            ) : (
+              <>
+                <Button
+                  label={
+                    isLoadingBasket
+                      ? "Добавляется..."
+                      : isInBasket
+                      ? "Перейти в корзину"
+                      : "Добавить в корзину"
+                  }
+                  onClick={handleButtonClick}
+                  variant={isInBasket ? "outlined" : "filled"}
+                />
+                {/* <Button
+                  label={"Купить в один клик"}
+                  onClick={handleButtonClick}
+                  variant={"filled"}
+                /> */}
+              </>
+            )}
           </div>
 
           {/* Use the new AdditionalImages component */}

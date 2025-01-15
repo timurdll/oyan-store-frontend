@@ -2,6 +2,8 @@ import { useGetUserOrdersQuery } from "@redux/services/ordersApi";
 import styles from "@styles/orders-page.module.scss";
 import { formatPrice } from "@components/Functions/formatPrice";
 import { Order } from "types/types";
+import { useEffect } from "react";
+import socket from "../socket";
 
 const OrderStatusTranslation: Record<string, string> = {
   PENDING: "Ожидает обработки",
@@ -12,7 +14,30 @@ const OrderStatusTranslation: Record<string, string> = {
 };
 
 const Orders = () => {
-  const { data: orders, isLoading, isError } = useGetUserOrdersQuery({});
+  const {
+    data: orders,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetUserOrdersQuery({});
+
+  useEffect(() => {
+    // Set up WebSocket listeners
+
+    socket.on(
+      "orderStatusUpdate",
+      (data: { orderId: number; status: string }) => {
+        console.log(
+          `Статус заказа обновлен: Заказ ${data.orderId} -> ${data.status}`
+        );
+        refetch(); // Refetch data when an order status updates
+      }
+    );
+
+    return () => {
+      socket.off("orderStatusUpdate");
+    };
+  }, []); // No dependency array ensures this runs only once on mount
 
   if (isLoading) {
     return <div className={styles.loader}>Загрузка...</div>;
@@ -25,8 +50,6 @@ const Orders = () => {
   if (!orders || orders.length === 0) {
     return <div className={styles.empty}>У вас пока нет заказов</div>;
   }
-
-  console.log(orders);
 
   return (
     <div className={styles.container}>

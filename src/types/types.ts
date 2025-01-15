@@ -22,7 +22,7 @@ export interface BasketProduct {
   basket_id: number;
   product_id: number;
   quantity: number;
-  product: Product; // Связанный объект продукта
+  product: Product;
 }
 
 export interface Product {
@@ -33,6 +33,7 @@ export interface Product {
   cover_image: string;
   images: string[];
   typeId: number;
+  stock: number;
   type: Type;
   basketProducts: BasketProduct[];
   productInfo?: ProductInfo;

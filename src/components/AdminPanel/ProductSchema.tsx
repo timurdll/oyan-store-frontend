@@ -1,23 +1,27 @@
 import * as Yup from "yup";
 
 export const ProductSchema = Yup.object().shape({
-  name: Yup.string().required("Product name is required"),
+  name: Yup.string().required("Введите название продукта"),
   price: Yup.number()
-    .required("Price is required")
-    .positive("Price must be positive"),
-  typeId: Yup.string().required("Select or create a type"),
-  coverImage: Yup.mixed().required("Cover image is required"),
+    .required("Введите цену продукта")
+    .min(0, "Цена не может быть отрицательной"),
+  typeId: Yup.string().required("Выберите тип продукта"),
+  stock: Yup.number()
+    .transform((originalValue) =>
+      originalValue ? parseInt(originalValue, 10) : 0
+    )
+    .required("Введите количество товара")
+    .min(0, "Количество не может быть отрицательным"),
+  coverImage: Yup.mixed().required("Добавьте обложку продукта"),
   images: Yup.array().of(Yup.mixed()),
   productInfo: Yup.object().shape({
-    title: Yup.string().required("Title is required"),
-    description: Yup.string().required("Description is required"),
+    title: Yup.string(),
+    description: Yup.string(),
   }),
   characteristics: Yup.array().of(
     Yup.object().shape({
-      name: Yup.string().required("Characteristic name is required"),
-      description: Yup.string().required(
-        "Characteristic description is required"
-      ),
+      name: Yup.string().required("Введите название характеристики"),
+      description: Yup.string().required("Введите описание характеристики"),
     })
   ),
 });

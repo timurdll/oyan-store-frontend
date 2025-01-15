@@ -19,6 +19,7 @@ type Product = {
   images: string[];
   price: number;
   rating?: number;
+  stock: number; // Ensure stock is defined
 };
 
 interface CardProps {
@@ -61,10 +62,8 @@ export const Card: React.FC<CardProps> = ({ product }) => {
     event.stopPropagation();
 
     if (isInBasket) {
-      // Если товар уже в корзине, редирект на страницу товара
       handleRedirect(event);
     } else {
-      // Добавление товара в корзину
       setIsLoading(true);
       try {
         await handleAddToBasket(product.id);
@@ -84,14 +83,13 @@ export const Card: React.FC<CardProps> = ({ product }) => {
   const closeAlert = () => setAlert(null);
 
   const handleRedirect = (e: React.MouseEvent<HTMLElement>) => {
-    e.stopPropagation(); // Prevent the redirect if clicked elsewhere
+    e.stopPropagation();
     let slug = createSlug(product.name);
     navigate(`/product/${slug}`);
   };
 
   const handleGoToBasket = () => {
     setIsModalOpen(false);
-    // Перенаправление в корзину
     navigate("/basket");
   };
 
@@ -110,19 +108,13 @@ export const Card: React.FC<CardProps> = ({ product }) => {
             src={`${import.meta.env.VITE_API_URL}${product.cover_image}`}
             alt={product.name}
             className={styles.cover_image}
-            onClick={handleRedirect} // Redirect on image click
+            onClick={handleRedirect}
           />
           <div className={styles.info}>
-            <h2
-              className={styles.title}
-              onClick={handleRedirect} // Redirect on title click
-            >
+            <h2 className={styles.title} onClick={handleRedirect}>
               {product.name}
             </h2>
-            <p
-              className={styles.price}
-              onClick={handleRedirect} // Redirect on price click
-            >
+            <p className={styles.price} onClick={handleRedirect}>
               ₸ {formattedPrice}
             </p>
             {product.rating && (
@@ -143,6 +135,12 @@ export const Card: React.FC<CardProps> = ({ product }) => {
                   variant="outlined"
                 />
               </>
+            ) : product.stock === 0 ? (
+              <Button
+                label="Товар закончился"
+                variant="outlined"
+                disabled // Disable button if stock is 0
+              />
             ) : (
               <Button
                 label={
@@ -156,7 +154,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
                 }
                 onClick={(event) => handleButtonClick(event)}
                 variant="filled"
-                disabled={isLoading} // Disable button while loading
+                disabled={isLoading}
               />
             )}
           </div>

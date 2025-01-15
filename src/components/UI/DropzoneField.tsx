@@ -15,14 +15,10 @@ const DropzoneField: React.FC<DropzoneFieldProps> = ({
   setFieldValue,
   multiple = false,
 }) => {
-  // State to hold the uploaded files
   const [files, setFiles] = useState<File[]>([]);
 
   const handleDrop = (acceptedFiles: File[]) => {
-    // Update state with the accepted files
     setFiles(acceptedFiles);
-
-    // Set the field value in form (Formik or similar)
     setFieldValue(fieldName, multiple ? acceptedFiles : acceptedFiles[0]);
   };
 
@@ -57,7 +53,6 @@ const DropzoneField: React.FC<DropzoneFieldProps> = ({
               </p>
             )}
 
-            {/* Render the list of uploaded files inside the dropzone */}
             {files.length > 0 && (
               <div className={styles.filesPreview}>
                 <ul>

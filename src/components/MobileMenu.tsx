@@ -1,5 +1,4 @@
 import styles from "@styles/mobile-menu.module.scss";
-import FavouriteIcon from "@assets/images/star.svg?react";
 import BasketIcon from "@assets/images/cart.svg?react";
 import OrderIcon from "@assets/images/box.svg?react";
 import UserIcon from "@assets/images/user.svg?react";
@@ -8,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { openAuthModal } from "@redux/slices/authModalSlice";
 import { useGetBasketQuery } from "@redux/services";
 import { useGetUserOrdersQuery } from "@redux/services/ordersApi";
+import NotificationsMenu from "./UI/NotificationsMenu";
 
 const MobileMenu: React.FC = () => {
   const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn);
@@ -37,9 +37,9 @@ const MobileMenu: React.FC = () => {
   return (
     <div className={styles.mobile_menu}>
       <ul className={styles.content}>
-        <li onClick={() => handleClick(() => navigate("/favorites"))}>
-          <FavouriteIcon style={{ fill: "var(--text-color)" }} />
-          <b>Избранное</b>
+        <li>
+          <NotificationsMenu />
+          <b>Уведомления</b>
         </li>
         <li onClick={() => handleClick(() => navigate("/basket"))}>
           <div className={styles.icon}>
@@ -48,7 +48,6 @@ const MobileMenu: React.FC = () => {
             )}
             <BasketIcon style={{ fill: "var(--text-color)" }} />
           </div>
-
           <b>Корзина</b>
         </li>
         <li onClick={() => handleClick(() => navigate("/orders"))}>

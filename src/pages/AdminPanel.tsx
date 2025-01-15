@@ -12,6 +12,7 @@ const AdminPanel = () => {
       <ProductList selectedType={selectedType} />
       <Link to={"/admin/add-product"}>Добавить продукт</Link>
       <Link to={"/admin/orders"}>Управление заказами</Link>
+      <Link to={"/admin/stock"}>Управление остатками</Link>
     </div>
   );
 };

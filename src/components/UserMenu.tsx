@@ -1,13 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styles from "@styles/user-menu.module.scss";
-import FavouriteIcon from "@assets/images/star.svg?react";
 import BasketIcon from "@assets/images/cart.svg?react";
 import OrderIcon from "@assets/images/box.svg?react";
 import UserIcon from "@assets/images/user.svg?react";
 import { useGetBasketQuery } from "@redux/services";
 import { useGetUserOrdersQuery } from "@redux/services/ordersApi";
 import { openAuthModal } from "@redux/slices/authModalSlice";
+import NotificationsMenu from "./UI/NotificationsMenu";
 
 const UserMenu: React.FC = () => {
   const user = useSelector((state: any) => state.user.currentUser);
@@ -48,13 +48,8 @@ const UserMenu: React.FC = () => {
 
   return (
     <ul className={styles.menu}>
-      <li
-        data-tooltip="Избранное"
-        onClick={() => handleClick(() => navigate("/favorites"))}
-      >
-        <FavouriteIcon
-          style={{ fill: "var(--text-color)", cursor: "pointer" }}
-        />
+      <li data-tooltip="Уведомления">
+        <NotificationsMenu />
       </li>
       <li
         data-tooltip="Корзина"

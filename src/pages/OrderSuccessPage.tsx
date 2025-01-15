@@ -25,7 +25,10 @@ const OrderSuccessPage: React.FC = () => {
   }, []);
 
   const handleGoHome = () => {
-    navigate("/orders"); // Редирект на главную страницу
+    navigate("/"); // Редирект на главную страницу
+  };
+  const handleGoToOrders = () => {
+    navigate("/"); // Редирект на главную страницу
   };
 
   return (
@@ -39,11 +42,18 @@ const OrderSuccessPage: React.FC = () => {
         <h1>🎉 Поздравляем!</h1>
         <p>Ваш заказ был успешно создан!</p>
         <p>Спасибо за покупку в нашем магазине.</p>
-        <Button
-          label="На страницу заказов"
-          onClick={handleGoHome}
-          variant="filled"
-        />
+        <div className={styles.buttons}>
+          <Button
+            label="На страницу заказов"
+            onClick={handleGoHome}
+            variant="filled"
+          />
+          <Button
+            label="На домашнюю страницу"
+            onClick={handleGoToOrders}
+            variant="outlined"
+          />
+        </div>
       </div>
     </div>
   );
