@@ -4,7 +4,7 @@ const socket: Socket = io(`${import.meta.env.VITE_WSS_URL}`, {
   autoConnect: false, // Автоматическое подключение отключено
   withCredentials: true, // Для работы с CORS
   path: "/socket.io",
-  transports: ["websocket"],
+  // transports: ["websocket"],
 });
 
 socket.on("connect", () => {
