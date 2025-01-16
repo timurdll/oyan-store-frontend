@@ -16,7 +16,6 @@ import {
 import storage from "redux-persist/lib/storage";
 import { baseApi } from "./services"; // Импортируйте базовый API
 import { authMiddleware } from "./middleware/authMiddleware";
-import { socketMiddleware } from "./middleware/socketMiddleware";
 
 // Combine reducers
 // src/store.ts
@@ -47,8 +46,7 @@ const store = configureStore({
       },
     })
       .concat(baseApi.middleware)
-      .concat(authMiddleware)
-      .concat(socketMiddleware), // Подключаем WebSocket middleware
+      .concat(authMiddleware),
 });
 
 // Export store and persistor

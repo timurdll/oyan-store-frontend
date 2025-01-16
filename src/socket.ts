@@ -3,8 +3,8 @@ import { io, Socket } from "socket.io-client";
 const socket: Socket = io(`${import.meta.env.VITE_API_URL}`, {
   autoConnect: false, // Автоматическое подключение отключено
   withCredentials: true, // Для работы с CORS
-  path: "api/socket.io/",
-  transports: ["websocket"],
+  // path: "/socket.io/",
+  // transports: ["websocket"],
 });
 
 socket.on("connect", () => {
