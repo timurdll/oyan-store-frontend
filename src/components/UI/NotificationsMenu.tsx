@@ -13,32 +13,32 @@ import {
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import styles from "@styles/notifications.module.scss";
-import socket from "../../socket";
+// import socket from "../../socket";
 
 const NotificationsMenu: React.FC = () => {
   const {
     data: notifications,
     isLoading,
     isError,
-    refetch,
+    // refetch,
   } = useFetchNotificationsQuery({});
   const [markAllAsRead] = useMarkAllAsReadMutation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [unreadCount, setUnreadCount] = useState(0);
   const isMobile = useMediaQuery("(max-width:600px)");
 
-  useEffect(() => {
-    setUnreadCount(notifications?.filter((n: any) => !n.read).length || 0);
+  // useEffect(() => {
+  //   setUnreadCount(notifications?.filter((n: any) => !n.read).length || 0);
 
-    socket.on("notification", (message: string) => {
-      console.log("Получено уведомление:", message);
-      refetch();
-    });
+  //   socket.on("notification", (message: string) => {
+  //     console.log("Получено уведомление:", message);
+  //     refetch();
+  //   });
 
-    return () => {
-      socket.off("notification");
-    };
-  }, [notifications]);
+  //   return () => {
+  //     socket.off("notification");
+  //   };
+  // }, [notifications]);
 
   useEffect(() => {
     setUnreadCount(notifications?.filter((n: any) => !n.read).length || 0);
