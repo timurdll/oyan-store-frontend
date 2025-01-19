@@ -13,7 +13,7 @@ import { BrowserRouter } from "react-router-dom";
 // import socket from "./socket";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/store";
-import { jwtDecode } from "jwt-decode"; // Убедитесь, что импорт без фигурных скобок
+// import { jwtDecode } from "jwt-decode"; // Убедитесь, что импорт без фигурных скобок
 
 function App() {
   const isMobile = useIsMobile();
