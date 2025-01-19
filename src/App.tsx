@@ -11,13 +11,14 @@ import ScrollToTopWrapper from "@routes/ScrollToTopWrapper";
 import { Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
 // import socket from "./socket";
-// import { useSelector } from "react-redux";
-// import { RootState } from "@redux/store";
-// import { jwtDecode } from "jwt-decode"; // Убедитесь, что импорт без фигурных скобок
+import { useSelector } from "react-redux";
+import { RootState } from "@redux/store";
+import { jwtDecode } from "jwt-decode"; // Убедитесь, что импорт без фигурных скобок
 
 function App() {
   const isMobile = useIsMobile();
-  // const { token } = useSelector((state: RootState) => state.user);
+  const { token } = useSelector((state: RootState) => state.user);
+  console.log(token);
   // const [userId, setUserId] = useState<string | null>(null);
 
   // Эффект для декодирования токена и установки userId
