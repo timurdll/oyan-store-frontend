@@ -33,7 +33,9 @@ const ImageModal: React.FC<ImageModalProps> = ({
       >
         <div className={styles.imageWrapper}>
           <motion.img
-            src={`${import.meta.env.VITE_API_URL}${images[currentImageIndex]}`}
+            src={`${import.meta.env.VITE_API_URL}/uploads/products${
+              images[currentImageIndex]
+            }`}
             alt={`Image ${currentImageIndex + 1}`}
             className={styles.image}
             key={currentImageIndex}
@@ -51,7 +53,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
           {images.map((image, index) => (
             <img
               key={index}
-              src={`${import.meta.env.VITE_API_URL}${image}`}
+              src={`${import.meta.env.VITE_API_URL}/uploads/products${image}`}
               alt={`Thumbnail ${index + 1}`}
               className={`${styles.thumbnail} ${
                 index === currentImageIndex ? styles.activeThumbnail : ""

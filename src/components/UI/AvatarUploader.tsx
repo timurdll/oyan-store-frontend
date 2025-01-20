@@ -51,7 +51,9 @@ const AvatarUploader: React.FC<AvatarUploaderProps> = ({ userId }) => {
         <div className={styles.avatarPreview}>
           {avatarPreview ? (
             <img
-              src={`${import.meta.env.VITE_API_URL}${avatarPreview}`}
+              src={`${
+                import.meta.env.VITE_API_URL
+              }/uploads/avatars${avatarPreview}`}
               alt="Аватар пользователя"
               className={styles.avatarImage}
             />
