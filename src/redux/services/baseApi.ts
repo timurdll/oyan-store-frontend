@@ -4,7 +4,6 @@ import { RootState } from "@redux/store";
 export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    credentials: "include", // Добавьте эту строку
     baseUrl: `${import.meta.env.VITE_API_URL}/api`,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).user.token;

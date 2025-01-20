@@ -2,8 +2,8 @@ import { useGetUserOrdersQuery } from "@redux/services/ordersApi";
 import styles from "@styles/orders-page.module.scss";
 import { formatPrice } from "@components/Functions/formatPrice";
 import { Order } from "types/types";
-// import { useEffect } from "react";
-// import socket from "../socket";
+import { useEffect } from "react";
+import socket from "../socket";
 
 const OrderStatusTranslation: Record<string, string> = {
   PENDING: "Ожидает обработки",
@@ -18,26 +18,26 @@ const Orders = () => {
     data: orders,
     isLoading,
     isError,
-    // refetch,
+    refetch,
   } = useGetUserOrdersQuery({});
 
-  // useEffect(() => {
-  //   // Set up WebSocket listeners
+  useEffect(() => {
+    // Set up WebSocket listeners
 
-  //   socket.on(
-  //     "orderStatusUpdate",
-  //     (data: { orderId: number; status: string }) => {
-  //       console.log(
-  //         `Статус заказа обновлен: Заказ ${data.orderId} -> ${data.status}`
-  //       );
-  //       refetch(); // Refetch data when an order status updates
-  //     }
-  //   );
+    socket.on(
+      "orderStatusUpdate",
+      (data: { orderId: number; status: string }) => {
+        console.log(
+          `Статус заказа обновлен: Заказ ${data.orderId} -> ${data.status}`
+        );
+        refetch(); // Refetch data when an order status updates
+      }
+    );
 
-  //   return () => {
-  //     socket.off("orderStatusUpdate");
-  //   };
-  // }, []); // No dependency array ensures this runs only once on mount
+    return () => {
+      socket.off("orderStatusUpdate");
+    };
+  }, []); // No dependency array ensures this runs only once on mount
 
   if (isLoading) {
     return <div className={styles.loader}>Загрузка...</div>;
