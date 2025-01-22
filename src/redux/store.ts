@@ -15,7 +15,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { baseApi } from "./services"; // Импортируйте базовый API
-// import { authMiddleware } from "./middleware/authMiddleware";
+import { authMiddleware } from "./middleware/authMiddleware";
 
 // Combine reducers
 // src/store.ts
@@ -44,8 +44,9 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(baseApi.middleware),
-  // .concat(authMiddleware),
+    })
+      .concat(baseApi.middleware)
+      .concat(authMiddleware),
 });
 
 // Export store and persistor

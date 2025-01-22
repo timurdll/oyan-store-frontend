@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "./UI/Button";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -11,6 +11,7 @@ import Alert from "./UI/Alert";
 import { formatPrice } from "./Functions/formatPrice";
 import { createSlug } from "./Functions/createSlug";
 import CartModal from "./UI/CartModal";
+import { openAuthModal } from "@redux/slices/authModalSlice"; // Add this import
 
 type Product = {
   id: number;
@@ -19,7 +20,7 @@ type Product = {
   images: string[];
   price: number;
   rating?: number;
-  stock: number; // Ensure stock is defined
+  stock: number;
 };
 
 interface CardProps {
@@ -28,6 +29,7 @@ interface CardProps {
 
 export const Card: React.FC<CardProps> = ({ product }) => {
   const [deleteProduct] = useDeleteProductMutation();
+  const dispatch = useDispatch(); // Add dispatch
   const user = useSelector((state: any) => state.user.currentUser);
   const isAdmin = user?.role === "admin";
   const { handleAddToBasket } = useAddToBasket();
@@ -60,6 +62,12 @@ export const Card: React.FC<CardProps> = ({ product }) => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation();
+
+    // If user is not logged in, show auth modal
+    if (!user) {
+      dispatch(openAuthModal());
+      return;
+    }
 
     if (isInBasket) {
       handleRedirect(event);
@@ -136,11 +144,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
                 />
               </>
             ) : product.stock === 0 ? (
-              <Button
-                label="Товар закончился"
-                variant="outlined"
-                disabled // Disable button if stock is 0
-              />
+              <Button label="Товар закончился" variant="outlined" disabled />
             ) : (
               <Button
                 label={
