@@ -4,6 +4,7 @@ import styles from "@styles/product-edit-form.module.scss";
 import { useUpdateProductMutation } from "@redux/services";
 import CreatableFieldArray from "./CreatableFieldSelector";
 import { Product } from "types/types";
+import Dropzone from "react-dropzone";
 
 interface CharacteristicForm {
   name: string;
@@ -52,6 +53,8 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
           description: product.productInfo?.description || "",
         },
         characteristics: initialCharacteristics,
+        cover_image: null,
+        images: [],
       }}
       validationSchema={validationSchema}
       onSubmit={async (values) => {
@@ -74,6 +77,16 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
           );
         });
 
+        if (values.cover_image) {
+          formData.append("cover_image", values.cover_image);
+        }
+
+        if (values.images.length > 0) {
+          values.images.forEach((file) => {
+            formData.append("images", file);
+          });
+        }
+
         try {
           await updateProduct({ id: product.id, formData }).unwrap();
           alert("Продукт успешно обновлен!");
@@ -82,7 +95,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
         }
       }}
     >
-      {() => (
+      {({ setFieldValue }) => (
         <Form className={styles.formContainer}>
           <div className={styles.field}>
             <label htmlFor="name">Название</label>
@@ -119,6 +132,37 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
               component="div"
               className={styles.errorMessage}
             />
+          </div>
+
+          <div className={styles.uploadSection}>
+            <label>Обложка продукта</label>
+            <Dropzone
+              onDrop={(acceptedFiles) =>
+                setFieldValue("cover_image", acceptedFiles[0])
+              }
+            >
+              {({ getRootProps, getInputProps }) => (
+                <div className={styles.dropzone} {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <p>Перетащите файл или нажмите для выбора</p>
+                </div>
+              )}
+            </Dropzone>
+          </div>
+
+          <div className={styles.uploadSection}>
+            <label>Изображения продукта</label>
+            <Dropzone
+              onDrop={(acceptedFiles) => setFieldValue("images", acceptedFiles)}
+              multiple
+            >
+              {({ getRootProps, getInputProps }) => (
+                <div className={styles.dropzone} {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <p>Перетащите файлы или нажмите для выбора</p>
+                </div>
+              )}
+            </Dropzone>
           </div>
 
           <CreatableFieldArray
