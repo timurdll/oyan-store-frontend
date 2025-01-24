@@ -61,6 +61,13 @@ export const productApi = baseApi.injectEndpoints({
       query: (slug) => `/products/slug/${slug}`,
       providesTags: (slug) => [{ type: "Products", id: `SLUG_${slug}` }],
     }),
+    createPreOrder: builder.mutation({
+      query: (productId) => ({
+        url: `/products/${productId}/pre-order`,
+        method: "POST",
+      }),
+      invalidatesTags: [{ type: "Products", id: "LIST" }], // Обновляет список продуктов, если нужно
+    }),
   }),
 });
 
@@ -73,4 +80,5 @@ export const {
   useFetchProductBySlugQuery,
   useUpdateProductMutation,
   useUpdateStockMutation,
+  useCreatePreOrderMutation,
 } = productApi;

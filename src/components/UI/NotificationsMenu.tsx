@@ -12,8 +12,9 @@ import {
 } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import styles from "@styles/notifications.module.scss";
+import Alert from "./Alert"; // Импорт Alert компонента
 import socket from "../../socket";
+import styles from "@styles/notifications.module.scss";
 
 const NotificationsMenu: React.FC = () => {
   const {
@@ -25,13 +26,19 @@ const NotificationsMenu: React.FC = () => {
   const [markAllAsRead] = useMarkAllAsReadMutation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [alert, setAlert] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null); // Состояние для Alert
   const isMobile = useMediaQuery("(max-width:600px)");
 
   useEffect(() => {
     setUnreadCount(notifications?.filter((n: any) => !n.read).length || 0);
 
+    // Обработка уведомлений через WebSocket
     socket.on("notification", (message: string) => {
       console.log("Получено уведомление:", message);
+      setAlert({ message, type: "success" }); // Установить сообщение Alert
       refetch();
     });
 
@@ -55,6 +62,10 @@ const NotificationsMenu: React.FC = () => {
 
   const handleMarkAllAsRead = async () => {
     await markAllAsRead({});
+  };
+
+  const handleAlertClose = () => {
+    setAlert(null); // Закрыть Alert
   };
 
   const open = Boolean(anchorEl);
@@ -135,6 +146,15 @@ const NotificationsMenu: React.FC = () => {
           )}
         </Box>
       </Popover>
+
+      {/* Рендер Alert при наличии уведомления */}
+      {alert && (
+        <Alert
+          message={alert.message}
+          type={alert.type}
+          onClose={handleAlertClose}
+        />
+      )}
     </>
   );
 };

@@ -5,13 +5,16 @@ import Button from "./UI/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import styles from "@styles/card.module.scss";
 import useIsProductInBasket from "./Hooks/UseIsInBasket";
-import { useDeleteProductMutation } from "@redux/services";
+import {
+  useDeleteProductMutation,
+  useCreatePreOrderMutation,
+} from "@redux/services";
 import useAddToBasket from "./Hooks/UseAddToBasket";
 import Alert from "./UI/Alert";
 import { formatPrice } from "./Functions/formatPrice";
 import { createSlug } from "./Functions/createSlug";
 import CartModal from "./UI/CartModal";
-import { openAuthModal } from "@redux/slices/authModalSlice"; // Add this import
+import { openAuthModal } from "@redux/slices/authModalSlice";
 
 type Product = {
   id: number;
@@ -29,7 +32,8 @@ interface CardProps {
 
 export const Card: React.FC<CardProps> = ({ product }) => {
   const [deleteProduct] = useDeleteProductMutation();
-  const dispatch = useDispatch(); // Add dispatch
+  const [createPreOrder] = useCreatePreOrderMutation();
+  const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user.currentUser);
   const isAdmin = user?.role === "admin";
   const { handleAddToBasket } = useAddToBasket();
@@ -42,10 +46,10 @@ export const Card: React.FC<CardProps> = ({ product }) => {
   } | null>(null);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isPreOrdered, setIsPreOrdered] = useState(false); // Новый стейт для предзаказа
 
   const formattedPrice = formatPrice(product.price);
 
-  // Only check isInBasket if the user is logged in
   const { isInBasket } = useIsProductInBasket(product.id);
 
   const handleDeleteProduct = async () => {
@@ -58,12 +62,32 @@ export const Card: React.FC<CardProps> = ({ product }) => {
     }
   };
 
+  const handlePreOrder = async () => {
+    if (!user) {
+      dispatch(openAuthModal());
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await createPreOrder(product.id).unwrap();
+      setIsPreOrdered(true); // Устанавливаем статус предзаказа
+      setAlert({ message: "Предзаказ успешно оформлен!", type: "success" });
+    } catch (error) {
+      setAlert({
+        message: "Не удалось оформить предзаказ. Попробуйте позже.",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleButtonClick = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation();
 
-    // If user is not logged in, show auth modal
     if (!user) {
       dispatch(openAuthModal());
       return;
@@ -144,7 +168,14 @@ export const Card: React.FC<CardProps> = ({ product }) => {
                 />
               </>
             ) : product.stock === 0 ? (
-              <Button label="Товар закончился" variant="outlined" disabled />
+              <Button
+                label={
+                  isPreOrdered ? "Предзаказ оформлен" : "Сделать предзаказ"
+                }
+                onClick={!isPreOrdered ? handlePreOrder : undefined}
+                variant="outlined"
+                disabled={isPreOrdered || isLoading}
+              />
             ) : (
               <Button
                 label={
