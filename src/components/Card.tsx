@@ -35,8 +35,11 @@ interface CardProps {
 export const Card: React.FC<CardProps> = ({ product }) => {
   const [deleteProduct] = useDeleteProductMutation();
   const [createPreOrder] = useCreatePreOrderMutation();
-  const { data: preOrders, isLoading: isLoadingPreOrders } =
-    useGetPreOrdersQuery({});
+  const {
+    data: preOrders,
+    isLoading: isLoadingPreOrders,
+    refetch,
+  } = useGetPreOrdersQuery({});
 
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user.currentUser);
@@ -141,6 +144,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
       });
     } finally {
       setIsLoading(false);
+      refetch();
     }
   };
 
@@ -189,7 +193,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
       }
       return (
         <Button
-          label="Прездаказать"
+          label="Предзаказ"
           onClick={openPreOrderModal}
           variant="filled"
           disabled={isLoading || isLoadingPreOrders}
