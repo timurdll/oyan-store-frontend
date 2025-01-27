@@ -62,11 +62,16 @@ export const productApi = baseApi.injectEndpoints({
       providesTags: (slug) => [{ type: "Products", id: `SLUG_${slug}` }],
     }),
     createPreOrder: builder.mutation({
-      query: (productId) => ({
+      query: ({ productId, phoneNumber }) => ({
         url: `/products/${productId}/pre-order`,
         method: "POST",
+        body: { phoneNumber },
       }),
-      invalidatesTags: [{ type: "Products", id: "LIST" }], // Обновляет список продуктов, если нужно
+      invalidatesTags: [{ type: "Products", id: "LIST" }],
+    }),
+    getPreOrders: builder.query({
+      query: () => "/products/pre-orders", // Updated to match new endpoint
+      providesTags: [{ type: "Products", id: "PRE_ORDERS" }],
     }),
   }),
 });
@@ -81,4 +86,5 @@ export const {
   useUpdateProductMutation,
   useUpdateStockMutation,
   useCreatePreOrderMutation,
+  useGetPreOrdersQuery, // Хук для получения предварительных заказов
 } = productApi;

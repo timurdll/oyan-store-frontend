@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "./UI/Button";
@@ -8,6 +8,7 @@ import useIsProductInBasket from "./Hooks/UseIsInBasket";
 import {
   useDeleteProductMutation,
   useCreatePreOrderMutation,
+  useGetPreOrdersQuery,
 } from "@redux/services";
 import useAddToBasket from "./Hooks/UseAddToBasket";
 import Alert from "./UI/Alert";
@@ -15,6 +16,7 @@ import { formatPrice } from "./Functions/formatPrice";
 import { createSlug } from "./Functions/createSlug";
 import CartModal from "./UI/CartModal";
 import { openAuthModal } from "@redux/slices/authModalSlice";
+import Modal from "./UI/Modal";
 
 type Product = {
   id: number;
@@ -33,6 +35,9 @@ interface CardProps {
 export const Card: React.FC<CardProps> = ({ product }) => {
   const [deleteProduct] = useDeleteProductMutation();
   const [createPreOrder] = useCreatePreOrderMutation();
+  const { data: preOrders, isLoading: isLoadingPreOrders } =
+    useGetPreOrdersQuery({});
+
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user.currentUser);
   const isAdmin = user?.role === "admin";
@@ -46,11 +51,16 @@ export const Card: React.FC<CardProps> = ({ product }) => {
   } | null>(null);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isPreOrdered, setIsPreOrdered] = useState(false); // Новый стейт для предзаказа
-
+  const [isPreOrderModalOpen, setIsPreOrderModalOpen] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
   const formattedPrice = formatPrice(product.price);
 
   const { isInBasket } = useIsProductInBasket(product.id);
+
+  const hasPreOrder = useMemo(() => {
+    if (!preOrders || !Array.isArray(preOrders)) return false;
+    return preOrders.some((order) => order.productId === product.id);
+  }, [preOrders, product.id]);
 
   const handleDeleteProduct = async () => {
     if (window.confirm("Are you sure you want to delete this product?")) {
@@ -59,27 +69,6 @@ export const Card: React.FC<CardProps> = ({ product }) => {
       } catch (error) {
         console.error("Failed to delete product:", error);
       }
-    }
-  };
-
-  const handlePreOrder = async () => {
-    if (!user) {
-      dispatch(openAuthModal());
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      await createPreOrder(product.id).unwrap();
-      setIsPreOrdered(true); // Устанавливаем статус предзаказа
-      setAlert({ message: "Предзаказ успешно оформлен!", type: "success" });
-    } catch (error) {
-      setAlert({
-        message: "Не удалось оформить предзаказ. Попробуйте позже.",
-        type: "error",
-      });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -125,6 +114,107 @@ export const Card: React.FC<CardProps> = ({ product }) => {
     navigate("/basket");
   };
 
+  const handlePreOrderSubmit = async () => {
+    const cleanedPhoneNumber = phoneNumber.replace(/\D/g, "");
+    if (cleanedPhoneNumber.length < 10) {
+      setAlert({
+        message: "Пожалуйста, введите корректный номер телефона",
+        type: "error",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await createPreOrder({
+        productId: product.id,
+        phoneNumber: cleanedPhoneNumber,
+      }).unwrap();
+
+      setIsPreOrderModalOpen(false);
+      setAlert({ message: "Предзаказ успешно оформлен!", type: "success" });
+      setPhoneNumber("");
+    } catch (error) {
+      setAlert({
+        message: "Не удалось оформить предзаказ. Попробуйте позже.",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const openPreOrderModal = () => {
+    if (!user) {
+      dispatch(openAuthModal());
+      return;
+    }
+    if (hasPreOrder) {
+      setAlert({
+        message: "Вы уже оформили предзаказ на этот товар",
+        type: "error",
+      });
+      return;
+    }
+    setIsPreOrderModalOpen(true);
+  };
+
+  const renderActionButton = () => {
+    if (isAdmin) {
+      return (
+        <>
+          <Button
+            label="Редактировать"
+            onClick={() => navigate(`/admin/edit/${product.id}`)}
+            variant="filled"
+          />
+          <Button
+            label="Удалить"
+            onClick={handleDeleteProduct}
+            variant="outlined"
+          />
+        </>
+      );
+    }
+
+    if (product.stock === 0) {
+      if (hasPreOrder) {
+        return (
+          <Button
+            label="Предзаказ оформлен"
+            variant="outlined"
+            disabled={true}
+          />
+        );
+      }
+      return (
+        <Button
+          label="Прездаказать"
+          onClick={openPreOrderModal}
+          variant="filled"
+          disabled={isLoading || isLoadingPreOrders}
+        />
+      );
+    }
+
+    return (
+      <Button
+        label={
+          isLoading ? (
+            <CircularProgress size={20} color="inherit" />
+          ) : isInBasket ? (
+            "Перейти в корзину"
+          ) : (
+            "Купить"
+          )
+        }
+        onClick={(event) => handleButtonClick(event)}
+        variant="filled"
+        disabled={isLoading}
+      />
+    );
+  };
+
   return (
     <>
       <div className={styles.card}>
@@ -153,48 +243,49 @@ export const Card: React.FC<CardProps> = ({ product }) => {
               <p className={styles.rating}>Оценки: {product.rating} ⭐</p>
             )}
           </div>
-          <div className={styles.buttons}>
-            {isAdmin ? (
-              <>
-                <Button
-                  label="Редактировать"
-                  onClick={() => navigate(`/admin/edit/${product.id}`)}
-                  variant="filled"
-                />
-                <Button
-                  label="Удалить"
-                  onClick={handleDeleteProduct}
-                  variant="outlined"
-                />
-              </>
-            ) : product.stock === 0 ? (
-              <Button
-                label={
-                  isPreOrdered ? "Предзаказ оформлен" : "Сделать предзаказ"
-                }
-                onClick={!isPreOrdered ? handlePreOrder : undefined}
-                variant="outlined"
-                disabled={isPreOrdered || isLoading}
-              />
-            ) : (
-              <Button
-                label={
-                  isLoading ? (
-                    <CircularProgress size={20} color="inherit" />
-                  ) : isInBasket ? (
-                    "Перейти в корзину"
-                  ) : (
-                    "Купить"
-                  )
-                }
-                onClick={(event) => handleButtonClick(event)}
-                variant="filled"
-                disabled={isLoading}
-              />
-            )}
-          </div>
+          <div className={styles.buttons}>{renderActionButton()}</div>
         </div>
       </div>
+
+      <Modal
+        isOpen={isPreOrderModalOpen}
+        onClose={() => setIsPreOrderModalOpen(false)}
+        title="Оформление предзаказа"
+      >
+        <div className={styles.preOrderModalContent}>
+          <p>
+            Введите номер телефона для предзаказа <br /> мы уведомим вас когда
+            товар будет в наличии
+          </p>
+          <input
+            type="tel"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            placeholder="+7 (___) ___-__-__"
+            className={styles.phoneInput}
+          />
+          <div className={styles.modalButtons}>
+            <Button
+              label="Отмена"
+              onClick={() => setIsPreOrderModalOpen(false)}
+              variant="outlined"
+            />
+            <Button
+              label={
+                isLoading ? (
+                  <CircularProgress size={20} color="inherit" />
+                ) : (
+                  "Подтвердить"
+                )
+              }
+              onClick={handlePreOrderSubmit}
+              variant="filled"
+              disabled={isLoading}
+            />
+          </div>
+        </div>
+      </Modal>
+
       <CartModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
