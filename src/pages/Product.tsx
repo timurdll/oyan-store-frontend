@@ -227,8 +227,8 @@ const ProductPage: React.FC = () => {
                     rel="noopener noreferrer"
                     className={styles.marketplaceIcon}
                   >
-                    <img src={halyqIcon} alt="Halk Market" />
-                    <span>Halyq</span>
+                    <img src={halyqIcon} alt="Halyk Market" />
+                    <span>Halyk</span>
                   </a>
                 )}
                 {product.satuLink && (
