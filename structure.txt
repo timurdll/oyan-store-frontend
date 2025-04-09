@@ -1,0 +1,225 @@
+.
+├── index.html
+├── package.json
+├── package-lock.json
+├── public
+│   ├── favicon.png
+│   └── locales
+│       ├── en
+│       │   └── translation.json
+│       ├── kk
+│       │   └── translation.json
+│       └── ru
+│           └── translation.json
+├── pwa-assets.config.ts
+├── README.md
+├── src
+│   ├── App.tsx
+│   ├── assets
+│   │   ├── fonts
+│   │   │   ├── Gilroy-Black.ttf
+│   │   │   ├── Gilroy-Bold.ttf
+│   │   │   ├── Gilroy-Extrabold.ttf
+│   │   │   ├── Gilroy-Light.ttf
+│   │   │   ├── Gilroy-Medium.ttf
+│   │   │   ├── Gilroy-Regular.ttf
+│   │   │   └── Gilroy-Semibold.ttf
+│   │   └── images
+│   │       ├── about-us.svg
+│   │       ├── arrow.svg
+│   │       ├── auth-hero.svg
+│   │       ├── basket.svg
+│   │       ├── box.svg
+│   │       ├── bucket.svg
+│   │       ├── burger.svg
+│   │       ├── cart.svg
+│   │       ├── close.svg
+│   │       ├── contact-us.svg
+│   │       ├── file.svg
+│   │       ├── google.svg
+│   │       ├── instagram.svg
+│   │       ├── ktab.png
+│   │       ├── like.svg
+│   │       ├── loader-logo.svg
+│   │       ├── location.svg
+│   │       ├── logo-letter.svg
+│   │       ├── logo-letter-white.svg
+│   │       ├── logo.svg
+│   │       ├── lucide_user-round.svg
+│   │       ├── mingcute_search-line.svg
+│   │       ├── minus.svg
+│   │       ├── order.svg
+│   │       ├── oyanlogo.svg
+│   │       ├── phone.svg
+│   │       ├── plus.svg
+│   │       ├── products.svg
+│   │       ├── rent.svg
+│   │       ├── schedule.svg
+│   │       ├── services.svg
+│   │       ├── sliderArrow.svg
+│   │       ├── solar_box-outline.svg
+│   │       ├── solar_cart-5-linear.svg
+│   │       ├── solar_star-outline.svg
+│   │       ├── star.svg
+│   │       ├── telegram.svg
+│   │       ├── tumbler.svg
+│   │       ├── user.svg
+│   │       ├── whatsapp.svg
+│   │       ├── x14.png
+│   │       └── x15.png
+│   ├── components
+│   │   ├── AdminPanel
+│   │   │   ├── AdminOrders.tsx
+│   │   │   ├── CreatableFieldSelector.tsx
+│   │   │   ├── ProductAddForm.tsx
+│   │   │   ├── ProductEditForm.tsx
+│   │   │   ├── ProductFields.tsx
+│   │   │   ├── ProductInfoFields.tsx
+│   │   │   ├── ProductSchema.tsx
+│   │   │   ├── ProductTypeSelector.tsx
+│   │   │   └── StockManagment.tsx
+│   │   ├── AlertComponent.tsx
+│   │   ├── Card.tsx
+│   │   ├── Checkout
+│   │   │   ├── StepAddress.tsx
+│   │   │   ├── StepPayment.tsx
+│   │   │   └── StepUserData.tsx
+│   │   ├── Footer.tsx
+│   │   ├── Functions
+│   │   │   ├── createSlug.ts
+│   │   │   ├── formatPrice.ts
+│   │   │   ├── phoneUtils.ts
+│   │   │   └── smoothScroll.ts
+│   │   ├── Header.tsx
+│   │   ├── Hooks
+│   │   │   ├── UseAddToBasket.tsx
+│   │   │   ├── UseIsInBasket.tsx
+│   │   │   └── UseIsMobile.tsx
+│   │   ├── MobileMenu.tsx
+│   │   ├── NavBar.tsx
+│   │   ├── OrderSuccessModal.tsx
+│   │   ├── Products.tsx
+│   │   ├── UI
+│   │   │   ├── AdditionalImages.tsx
+│   │   │   ├── Alert.tsx
+│   │   │   ├── AnimatedDescription.tsx
+│   │   │   ├── AnimatedHeader.tsx
+│   │   │   ├── AvatarUploader.tsx
+│   │   │   ├── BurgerMenu.tsx
+│   │   │   ├── Button.tsx
+│   │   │   ├── CartModal.tsx
+│   │   │   ├── CharacteristicsList.tsx
+│   │   │   ├── Counter.tsx
+│   │   │   ├── DropzoneField.tsx
+│   │   │   ├── FeatureCard.tsx
+│   │   │   ├── ImageModal.tsx
+│   │   │   ├── LanguageSelector.tsx
+│   │   │   ├── Loader.tsx
+│   │   │   ├── Modal.tsx
+│   │   │   ├── NotificationsMenu.tsx
+│   │   │   ├── PreorderModal.tsx
+│   │   │   ├── ProductCharacteristic.tsx
+│   │   │   ├── ProductDescription.tsx
+│   │   │   ├── ProductInfo.tsx
+│   │   │   ├── ProfileForm.tsx
+│   │   │   ├── Receipt.tsx
+│   │   │   ├── SearchBar.tsx
+│   │   │   ├── SkeletonCard.tsx
+│   │   │   ├── SlickSlider.tsx
+│   │   │   └── StatCard.tsx
+│   │   └── UserMenu.tsx
+│   ├── i18n.ts
+│   ├── main.tsx
+│   ├── pages
+│   │   ├── AboutUs.tsx
+│   │   ├── AddProduct.tsx
+│   │   ├── AdminPanel.tsx
+│   │   ├── Auth.tsx
+│   │   ├── Basket.tsx
+│   │   ├── Checkout.tsx
+│   │   ├── EditProduct.tsx
+│   │   ├── Home.tsx
+│   │   ├── Orders.tsx
+│   │   ├── OrderSuccessPage.tsx
+│   │   ├── Product.tsx
+│   │   └── Profile.tsx
+│   ├── redux
+│   │   ├── hooks.ts
+│   │   ├── middleware
+│   │   │   └── authMiddleware.ts
+│   │   ├── services
+│   │   │   ├── authApi.ts
+│   │   │   ├── baseApi.ts
+│   │   │   ├── basketApi.ts
+│   │   │   ├── index.ts
+│   │   │   ├── notificationsApi.ts
+│   │   │   ├── ordersApi.ts
+│   │   │   ├── productApi.ts
+│   │   │   ├── typeApi.ts
+│   │   │   └── userApi.ts
+│   │   ├── slices
+│   │   │   ├── authModalSlice.ts
+│   │   │   ├── themeSlice.ts
+│   │   │   └── userSlice.ts
+│   │   └── store.ts
+│   ├── routes
+│   │   ├── AppRouter.tsx
+│   │   ├── routes.ts
+│   │   └── ScrollToTopWrapper.tsx
+│   ├── socket.ts
+│   ├── styles
+│   │   ├── about-us-page.module.scss
+│   │   ├── additional-images.module.scss
+│   │   ├── admin-panel.module.scss
+│   │   ├── alert.module.scss
+│   │   ├── auth.module.scss
+│   │   ├── avatar-uploader.module.scss
+│   │   ├── banner.module.scss
+│   │   ├── basket-page.module.scss
+│   │   ├── burger-menu.module.scss
+│   │   ├── button.module.scss
+│   │   ├── card.module.scss
+│   │   ├── cart-modal.module.scss
+│   │   ├── characteristics-field-array.module.scss
+│   │   ├── checkout-page.module.scss
+│   │   ├── counter.module.scss
+│   │   ├── customArrows.css
+│   │   ├── dropzone.module.scss
+│   │   ├── fade.module.scss
+│   │   ├── footer.module.scss
+│   │   ├── header.module.scss
+│   │   ├── image-modal.module.scss
+│   │   ├── index.scss
+│   │   ├── input.module.scss
+│   │   ├── loader.module.scss
+│   │   ├── mobile-menu.module.scss
+│   │   ├── modal.module.scss
+│   │   ├── navbar.module.scss
+│   │   ├── notifications.module.scss
+│   │   ├── orders-page.module.scss
+│   │   ├── order-success.module.scss
+│   │   ├── order-success-page.module.scss
+│   │   ├── preorder-modal.module.scss
+│   │   ├── product-add-form.module.scss
+│   │   ├── product-edit-form.module.scss
+│   │   ├── product-info.module.scss
+│   │   ├── product-page.module.scss
+│   │   ├── products.module.scss
+│   │   ├── profile-form.module.scss
+│   │   ├── profile.module.scss
+│   │   ├── receipt.module.scss
+│   │   ├── searchbar.module.scss
+│   │   ├── steps.module.scss
+│   │   ├── stockManagement.module.scss
+│   │   ├── type-selector.module.scss
+│   │   ├── user-menu.module.scss
+│   │   └── _variables.scss
+│   ├── types
+│   │   └── types.ts
+│   └── vite-env.d.ts
+├── structure.txt
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
+
+24 directories, 199 files

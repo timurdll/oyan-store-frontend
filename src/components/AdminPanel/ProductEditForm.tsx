@@ -35,6 +35,10 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
         description: Yup.string().required("Описание обязательно"),
       })
     ),
+    // Marketplace ссылки не обязательны, но можно добавить проверку URL если нужно
+    halyqLink: Yup.string(),
+    kaspiLink: Yup.string(),
+    satuLink: Yup.string(),
   });
 
   const initialCharacteristics = product.productCharacteristics.map((char) => ({
@@ -55,6 +59,10 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
         characteristics: initialCharacteristics,
         cover_image: null,
         images: [],
+        // Новые поля для маркетплейс ссылок
+        halyqLink: product.halyqLink || "",
+        kaspiLink: product.kaspiLink || "",
+        satuLink: product.satuLink || "",
       }}
       validationSchema={validationSchema}
       onSubmit={async (values) => {
@@ -76,6 +84,17 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
             char.description
           );
         });
+
+        // Добавляем новые поля, если они заполнены
+        if (values.halyqLink) {
+          formData.append("halyqLink", values.halyqLink);
+        }
+        if (values.kaspiLink) {
+          formData.append("kaspiLink", values.kaspiLink);
+        }
+        if (values.satuLink) {
+          formData.append("satuLink", values.satuLink);
+        }
 
         if (values.cover_image) {
           formData.append("cover_image", values.cover_image);
@@ -129,6 +148,37 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
             <Field name="productInfo.description" as="textarea" />
             <ErrorMessage
               name="productInfo.description"
+              component="div"
+              className={styles.errorMessage}
+            />
+          </div>
+
+          {/* Новые поля для ссылок на маркетплейсы */}
+          <div className={styles.field}>
+            <label htmlFor="halyqLink">Ссылка на Халык</label>
+            <Field name="halyqLink" type="text" placeholder="https://..." />
+            <ErrorMessage
+              name="halyqLink"
+              component="div"
+              className={styles.errorMessage}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="kaspiLink">Ссылка на Каспи</label>
+            <Field name="kaspiLink" type="text" placeholder="https://..." />
+            <ErrorMessage
+              name="kaspiLink"
+              component="div"
+              className={styles.errorMessage}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="satuLink">Ссылка на Сату</label>
+            <Field name="satuLink" type="text" placeholder="https://..." />
+            <ErrorMessage
+              name="satuLink"
               component="div"
               className={styles.errorMessage}
             />

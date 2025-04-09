@@ -40,6 +40,11 @@ export interface Product {
   ratings: Rating[];
   favorites: Favorite[];
   productCharacteristics: ProductCharacteristic[];
+
+  // Новые поля для ссылок на маркетплейсы
+  halyqLink?: string;
+  kaspiLink?: string;
+  satuLink?: string;
 }
 
 export interface ProductInfo {

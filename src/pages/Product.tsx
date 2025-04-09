@@ -1,4 +1,3 @@
-// ProductPage.tsx
 import { useFetchProductBySlugQuery } from "@redux/services";
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -13,8 +12,13 @@ import { formatPrice } from "@components/Functions/formatPrice";
 import arrow from "@assets/images/arrow.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { openAuthModal } from "@redux/slices/authModalSlice";
-import AdditionalImages from "@components/UI/AdditionalImages"; // Import the new component
+import AdditionalImages from "@components/UI/AdditionalImages";
 import { Skeleton } from "@mui/material";
+
+// Импорт иконок для маркетплейсов
+import kaspiIcon from "@assets/images/kaspiLink.svg";
+import halyqIcon from "@assets/images/halyqLink.svg";
+import satuIcon from "@assets/images/satuLink.svg";
 
 const ProductPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -29,7 +33,7 @@ const ProductPage: React.FC = () => {
     message: string;
     type: "success" | "error";
   } | null>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0); // Current image index
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { isInBasket } = useIsProductInBasket(
@@ -131,7 +135,6 @@ const ProductPage: React.FC = () => {
 
   const handleButtonClick = async () => {
     if (!user) {
-      // If the user is not logged in, open the auth modal
       dispatch(openAuthModal());
       return;
     }
@@ -167,7 +170,7 @@ const ProductPage: React.FC = () => {
           className={styles.image}
           src={`${import.meta.env.VITE_API_URL}${product.cover_image}`}
           alt={product.name}
-          onClick={() => openModal(0)} // Open modal on click
+          onClick={() => openModal(0)}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
@@ -177,34 +180,73 @@ const ProductPage: React.FC = () => {
           <span className={styles.price}>₸ {formatPrice(product.price)}</span>
           <div className={styles.buttons}>
             {product.stock === 0 ? (
-              <Button
-                label="Товар закончился"
-                variant="outlined"
-                disabled // Disable button if stock is 0
-              />
+              <Button label="Товар закончился" variant="outlined" disabled />
             ) : (
-              <>
-                <Button
-                  label={
-                    isLoadingBasket
-                      ? "Добавляется..."
-                      : isInBasket
-                      ? "Перейти в корзину"
-                      : "Добавить в корзину"
-                  }
-                  onClick={handleButtonClick}
-                  variant={isInBasket ? "outlined" : "filled"}
-                />
-                {/* <Button
-                  label={"Купить в один клик"}
-                  onClick={handleButtonClick}
-                  variant={"filled"}
-                /> */}
-              </>
+              <Button
+                label={
+                  isLoadingBasket
+                    ? "Добавляется..."
+                    : isInBasket
+                    ? "Перейти в корзину"
+                    : "Добавить в корзину"
+                }
+                onClick={handleButtonClick}
+                variant={isInBasket ? "outlined" : "filled"}
+              />
             )}
           </div>
 
-          {/* Use the new AdditionalImages component */}
+          {/* Блок "Купить на маркетплейсах" */}
+          {(product.halyqLink || product.kaspiLink || product.satuLink) && (
+            <motion.div
+              className={styles.marketplaceSection}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className={styles.marketplaceTitle}>
+                Купить на маркетплейсах:
+              </div>
+              <div className={styles.marketplaceIcons}>
+                {product.kaspiLink && (
+                  <a
+                    href={product.kaspiLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.marketplaceIcon}
+                  >
+                    <img src={kaspiIcon} alt="Kaspi" />
+                    <span>Kaspi</span>
+                  </a>
+                )}
+                {product.halyqLink && (
+                  <a
+                    href={product.halyqLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.marketplaceIcon}
+                  >
+                    <img src={halyqIcon} alt="Halk Market" />
+                    <span>Halyq</span>
+                  </a>
+                )}
+                {product.satuLink && (
+                  <a
+                    href={product.satuLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.marketplaceIcon}
+                  >
+                    <img src={satuIcon} alt="Satu.kz" />
+                    <span>Satu.kz</span>
+                  </a>
+                )}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Компонент для дополнительных изображений */}
           <AdditionalImages
             images={product.images}
             currentImageIndex={currentImageIndex}
@@ -227,14 +269,6 @@ const ProductPage: React.FC = () => {
         >
           Характеристики
         </button>
-        {/* <button
-          className={`${styles.sectionButton} ${
-            activeSection === "reviews" ? styles.active : ""
-          }`}
-          onClick={() => setActiveSection("reviews")}
-        >
-          Отзывы
-        </button> */}
         <button
           className={`${styles.sectionButton} ${
             activeSection === "description" ? styles.active : ""
@@ -292,17 +326,6 @@ const ProductPage: React.FC = () => {
               )}
             </>
           )}
-          {/* {activeSection === "reviews" && (
-            <motion.div
-              key="reviews"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.5 }}
-            >
-              <p>Здесь будут отображаться отзывы о продукте.</p>
-            </motion.div>
-          )} */}
           {activeSection === "description" && (
             <motion.div
               className={styles.description}

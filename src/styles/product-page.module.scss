@@ -77,9 +77,10 @@
 
       .price {
         font-family: "Gilroy-Black";
-        background: linear-gradient(110deg, #1869ff 56%, #0e3f99 100%);
-        -webkit-background-clip: text;
-        color: transparent;
+        // background: linear-gradient(110deg, #1869ff 56%, #0e3f99 100%);
+        color: #333;
+        // -webkit-background-clip: text;
+        // color: transparent;
 
         @media (max-width: 768px) {
           font-size: 20px; /* Уменьшаем шрифт на мобильных */
@@ -122,6 +123,50 @@
               height: 20px; /* Уменьшаем размер кнопок */
             }
           }
+        }
+      }
+      // Блок для маркетплейсов
+      .marketplaceSection {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+      }
+
+      .marketplaceTitle {
+        font-size: 18px;
+        font-family: "Gilroy-Bold";
+        text-align: center;
+        margin-bottom: 12px;
+        color: #333;
+      }
+
+      .marketplaceIcons {
+        display: flex;
+        justify-content: space-around;
+        align-items: start;
+        gap: 48px;
+        flex-wrap: wrap;
+      }
+
+      .marketplaceIcon {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: #333;
+        transition: transform 0.3s ease;
+
+        img {
+          width: 48px;
+          height: 48px;
+          object-fit: contain;
+          margin-bottom: 6px;
+        }
+
+        span {
+          font-size: 14px;
+          font-family: "Gilroy-Regular";
         }
       }
     }

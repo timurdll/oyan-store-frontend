@@ -48,16 +48,26 @@ export const Card: React.FC<CardProps> = ({ product }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Alert state
   const [alert, setAlert] = useState<{
     message: string;
     type: "success" | "error";
   } | null>(null);
 
+  // Loading state
   const [isLoading, setIsLoading] = useState(false);
+
+  // Preorder modal state
   const [isPreOrderModalOpen, setIsPreOrderModalOpen] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
-  const formattedPrice = formatPrice(product.price);
 
+  // Quick purchase modal state для незарегистрированных пользователей
+  const [isQuickPurchaseModalOpen, setIsQuickPurchaseModalOpen] =
+    useState(false);
+  const [quickPurchaseName, setQuickPurchaseName] = useState("");
+  const [quickPurchasePhone, setQuickPurchasePhone] = useState("");
+
+  const formattedPrice = formatPrice(product.price);
   const { isInBasket } = useIsProductInBasket(product.id);
 
   const hasPreOrder = useMemo(() => {
@@ -81,7 +91,8 @@ export const Card: React.FC<CardProps> = ({ product }) => {
     event.stopPropagation();
 
     if (!user) {
-      dispatch(openAuthModal());
+      // Если пользователь не авторизован, открываем модалку для быстрой покупки
+      setIsQuickPurchaseModalOpen(true);
       return;
     }
 
@@ -108,7 +119,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
 
   const handleRedirect = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    let slug = createSlug(product.name);
+    const slug = createSlug(product.name);
     navigate(`/product/${slug}`);
   };
 
@@ -161,6 +172,40 @@ export const Card: React.FC<CardProps> = ({ product }) => {
       return;
     }
     setIsPreOrderModalOpen(true);
+  };
+
+  const handleQuickPurchaseSubmit = async () => {
+    const cleanedPhoneNumber = quickPurchasePhone.replace(/\D/g, "");
+    if (quickPurchaseName.trim() === "" || cleanedPhoneNumber.length < 10) {
+      setAlert({
+        message: "Пожалуйста, заполните все поля корректно",
+        type: "error",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      // Здесь необходимо вызвать API для быстрой покупки,
+      // например: await createQuickPurchase({ productId: product.id, name: quickPurchaseName, phone: cleanedPhoneNumber }).unwrap();
+      // Для примера — задержка:
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      setIsQuickPurchaseModalOpen(false);
+      setAlert({
+        message: "Заявка отправлена и будет обработана в ближайшее время",
+        type: "success",
+      });
+      setQuickPurchaseName("");
+      setQuickPurchasePhone("");
+    } catch (error) {
+      setAlert({
+        message: "Ошибка отправки заявки. Попробуйте позже.",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const renderActionButton = () => {
@@ -258,7 +303,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
       >
         <div className={styles.preOrderModalContent}>
           <p>
-            Введите номер телефона для предзаказа <br /> мы уведомим вас когда
+            Введите номер телефона для предзаказа <br /> мы уведомим вас, когда
             товар будет в наличии
           </p>
           <input
@@ -283,6 +328,49 @@ export const Card: React.FC<CardProps> = ({ product }) => {
                 )
               }
               onClick={handlePreOrderSubmit}
+              variant="filled"
+              disabled={isLoading}
+            />
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={isQuickPurchaseModalOpen}
+        onClose={() => setIsQuickPurchaseModalOpen(false)}
+        title="Быстрая покупка"
+      >
+        <div className={styles.quickPurchaseContent}>
+          <p>Введите ваше имя и номер телефона для быстрой покупки</p>
+          <input
+            type="text"
+            value={quickPurchaseName}
+            onChange={(e) => setQuickPurchaseName(e.target.value)}
+            placeholder="Ваше имя"
+            className={styles.input}
+          />
+          <input
+            type="tel"
+            value={quickPurchasePhone}
+            onChange={(e) => setQuickPurchasePhone(e.target.value)}
+            placeholder="+7 (___) ___-__-__"
+            className={styles.input}
+          />
+          <div className={styles.modalButtons}>
+            <Button
+              label="Отмена"
+              onClick={() => setIsQuickPurchaseModalOpen(false)}
+              variant="outlined"
+            />
+            <Button
+              label={
+                isLoading ? (
+                  <CircularProgress size={20} color="inherit" />
+                ) : (
+                  "Отправить заявку"
+                )
+              }
+              onClick={handleQuickPurchaseSubmit}
               variant="filled"
               disabled={isLoading}
             />

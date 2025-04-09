@@ -44,7 +44,7 @@
         overflow: hidden; /* Скрываем лишний текст */
         text-overflow: ellipsis; /* Добавляем многоточие */
         display: -webkit-box; /* Поддержка нескольких строк */
-        -webkit-line-clamp: 1; /* Ограничиваем текст двумя строками */
+        -webkit-line-clamp: 1; /* Ограничиваем текст одной строкой */
         -webkit-box-orient: vertical;
       }
 
@@ -95,6 +95,50 @@
   }
 
   .phoneInput {
+    width: 90%;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-family: "Gilroy-Regular";
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s;
+
+    &:focus {
+      border-color: #007bff;
+    }
+
+    &::placeholder {
+      color: #aaa;
+    }
+  }
+
+  .modalButtons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+
+    button {
+      flex: 1;
+    }
+  }
+}
+
+.quickPurchaseContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  p {
+    font-size: 16px;
+    text-align: center;
+    font-family: "Gilroy-Regular";
+    color: #333;
+  }
+
+  .input {
     width: 90%;
     padding: 10px 15px;
     font-size: 14px;

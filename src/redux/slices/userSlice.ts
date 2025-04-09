@@ -19,9 +19,13 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action: PayloadAction<{ user: User; token: string }>) => {
-      state.currentUser = action.payload.user; // Устанавливаем текущего пользователя
-      state.isLoggedIn = true; // Пользователь вошел в систему
-      state.token = action.payload.token; // Сохраняем токен
+      state.currentUser = action.payload.user;
+      state.isLoggedIn = true;
+      state.token = action.payload.token;
+
+      // Сохраняем токен и флаг в localStorage
+      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("hasLoggedIn", "true"); // <-- Вот этот флаг
     },
     logout: (state) => {
       state.currentUser = null; // Очищаем текущего пользователя
