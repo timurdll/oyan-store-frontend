@@ -5,7 +5,8 @@
 
   h1 {
     color: var(--primary-color);
-    font-family: "Gilroy-Bold";
+    // font-family: "Gilroy-Bold";
+    font-weight: 700;
     font-size: 24px;
   }
 
@@ -35,7 +36,8 @@
           border: 1px solid var(--primary-color);
           background: none;
           cursor: pointer;
-          font-family: "Gilroy-Regular", sans-serif;
+          // font-family: "Gilroy-Regular", sans-serif;
+          font-weight: 400;
           font-size: 16px;
           transition: background 0.3s;
           @media (max-width: 768px) {

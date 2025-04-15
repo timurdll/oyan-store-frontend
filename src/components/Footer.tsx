@@ -50,8 +50,8 @@ const Footer: React.FC = () => {
               <p>График работы</p>
             </div>
             <div className={styles.contactItem}>
-              <a href="tel:+77002538363" className={styles.phone}>
-                +7‒700‒253‒83‒63
+              <a href="tel:+77089045254" className={styles.phone}>
+                +7 708 904 5254
               </a>
             </div>
             <div className={styles.contactItem}>

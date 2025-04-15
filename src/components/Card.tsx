@@ -9,6 +9,7 @@ import {
   useDeleteProductMutation,
   useCreatePreOrderMutation,
   useGetPreOrdersQuery,
+  useQuickPurchaseMutation,
 } from "@redux/services";
 import useAddToBasket from "./Hooks/UseAddToBasket";
 import Alert from "./UI/Alert";
@@ -40,6 +41,10 @@ export const Card: React.FC<CardProps> = ({ product }) => {
     isLoading: isLoadingPreOrders,
     refetch,
   } = useGetPreOrdersQuery({});
+
+  // Хук для быстрого заказа
+  const [quickPurchase, { isLoading: isQuickPurchaseLoading }] =
+    useQuickPurchaseMutation();
 
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user.currentUser);
@@ -184,16 +189,16 @@ export const Card: React.FC<CardProps> = ({ product }) => {
       return;
     }
 
-    setIsLoading(true);
     try {
-      // Здесь необходимо вызвать API для быстрой покупки,
-      // например: await createQuickPurchase({ productId: product.id, name: quickPurchaseName, phone: cleanedPhoneNumber }).unwrap();
-      // Для примера — задержка:
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
+      await quickPurchase({
+        fullName: quickPurchaseName,
+        phoneNumber: cleanedPhoneNumber,
+        productId: product.id,
+      }).unwrap();
       setIsQuickPurchaseModalOpen(false);
       setAlert({
-        message: "Заявка отправлена и будет обработана в ближайшее время",
+        message:
+          "Запрос на быструю покупку отправлен и будет обработан в ближайшее время",
         type: "success",
       });
       setQuickPurchaseName("");
@@ -203,8 +208,6 @@ export const Card: React.FC<CardProps> = ({ product }) => {
         message: "Ошибка отправки заявки. Попробуйте позже.",
         type: "error",
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -338,10 +341,9 @@ export const Card: React.FC<CardProps> = ({ product }) => {
       <Modal
         isOpen={isQuickPurchaseModalOpen}
         onClose={() => setIsQuickPurchaseModalOpen(false)}
-        title="Быстрая покупка"
+        title="Покупка в один клик"
       >
         <div className={styles.quickPurchaseContent}>
-          <p>Введите ваше имя и номер телефона для быстрой покупки</p>
           <input
             type="text"
             value={quickPurchaseName}
@@ -353,26 +355,21 @@ export const Card: React.FC<CardProps> = ({ product }) => {
             type="tel"
             value={quickPurchasePhone}
             onChange={(e) => setQuickPurchasePhone(e.target.value)}
-            placeholder="+7 (___) ___-__-__"
+            placeholder="Ваш номер телефона"
             className={styles.input}
           />
           <div className={styles.modalButtons}>
             <Button
-              label="Отмена"
-              onClick={() => setIsQuickPurchaseModalOpen(false)}
-              variant="outlined"
-            />
-            <Button
               label={
-                isLoading ? (
+                isQuickPurchaseLoading ? (
                   <CircularProgress size={20} color="inherit" />
                 ) : (
-                  "Отправить заявку"
+                  "Купить"
                 )
               }
               onClick={handleQuickPurchaseSubmit}
               variant="filled"
-              disabled={isLoading}
+              disabled={isQuickPurchaseLoading}
             />
           </div>
         </div>
@@ -387,3 +384,5 @@ export const Card: React.FC<CardProps> = ({ product }) => {
     </>
   );
 };
+
+export default Card;

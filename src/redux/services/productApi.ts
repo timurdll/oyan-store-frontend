@@ -73,6 +73,17 @@ export const productApi = baseApi.injectEndpoints({
       query: () => "/products/pre-orders", // Updated to match new endpoint
       providesTags: [{ type: "Products", id: "PRE_ORDERS" }],
     }),
+    quickPurchase: builder.mutation({
+      query: (data: {
+        fullName: string;
+        phoneNumber: string;
+        productId: number;
+      }) => ({
+        url: `/orders/quick-purchase`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -87,4 +98,5 @@ export const {
   useUpdateStockMutation,
   useCreatePreOrderMutation,
   useGetPreOrdersQuery, // Хук для получения предварительных заказов
+  useQuickPurchaseMutation,
 } = productApi;

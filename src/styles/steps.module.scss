@@ -10,7 +10,6 @@
   .info {
     display: flex;
     gap: 16px;
-    font-family: "Gilroy-Bold";
     align-items: center;
 
     .number {
@@ -103,7 +102,6 @@
         }
 
         label {
-          font-family: "Gilroy-Bold";
           color: #575757;
           font-size: 20px;
           @media (max-width: 768px) {

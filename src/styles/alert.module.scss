@@ -9,7 +9,8 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   animation: fadeIn 0.3s ease-in-out;
-  font-family: "Gilroy-Bold";
+  // font-family: "Gilroy-Bold";
+  font-weight: 700;
 
   &.success {
     background-color: #4caf50;

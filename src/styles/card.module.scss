@@ -5,7 +5,8 @@
   width: 250px;
   height: fit-content;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: "Gilroy-Regular";
+  // font-family: "Gilroy-Regular";
+  font-weight: 400;
   z-index: 10;
 
   @media (max-width: 768px) {
@@ -38,7 +39,8 @@
       .title {
         font-size: 15px;
         margin: 0;
-        font-family: "Gilroy-Bold";
+        // font-family: "Gilroy-Bold";
+        font-weight: 700;
         cursor: pointer;
         line-height: 1.2; /* Межстрочный интервал */
         overflow: hidden; /* Скрываем лишний текст */
@@ -90,7 +92,8 @@
   p {
     font-size: 16px;
     text-align: center;
-    font-family: "Gilroy-Regular";
+    // font-family: "Gilroy-Regular";
+    font-weight: 400;
     color: #333;
   }
 
@@ -98,7 +101,8 @@
     width: 90%;
     padding: 10px 15px;
     font-size: 14px;
-    font-family: "Gilroy-Regular";
+    // font-family: "Gilroy-Regular";
+    font-weight: 400;
     border: 1px solid #ddd;
     border-radius: 8px;
     outline: none;
@@ -134,7 +138,8 @@
   p {
     font-size: 16px;
     text-align: center;
-    font-family: "Gilroy-Regular";
+    // font-family: "Gilroy-Regular";
+    font-weight: 400;
     color: #333;
   }
 
@@ -142,7 +147,8 @@
     width: 90%;
     padding: 10px 15px;
     font-size: 14px;
-    font-family: "Gilroy-Regular";
+    // font-family: "Gilroy-Regular";
+    font-weight: 400;
     border: 1px solid #ddd;
     border-radius: 8px;
     outline: none;
@@ -171,7 +177,8 @@
 
 .modalTitle {
   font-size: 20px;
-  font-family: "Gilroy-Bold";
+  // font-family: "Gilroy-Bold";
+  font-weight: 700;
   text-align: center;
   color: #444;
   margin-bottom: 20px;

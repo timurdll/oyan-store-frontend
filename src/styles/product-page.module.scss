@@ -13,7 +13,8 @@
     margin-top: 20px;
 
     .sectionButton {
-      font-family: "Gilroy-Medium";
+      // font-family: "Gilroy-Medium";
+      font-weight: 400;
       font-size: 18px;
       background: transparent;
       border: none;
@@ -72,13 +73,13 @@
       }
 
       .name {
-        font-family: "Gilroy-Medium";
+        font-weight: 700;
       }
 
       .price {
-        font-family: "Gilroy-Black";
         // background: linear-gradient(110deg, #1869ff 56%, #0e3f99 100%);
         color: #333;
+        font-weight: bold;
         // -webkit-background-clip: text;
         // color: transparent;
 
@@ -90,7 +91,8 @@
       .buttons {
         display: flex;
         gap: 20px;
-        font-family: "Gilroy-Light";
+        // font-family: "Gilroy-Light";
+        font-weight: 400;
         font-size: 18px;
 
         @media (max-width: 768px) {
@@ -135,7 +137,8 @@
 
       .marketplaceTitle {
         font-size: 18px;
-        font-family: "Gilroy-Bold";
+        // font-family: "Gilroy-Bold";
+        font-weight: 700;
         text-align: center;
         margin-bottom: 12px;
         color: #333;
@@ -166,7 +169,8 @@
 
         span {
           font-size: 14px;
-          font-family: "Gilroy-Regular";
+          // font-family: "Gilroy-Regular";
+          font-weight: 400;
         }
       }
     }
@@ -200,17 +204,19 @@
         padding-top: 18px;
 
         .name {
-          font-family: "Gilroy-Regular";
+          font-weight: 400;
         }
 
         .description {
-          font-family: "Gilroy-Bold";
+          // font-family: "Gilroy-Bold";
+          font-weight: 700;
         }
       }
     }
 
     .description {
-      font-family: "Gilroy-Regular";
+      // font-family: "Gilroy-Regular";
+      font-weight: 400;
     }
   }
 
@@ -248,7 +254,8 @@
     }
 
     span {
-      font-family: "Gilroy-Regular";
+      // font-family: "Gilroy-Regular";
+      font-weight: 400;
       color: #575757;
       font-size: 24px;
 

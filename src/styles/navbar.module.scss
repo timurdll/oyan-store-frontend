@@ -4,11 +4,12 @@
   max-width: 1140px;
   justify-content: start;
   align-items: start;
-  font-family: "Gilroy-Bold";
+  // font-family: "Gilroy-Bold";
+  font-weight: 700;
   margin-top: 24px;
   overflow-x: auto; /* Добавляем горизонтальный скроллинг */
   white-space: nowrap; /* Предотвращаем перенос кнопок на новую строку */
-  margin-right: -19px;
+  // margin-right: -19px;
   /* Скрываем скроллбар, но сохраняем возможность прокрутки */
   scrollbar-width: thin; /* Для Firefox */
   scrollbar-color: transparent transparent; /* Для Firefox */
@@ -23,10 +24,15 @@
     background: transparent; /* Скрывает фон скроллбара */
   }
 
+  @media (max-width: 768px) {
+    // width: 100vw;
+    margin-right: -19px;
+  }
   .categoryButton {
     color: var(--text-color);
     background-color: transparent;
-    font-family: "Gilroy-Regular";
+    // font-family: "Gilroy-Regular";
+    font-weight: 400;
     width: fit-content;
     padding: 9px 12px;
     border-radius: 20px;

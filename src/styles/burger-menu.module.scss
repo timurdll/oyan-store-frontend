@@ -46,7 +46,8 @@
         text-decoration: none;
         color: var(--text-color);
         font-size: 18px;
-        font-family: "Gilroy-Semibold";
+        // font-family: "Gilroy-Semibold";
+        font-weight: 600;
 
         &:hover {
           text-decoration: underline;

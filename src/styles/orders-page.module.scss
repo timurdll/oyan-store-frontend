@@ -1,7 +1,7 @@
 .container {
   padding: 20px;
   h1 {
-    font-family: "Gilroy-Bold";
+    font-weight: bold;
     font-size: 24px;
     @media (max-width: 768px) {
       font-size: 18px;
@@ -71,17 +71,20 @@
             font-size: 18px;
           }
           .productName {
-            font-family: "Gilroy-Regular";
+            // font-family: "Gilroy-Regular";
+            font-weight: 500;
           }
           .productPrice {
-            font-family: "Gilroy-Black";
+            // font-family: "Gilroy-Black";
+            font-weight: 700;
           }
         }
       }
     }
     .totalPrice {
       margin: 20px 30px;
-      font-family: "Gilroy-Bold";
+      // font-family: "Gilroy-Bold";
+      font-weight: 700;
       font-size: 24px;
       color: #575757;
       @media (max-width: 768px) {

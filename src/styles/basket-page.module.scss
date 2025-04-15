@@ -5,7 +5,8 @@
   width: 100%;
 
   h1 {
-    font-family: "Gilroy-Bold";
+    // font-family: "Gilroy-Bold";
+    font-weight: bold;
     font-size: 24px;
   }
 
@@ -57,10 +58,12 @@
               font-size: 20px;
               align-self: center;
               .name {
-                font-family: "Gilroy-Medium";
+                // font-family: "Gilroy-Medium";
+                font-weight: 500;
               }
               .price {
-                font-family: "Gilroy-Black";
+                // font-family: "Gilroy-Black";
+                font-weight: 700;
                 font-size: 24px;
                 font-weight: bold;
                 background: linear-gradient(90deg, #1869ff 56%, #0e3f99 100%);
