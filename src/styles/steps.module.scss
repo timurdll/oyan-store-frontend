@@ -113,7 +113,8 @@
           border: 2px solid #dadada;
           border-radius: 100px;
           padding: 8px 15px;
-          font-family: "Gilroy-Regular";
+          // font-family: "Gilroy-Regular";
+          font-weight: 400;
           @media (max-width: 768px) {
             font-size: 16px; /* Минимальный размер шрифта для предотвращения зума */
           }
@@ -155,7 +156,8 @@
         }
 
         label {
-          font-family: "Gilroy-Bold";
+          // font-family: "Gilroy-Bold";
+          font-weight: 700;
           color: #575757;
           font-size: 20px;
           @media (max-width: 768px) {
@@ -167,7 +169,8 @@
           border: 2px solid #dadada;
           border-radius: 100px;
           padding: 8px 15px;
-          font-family: "Gilroy-Regular";
+          // font-family: "Gilroy-Regular";
+          font-weight: 400;
         }
         .checkboxGroup {
           display: flex;
@@ -179,7 +182,8 @@
           display: flex;
           gap: 10px;
           label {
-            font-family: "Gilroy-Regular";
+            // font-family: "Gilroy-Regular";
+            font-weight: 400;
             font-size: 20px;
             @media (max-width: 768px) {
               font-size: 16px; /* Минимальный размер шрифта для предотвращения зума */

@@ -17,13 +17,33 @@
 │   ├── App.tsx
 │   ├── assets
 │   │   ├── fonts
-│   │   │   ├── Gilroy-Black.ttf
-│   │   │   ├── Gilroy-Bold.ttf
-│   │   │   ├── Gilroy-Extrabold.ttf
-│   │   │   ├── Gilroy-Light.ttf
-│   │   │   ├── Gilroy-Medium.ttf
-│   │   │   ├── Gilroy-Regular.ttf
-│   │   │   └── Gilroy-Semibold.ttf
+│   │   │   ├── Montserrat-BlackItalic.woff2
+│   │   │   ├── Montserrat-Black.ttf
+│   │   │   ├── Montserrat-Black.woff2
+│   │   │   ├── Montserrat-BoldItalic.woff2
+│   │   │   ├── Montserrat-Bold.ttf
+│   │   │   ├── Montserrat-Bold.woff2
+│   │   │   ├── Montserrat-ExtraBoldItalic.woff2
+│   │   │   ├── Montserrat-ExtraBold.ttf
+│   │   │   ├── Montserrat-ExtraBold.woff2
+│   │   │   ├── Montserrat-ExtraLightItalic.woff2
+│   │   │   ├── Montserrat-ExtraLight.woff2
+│   │   │   ├── Montserrat-Italic[wght].woff2
+│   │   │   ├── Montserrat-Italic.woff2
+│   │   │   ├── Montserrat-LightItalic.woff2
+│   │   │   ├── Montserrat-Light.ttf
+│   │   │   ├── Montserrat-Light.woff2
+│   │   │   ├── Montserrat-MediumItalic.woff2
+│   │   │   ├── Montserrat-Medium.ttf
+│   │   │   ├── Montserrat-Medium.woff2
+│   │   │   ├── Montserrat-Regular.ttf
+│   │   │   ├── Montserrat-Regular.woff2
+│   │   │   ├── Montserrat-SemiBoldItalic.woff2
+│   │   │   ├── Montserrat-SemiBold.ttf
+│   │   │   ├── Montserrat-SemiBold.woff2
+│   │   │   ├── Montserrat-ThinItalic.woff2
+│   │   │   ├── Montserrat-Thin.woff2
+│   │   │   └── Montserrat[wght].woff2
 │   │   └── images
 │   │       ├── about-us.svg
 │   │       ├── arrow.svg
@@ -32,12 +52,18 @@
 │   │       ├── box.svg
 │   │       ├── bucket.svg
 │   │       ├── burger.svg
+│   │       ├── call.svg
 │   │       ├── cart.svg
 │   │       ├── close.svg
 │   │       ├── contact-us.svg
 │   │       ├── file.svg
 │   │       ├── google.svg
+│   │       ├── halyk.svg
+│   │       ├── halyqLink.svg
 │   │       ├── instagram.svg
+│   │       ├── kaspiLink.svg
+│   │       ├── kaspi.svg
+│   │       ├── k-tab.png
 │   │       ├── ktab.png
 │   │       ├── like.svg
 │   │       ├── loader-logo.svg
@@ -54,6 +80,8 @@
 │   │       ├── plus.svg
 │   │       ├── products.svg
 │   │       ├── rent.svg
+│   │       ├── satuLink.svg
+│   │       ├── satu.svg
 │   │       ├── schedule.svg
 │   │       ├── services.svg
 │   │       ├── sliderArrow.svg
@@ -65,7 +93,9 @@
 │   │       ├── tumbler.svg
 │   │       ├── user.svg
 │   │       ├── whatsapp.svg
+│   │       ├── x14l.png
 │   │       ├── x14.png
+│   │       ├── x15l.png
 │   │       └── x15.png
 │   ├── components
 │   │   ├── AdminPanel
@@ -105,6 +135,7 @@
 │   │   │   ├── AnimatedDescription.tsx
 │   │   │   ├── AnimatedHeader.tsx
 │   │   │   ├── AvatarUploader.tsx
+│   │   │   ├── BannerSlider.css
 │   │   │   ├── BurgerMenu.tsx
 │   │   │   ├── Button.tsx
 │   │   │   ├── CartModal.tsx
@@ -169,6 +200,7 @@
 │   ├── socket.ts
 │   ├── styles
 │   │   ├── about-us-page.module.scss
+│   │   ├── adaptive-slider.module.scss
 │   │   ├── additional-images.module.scss
 │   │   ├── admin-panel.module.scss
 │   │   ├── alert.module.scss
@@ -222,4 +254,4 @@
 ├── tsconfig.node.json
 └── vite.config.ts
 
-24 directories, 199 files
+24 directories, 231 files

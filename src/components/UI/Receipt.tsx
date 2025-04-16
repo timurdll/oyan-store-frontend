@@ -23,7 +23,7 @@ const Receipt: React.FC<ReceiptProps> = ({
     <div className={styles.container}>
       <span className={styles.total}>
         Сумма к оплате:{" "}
-        <span className={styles.price}>₸ {formatPrice(totalSum)}</span>
+        <span className={styles.price}>{formatPrice(totalSum)} ₸</span>
       </span>
       {basketProducts && basketProducts.length > 0 ? (
         <ul className={styles.checkList}>
@@ -31,7 +31,7 @@ const Receipt: React.FC<ReceiptProps> = ({
             <li key={product.product.name} className={styles.checkItem}>
               <span>{product.product.name}</span>
               <span>
-                ₸ {formatPrice(product.product.price)} x {product.quantity}
+                {formatPrice(product.product.price)} ₸ x {product.quantity}
               </span>
             </li>
           ))}

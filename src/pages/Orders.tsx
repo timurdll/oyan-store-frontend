@@ -89,7 +89,7 @@ const Orders = () => {
                       {product.product.name}
                     </span>
                     <span className={styles.productPrice}>
-                      ₸ {formatPrice(product.product.price)} x{" "}
+                      {formatPrice(product.product.price)} ₸ x{" "}
                       {product.quantity}
                     </span>
                   </div>
@@ -99,7 +99,7 @@ const Orders = () => {
             <div className={styles.totalPrice}>
               Сумма:{" "}
               <span className={styles.value}>
-                ₸ {formatPrice(order.totalPrice)}
+                {formatPrice(order.totalPrice)} ₸
               </span>
             </div>
           </li>

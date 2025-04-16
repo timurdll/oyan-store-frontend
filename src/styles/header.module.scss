@@ -74,6 +74,23 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      .callButton {
+        padding: 8px;
+        background-color: #1869ff;
+        color: #fff;
+        border-radius: 50%;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        font-size: 12px;
+        &:hover {
+          background-color: #0053cc;
+        }
+      }
 
       @media (max-width: 950px) {
         display: none;

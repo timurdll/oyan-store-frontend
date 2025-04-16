@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "./UI/Button";
@@ -18,6 +18,7 @@ import { createSlug } from "./Functions/createSlug";
 import CartModal from "./UI/CartModal";
 import { openAuthModal } from "@redux/slices/authModalSlice";
 import Modal from "./UI/Modal";
+import { formatPhoneNumber } from "@components/Functions/phoneUtils";
 
 type Product = {
   id: number;
@@ -42,7 +43,6 @@ export const Card: React.FC<CardProps> = ({ product }) => {
     refetch,
   } = useGetPreOrdersQuery({});
 
-  // Хук для быстрого заказа
   const [quickPurchase, { isLoading: isQuickPurchaseLoading }] =
     useQuickPurchaseMutation();
 
@@ -66,7 +66,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
   const [isPreOrderModalOpen, setIsPreOrderModalOpen] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  // Quick purchase modal state для незарегистрированных пользователей
+  // Quick purchase modal state
   const [isQuickPurchaseModalOpen, setIsQuickPurchaseModalOpen] =
     useState(false);
   const [quickPurchaseName, setQuickPurchaseName] = useState("");
@@ -133,6 +133,15 @@ export const Card: React.FC<CardProps> = ({ product }) => {
     navigate("/basket");
   };
 
+  // Обработчик изменения номера телефона для предзаказа с форматированием
+  const handlePreOrderPhoneChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target;
+      setPhoneNumber(formatPhoneNumber(value));
+    },
+    []
+  );
+
   const handlePreOrderSubmit = async () => {
     const cleanedPhoneNumber = phoneNumber.replace(/\D/g, "");
     if (cleanedPhoneNumber.length < 10) {
@@ -178,6 +187,15 @@ export const Card: React.FC<CardProps> = ({ product }) => {
     }
     setIsPreOrderModalOpen(true);
   };
+
+  // Обработчик изменения номера телефона для покупки в один клик с форматированием
+  const handleQuickPurchasePhoneChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target;
+      setQuickPurchasePhone(formatPhoneNumber(value));
+    },
+    []
+  );
 
   const handleQuickPurchaseSubmit = async () => {
     const cleanedPhoneNumber = quickPurchasePhone.replace(/\D/g, "");
@@ -289,7 +307,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
               {product.name}
             </h2>
             <p className={styles.price} onClick={handleRedirect}>
-              ₸ {formattedPrice}
+              {formattedPrice} ₸
             </p>
             {product.rating && (
               <p className={styles.rating}>Оценки: {product.rating} ⭐</p>
@@ -312,7 +330,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
           <input
             type="tel"
             value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            onChange={handlePreOrderPhoneChange}
             placeholder="+7 (___) ___-__-__"
             className={styles.phoneInput}
           />
@@ -354,8 +372,8 @@ export const Card: React.FC<CardProps> = ({ product }) => {
           <input
             type="tel"
             value={quickPurchasePhone}
-            onChange={(e) => setQuickPurchasePhone(e.target.value)}
-            placeholder="Ваш номер телефона"
+            onChange={handleQuickPurchasePhoneChange}
+            placeholder="+7 (___) ___-__-__"
             className={styles.input}
           />
           <div className={styles.modalButtons}>

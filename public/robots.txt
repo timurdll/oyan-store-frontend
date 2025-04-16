@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/add-product
+Disallow: /admin/edit
+Disallow: /admin/orders
+Disallow: /admin/stock
+
+Sitemap: https://oyan-store.kz/sitemap.xml

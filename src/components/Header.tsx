@@ -10,6 +10,8 @@ import useIsMobile from "./Hooks/UseIsMobile";
 import styles from "@styles/header.module.scss";
 import logo from "@assets/images/oyanlogo.svg";
 import BurgerMenu from "./UI/BurgerMenu";
+// import { FaPhone } from "react-icons/fa"; // Импорт иконки телефона
+import phoneIcon from "@assets/images/call.svg"; // Импорт иконки телефона
 
 const Header = () => {
   const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn);
@@ -26,7 +28,7 @@ const Header = () => {
   return (
     <motion.header
       className={styles.header}
-      style={{ transform: isVisible ? "translateY(0)" : "translateY(-100%)" }} // Убедитесь, что хедер всегда виден
+      style={{ transform: isVisible ? "translateY(0)" : "translateY(-100%)" }}
     >
       <div className={styles.content}>
         {isMobile ? (
@@ -50,7 +52,7 @@ const Header = () => {
           className={styles.search}
           initial={{ height: 0, opacity: 0 }}
           animate={
-            isVisible || !isMobile // Логика для десктопа
+            isVisible || !isMobile
               ? { height: "auto", opacity: 1 }
               : { height: 0, opacity: 0 }
           }
@@ -69,6 +71,13 @@ const Header = () => {
           </span>
           <div className={styles.divider} />
           <UserMenu />
+          <div className={styles.divider} />
+          {/* Кнопка "Позвонить" с иконкой */}
+          <a href="tel:+77089045254" className={styles.callButton}>
+            {/* <FaPhone style={{ marginRight: "4px" }} /> */}
+            <img src={phoneIcon} />
+            {/* Позвонить */}
+          </a>
         </div>
       </div>
     </motion.header>

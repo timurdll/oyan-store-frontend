@@ -102,7 +102,7 @@ const BasketPage = () => {
                           {product.product.name}
                         </span>
                         <span className={styles.price}>
-                          ₸ {formatPrice(product.product.price)}
+                          {formatPrice(product.product.price)} ₸
                         </span>
                       </div>
                     </div>

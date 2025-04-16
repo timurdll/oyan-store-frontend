@@ -1,6 +1,7 @@
-import { useFetchProductBySlugQuery } from "@redux/services";
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useFetchProductBySlugQuery } from "@redux/services";
 import { ProductCharacteristic } from "types/types";
 import styles from "@styles/product-page.module.scss";
 import Button from "@components/UI/Button";
@@ -10,15 +11,13 @@ import useIsProductInBasket from "@components/Hooks/UseIsInBasket";
 import Alert from "@components/UI/Alert";
 import { formatPrice } from "@components/Functions/formatPrice";
 import arrow from "@assets/images/arrow.svg";
-import { useDispatch, useSelector } from "react-redux";
 import { openAuthModal } from "@redux/slices/authModalSlice";
 import AdditionalImages from "@components/UI/AdditionalImages";
 import { Skeleton } from "@mui/material";
-
-// Импорт иконок для маркетплейсов
-import kaspiIcon from "@assets/images/kaspiLink.svg";
-import halyqIcon from "@assets/images/halyqLink.svg";
-import satuIcon from "@assets/images/satuLink.svg";
+import { Helmet } from "react-helmet";
+import kaspiIcon from "@assets/images/kaspi.svg";
+import halyqIcon from "@assets/images/halyk.svg";
+import satuIcon from "@assets/images/satu.svg";
 
 const ProductPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -39,7 +38,6 @@ const ProductPage: React.FC = () => {
   const { isInBasket } = useIsProductInBasket(
     user && product ? product.id : null
   );
-
   const { isLoading: isLoadingBasket, handleAddToBasket } = useAddToBasket();
 
   if (isLoading) {
@@ -49,7 +47,6 @@ const ProductPage: React.FC = () => {
           <Skeleton
             variant="rectangular"
             width="100%"
-            height="auto"
             sx={{ minHeight: "233px", borderRadius: "30px" }}
           />
           <div className={styles.info}>
@@ -64,30 +61,22 @@ const ProductPage: React.FC = () => {
               />
             </div>
             <div className={styles.images}>
-              <Skeleton
-                variant="rectangular"
-                width={124}
-                height={124}
-                sx={{ borderRadius: "30px" }}
-              />
-              <Skeleton
-                variant="rectangular"
-                width={124}
-                height={124}
-                sx={{ borderRadius: "30px" }}
-              />
-              <Skeleton
-                variant="rectangular"
-                width={124}
-                height={124}
-                sx={{ borderRadius: "30px" }}
-              />
+              {[...Array(3)].map((_, i) => (
+                <Skeleton
+                  key={i}
+                  variant="rectangular"
+                  width={124}
+                  height={124}
+                  sx={{ borderRadius: "30px" }}
+                />
+              ))}
             </div>
           </div>
         </div>
         <div className={styles.sectionButtons}>
-          <Skeleton variant="text" width={120} height={30} />
-          <Skeleton variant="text" width={120} height={30} />
+          {[...Array(2)].map((_, i) => (
+            <Skeleton key={i} variant="text" width={120} height={30} />
+          ))}
         </div>
         <div className={styles.sectionContent}>
           <Skeleton variant="text" width="100%" height={200} />
@@ -162,9 +151,45 @@ const ProductPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
+      <Helmet>
+        <title>{product.name} | Купить в Oyan Store</title>
+        <meta
+          name="description"
+          content={
+            product.productInfo?.description?.slice(0, 150) ||
+            `${product.name} — доступная техника от Oyan Store. Купить на kaspi.kz, Halyk Market и Satu.kz.`
+          }
+        />
+        <link
+          rel="canonical"
+          href={`https://oyan-store.kz/product/${product.slug}`}
+        />
+        <meta
+          property="og:title"
+          content={`${product.name} | Купить в Oyan Store`}
+        />
+        <meta
+          property="og:description"
+          content={
+            product.productInfo?.description?.slice(0, 150) ||
+            `${product.name} — техника от Oyan Store с гарантией и сервисом.`
+          }
+        />
+        <meta
+          property="og:image"
+          content={`${import.meta.env.VITE_API_URL}${product.cover_image}`}
+        />
+        <meta
+          property="og:url"
+          content={`https://oyan-store.kz/product/${product.slug}`}
+        />
+        <meta property="og:type" content="product" />
+      </Helmet>
+
       {alert && (
         <Alert message={alert.message} type={alert.type} onClose={closeAlert} />
       )}
+
       <div className={styles.product}>
         <motion.img
           className={styles.image}
@@ -177,7 +202,7 @@ const ProductPage: React.FC = () => {
         />
         <div className={styles.info}>
           <span className={styles.name}>{product.name}</span>
-          <span className={styles.price}>₸ {formatPrice(product.price)}</span>
+          <span className={styles.price}>{formatPrice(product.price)} ₸</span>
           <div className={styles.buttons}>
             {product.stock === 0 ? (
               <Button label="Товар закончился" variant="outlined" disabled />
@@ -196,7 +221,6 @@ const ProductPage: React.FC = () => {
             )}
           </div>
 
-          {/* Блок "Купить на маркетплейсах" */}
           {(product.halyqLink || product.kaspiLink || product.satuLink) && (
             <motion.div
               className={styles.marketplaceSection}
@@ -214,10 +238,8 @@ const ProductPage: React.FC = () => {
                     href={product.kaspiLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={styles.marketplaceIcon}
                   >
                     <img src={kaspiIcon} alt="Kaspi" />
-                    <span>Kaspi</span>
                   </a>
                 )}
                 {product.halyqLink && (
@@ -225,10 +247,8 @@ const ProductPage: React.FC = () => {
                     href={product.halyqLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={styles.marketplaceIcon}
                   >
                     <img src={halyqIcon} alt="Halyk Market" />
-                    <span>Halyk</span>
                   </a>
                 )}
                 {product.satuLink && (
@@ -236,17 +256,14 @@ const ProductPage: React.FC = () => {
                     href={product.satuLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={styles.marketplaceIcon}
                   >
                     <img src={satuIcon} alt="Satu.kz" />
-                    <span>Satu.kz</span>
                   </a>
                 )}
               </div>
             </motion.div>
           )}
 
-          {/* Компонент для дополнительных изображений */}
           <AdditionalImages
             images={product.images}
             currentImageIndex={currentImageIndex}
@@ -295,7 +312,7 @@ const ProductPage: React.FC = () => {
                   <div className={styles.characteristic} key={char.id}>
                     <span className={styles.name}>
                       {char.characteristic.name}:
-                    </span>{" "}
+                    </span>
                     <span className={styles.description}>
                       {char.description}
                     </span>
@@ -326,6 +343,7 @@ const ProductPage: React.FC = () => {
               )}
             </>
           )}
+
           {activeSection === "description" && (
             <motion.div
               className={styles.description}
