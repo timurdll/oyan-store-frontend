@@ -39,6 +39,7 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
+        globIgnores: ["**/x14l-*.png", "**/x15l-*.png"],
       },
 
       devOptions: {
