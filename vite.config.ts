@@ -4,7 +4,6 @@ import react from "@vitejs/plugin-react";
 import path from "path-browserify";
 import svgr from "vite-plugin-svgr";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   css: {
     preprocessorOptions: {
@@ -18,30 +17,27 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    svgr(), // Плагин для работы с SVG
+    svgr(),
     VitePWA({
       registerType: "prompt",
       injectRegister: false,
-
       pwaAssets: {
         disabled: false,
         config: true,
       },
-
       manifest: {
         name: "oyan-store",
         short_name: "Oyan store",
         description: "oyan-store",
         theme_color: "#ffffff",
       },
-
       workbox: {
-        globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
+        globPatterns: ["**/*.{js,css,html,svg,png,ico,woff2}"],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
         globIgnores: ["**/x14l-*.png", "**/x15l-*.png"],
+        maximumFileSizeToCacheInBytes: 6 * 1024 * 1024, // увеличен лимит до 6MB
       },
-
       devOptions: {
         enabled: true,
         navigateFallback: "index.html",
@@ -50,6 +46,21 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    chunkSizeWarningLimit: 1500, // увеличим лимит предупреждения до 1.5MB
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            return "vendor";
+          }
+          if (id.includes("react") || id.includes("redux")) {
+            return "framework";
+          }
+        },
+      },
+    },
+  },
   server: {
     host: true,
     port: 4000,
