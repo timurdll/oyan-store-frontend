@@ -1,48 +1,106 @@
 .container {
-  position: relative; /* Для позиционирования кнопок прокрутки */
-  overflow: hidden; /* Скрываем все полосы прокрутки */
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+  border-radius: 12px;
+  margin: 10px 0;
 }
 
 .additionalImages {
   display: flex;
-  gap: 33px;
-  overflow-x: auto; /* Горизонтальная прокрутка */
-  padding-bottom: 10px; /* Дополнительное пространство при прокрутке */
-  scroll-snap-type: x mandatory; /* Для улучшенной прокрутки */
-  -webkit-overflow-scrolling: touch; /* Для плавной прокрутки на устройствах iOS */
-  max-width: 600px;
-  padding: 20px 10px;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 8px 4px;
   position: relative;
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+
+  /* Improved scroll aesthetics */
+  &::after {
+    content: "";
+    min-width: 8px; /* Create padding at the end of scroll */
+  }
+
+  /* Hide scrollbar across all browsers */
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+
+  /* Small fade effect on edges to indicate more content */
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 20px;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  &::before {
+    left: 0;
+    // background: linear-gradient(
+    //   to right,
+    //   rgba(255, 255, 255, 0.8),
+    //   rgba(255, 255, 255, 0)
+    // );
+  }
+
+  &::after {
+    right: 0;
+    // background: linear-gradient(
+    //   to left,
+    //   rgba(255, 255, 255, 0.8),
+    //   rgba(255, 255, 255, 0)
+    // );
+  }
 
   @media (max-width: 768px) {
-    justify-content: space-between;
-    padding: 20px 0;
-  }
+    gap: 10px;
+    padding: 8px 0;
 
-  /* Скрыть скроллбар */
-  ::-webkit-scrollbar {
-    display: none;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    display: none;
+    &::before,
+    &::after {
+      display: none; /* Remove gradient on mobile */
+    }
   }
 
   .additionalImage {
     border: 2px solid var(--primary-color);
-    border-radius: 20px;
-    width: 100px;
-    height: 100px;
+    border-radius: 12px;
+    width: 90px;
+    height: 90px;
+    min-width: 90px;
     object-fit: contain;
     cursor: pointer;
-    transition: transform 0.3s ease;
-    padding: 10px;
+    transition: all 0.2s ease;
+    padding: 8px;
+    background-color: #fff;
+    scroll-snap-align: start;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    &.active {
+      border-width: 3px;
+      transform: translateY(-2px);
+    }
 
     @media (max-width: 768px) {
-      width: 70px;
-      height: 70px;
+      width: 65px;
+      height: 65px;
+      min-width: 65px;
+      border-radius: 10px;
+      padding: 6px;
     }
   }
 }
@@ -51,30 +109,80 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--primary-color);
   color: white;
   border: none;
-  padding: 10px;
-  font-size: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 18px;
   cursor: pointer;
   z-index: 10;
-  display: none; /* Скрыть кнопки по умолчанию */
+  display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0.8;
+  transition: all 0.2s ease;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.7);
+    opacity: 1;
+    transform: translateY(-50%) scale(1.05);
+  }
+
+  &:focus {
+    outline: none;
   }
 
   &.left {
-    left: 0;
+    left: 5px;
   }
 
   &.right {
-    right: 0;
+    right: 5px;
+  }
+
+  @media (max-width: 1024px) {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
   }
 }
 
+/* Only show buttons on hover or if content is scrollable */
 .container:hover .scrollButton {
-  display: flex; /* Показать кнопки при ховере на контейнер */
+  display: flex;
+}
+
+.scrollIndicator {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 8px;
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #dadada;
+    transition: all 0.3s ease;
+
+    &.active {
+      background-color: var(--primary-color);
+      width: 12px;
+      border-radius: 3px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 6px;
+
+    .dot {
+      width: 5px;
+      height: 5px;
+
+      &.active {
+        width: 10px;
+      }
+    }
+  }
 }

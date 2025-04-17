@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useFetchProductBySlugQuery } from "@redux/services";
@@ -18,6 +18,9 @@ import { Helmet } from "react-helmet";
 import kaspiIcon from "@assets/images/kaspi.svg";
 import halyqIcon from "@assets/images/halyk.svg";
 import satuIcon from "@assets/images/satu.svg";
+import Modal from "@components/UI/Modal";
+import { useQuickPurchaseMutation } from "@redux/services";
+import { formatPhoneNumber } from "@components/Functions/phoneUtils";
 
 const ProductPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -25,6 +28,8 @@ const ProductPage: React.FC = () => {
   const dispatch = useDispatch();
   const { data: product, error, isLoading } = useFetchProductBySlugQuery(slug);
   const user = useSelector((state: any) => state.user.currentUser);
+  const [quickPurchase, { isLoading: isQuickPurchaseLoading }] =
+    useQuickPurchaseMutation();
 
   const [activeSection, setActiveSection] = useState("characteristics");
   const [showAllCharacteristics, setShowAllCharacteristics] = useState(false);
@@ -39,6 +44,45 @@ const ProductPage: React.FC = () => {
     user && product ? product.id : null
   );
   const { isLoading: isLoadingBasket, handleAddToBasket } = useAddToBasket();
+
+  const [isQuickPurchaseModalOpen, setIsQuickPurchaseModalOpen] =
+    useState(false);
+  const [quickPurchaseName, setQuickPurchaseName] = useState("");
+  const [quickPurchasePhone, setQuickPurchasePhone] = useState("");
+
+  const handleQuickPurchasePhoneChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setQuickPurchasePhone(formatPhoneNumber(e.target.value));
+    },
+    []
+  );
+
+  const handleQuickPurchaseSubmit = async () => {
+    const cleaned = quickPurchasePhone.replace(/\D/g, "");
+    if (!quickPurchaseName.trim() || cleaned.length < 10) {
+      setAlert({
+        message: "Пожалуйста, заполните все поля корректно",
+        type: "error",
+      });
+      return;
+    }
+    try {
+      await quickPurchase({
+        productId: product!.id,
+        phoneNumber: cleaned,
+        fullName: quickPurchaseName,
+      }).unwrap();
+      setIsQuickPurchaseModalOpen(false);
+      setAlert({
+        message: "Ваш заказ принят, мы свяжемся с вами!",
+        type: "success",
+      });
+      setQuickPurchaseName("");
+      setQuickPurchasePhone("");
+    } catch {
+      setAlert({ message: "Ошибка. Попробуйте позже.", type: "error" });
+    }
+  };
 
   if (isLoading) {
     return (
@@ -191,15 +235,17 @@ const ProductPage: React.FC = () => {
       )}
 
       <div className={styles.product}>
-        <motion.img
-          className={styles.image}
-          src={`${import.meta.env.VITE_API_URL}${product.cover_image}`}
-          alt={product.name}
-          onClick={() => openModal(0)}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        />
+        <div className={styles.imageContainer}>
+          <motion.img
+            className={styles.image}
+            src={`${import.meta.env.VITE_API_URL}${product.cover_image}`}
+            alt={product.name}
+            onClick={() => openModal(0)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          />
+        </div>
         <div className={styles.info}>
           <span className={styles.name}>{product.name}</span>
           <span className={styles.price}>{formatPrice(product.price)} ₸</span>
@@ -207,17 +253,24 @@ const ProductPage: React.FC = () => {
             {product.stock === 0 ? (
               <Button label="Товар закончился" variant="outlined" disabled />
             ) : (
-              <Button
-                label={
-                  isLoadingBasket
-                    ? "Добавляется..."
-                    : isInBasket
-                    ? "Перейти в корзину"
-                    : "Добавить в корзину"
-                }
-                onClick={handleButtonClick}
-                variant={isInBasket ? "outlined" : "filled"}
-              />
+              <>
+                <Button
+                  label={
+                    isLoadingBasket
+                      ? "Добавляется..."
+                      : isInBasket
+                      ? "Перейти в корзину"
+                      : "Добавить в корзину"
+                  }
+                  onClick={handleButtonClick}
+                  variant={isInBasket ? "outlined" : "filled"}
+                />
+                <Button
+                  label="Купить в 1 клик"
+                  variant="filled"
+                  onClick={() => setIsQuickPurchaseModalOpen(true)}
+                />
+              </>
             )}
           </div>
 
@@ -358,6 +411,31 @@ const ProductPage: React.FC = () => {
           )}
         </div>
       </AnimatePresence>
+      <Modal
+        isOpen={isQuickPurchaseModalOpen}
+        onClose={() => setIsQuickPurchaseModalOpen(false)}
+        title="Быстрая покупка"
+      >
+        <div className={styles.quickPurchaseForm}>
+          <input
+            type="text"
+            placeholder="Ваше имя"
+            value={quickPurchaseName}
+            onChange={(e) => setQuickPurchaseName(e.target.value)}
+          />
+          <input
+            type="tel"
+            placeholder="+7 (___) ___-__-__"
+            value={quickPurchasePhone}
+            onChange={handleQuickPurchasePhoneChange}
+          />
+          <Button
+            label={isQuickPurchaseLoading ? "Отправка..." : "Оформить заказ"}
+            onClick={handleQuickPurchaseSubmit}
+            variant="filled"
+          />
+        </div>
+      </Modal>
     </div>
   );
 };
