@@ -273,7 +273,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
           isLoading ? (
             <CircularProgress size={20} color="inherit" />
           ) : isInBasket ? (
-            "Перейти в корзину"
+            "В корзине"
           ) : (
             "Купить"
           )

@@ -2,18 +2,38 @@
   display: flex;
   flex-direction: column;
   max-width: calc(100% - 20px);
+  @media (max-width: 768px) {
+    // max-width: calc(100% - 20px);
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
 
   .products_container {
+    /* desktop */
     display: flex;
     gap: 37px;
     flex-wrap: wrap;
-    // justify-content: space-between;
     margin-top: 25px;
+
     @media (max-width: 768px) {
-      align-items: center;
-      justify-content: center;
+      /* мобильная сетка 2 колонки */
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      width: 100%;
+      margin: 25px auto 0;
+      // align-self: center;
+    }
+
+    /* принудительно заставляем .cardContainer занимать всю свою ячейку */
+    @media (max-width: 768px) {
+      .cardContainer {
+        width: 100% !important;
+      }
     }
   }
+
   .title {
     margin: 32px 0;
     font-size: 24px;

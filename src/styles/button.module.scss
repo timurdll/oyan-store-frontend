@@ -2,15 +2,24 @@
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  @media (max-width: 768px) {
+    font-size: 12px; /* Уменьшаем размер шрифта на мобильных устройствах */
+    padding: 4px 12px; /* Уменьшаем отступы на мобильных устройствах */
+  }
 
   &.filled {
     // font-family: "Gilroy-Bold";
-    font-weight: 600;
+    font-weight: 500;
     background-color: var(--primary-color);
     color: #fff;
     border: none;
     padding: 6px 19px;
     border-radius: 30px;
+    @media screen and (max-width: 768px) {
+      padding: 4px 12px; /* Уменьшаем отступы на мобильных устройствах */
+      font-size: 12px; /* Уменьшаем размер шрифта на мобильных устройствах */
+      border-radius: 20px; /* Уменьшаем радиус скругления на мобильных устройствах */
+    }
   }
 
   &.link {
