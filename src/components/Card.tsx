@@ -236,7 +236,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
           <Button
             label="Редактировать"
             onClick={() => navigate(`/admin/edit/${product.id}`)}
-            variant="filled"
+            variant="primary"
           />
           <Button
             label="Удалить"
@@ -252,7 +252,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
         return (
           <Button
             label="Предзаказ оформлен"
-            variant="outlined"
+            variant="primary"
             disabled={true}
           />
         );
@@ -261,7 +261,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
         <Button
           label="Предзаказ"
           onClick={openPreOrderModal}
-          variant="filled"
+          variant="primary"
           disabled={isLoading || isLoadingPreOrders}
         />
       );
@@ -279,7 +279,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
           )
         }
         onClick={(event) => handleButtonClick(event)}
-        variant="filled"
+        variant="primary"
         disabled={isLoading}
       />
     );
@@ -349,7 +349,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
                 )
               }
               onClick={handlePreOrderSubmit}
-              variant="filled"
+              variant="primary"
               disabled={isLoading}
             />
           </div>
@@ -386,7 +386,7 @@ export const Card: React.FC<CardProps> = ({ product }) => {
                 )
               }
               onClick={handleQuickPurchaseSubmit}
-              variant="filled"
+              variant="primary"
               disabled={isQuickPurchaseLoading}
             />
           </div>

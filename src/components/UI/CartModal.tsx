@@ -26,7 +26,7 @@ const CartModal: React.FC<ModalProps> = ({
           <Button
             label="Перейти в корзину"
             onClick={onGoToBasket}
-            variant="filled"
+            variant="primaryLarge"
           />
           <Button
             label="Продолжить покупки"

@@ -275,7 +275,7 @@ const StepUserData: React.FC<StepUserDataProps> = ({
             </div>
             {!completed && (
               <div className={styles.button}>
-                <Button type="submit" label="Далее" variant="filled" />
+                <Button type="submit" label="Далее" variant="primaryLarge" />
               </div>
             )}
           </Form>

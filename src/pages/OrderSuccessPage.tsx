@@ -46,7 +46,7 @@ const OrderSuccessPage: React.FC = () => {
           <Button
             label="На страницу заказов"
             onClick={handleGoHome}
-            variant="filled"
+            variant="primary"
           />
           <Button
             label="На домашнюю страницу"

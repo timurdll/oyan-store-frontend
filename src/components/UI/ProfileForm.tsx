@@ -138,7 +138,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
         <Button
           label={isUpdating ? "Сохранение..." : "Сохранить изменения"}
           onClick={handleUpdateProfile}
-          variant="filled"
+          variant="primaryLarge"
         />
         <Button
           label="Выйти из профиля"

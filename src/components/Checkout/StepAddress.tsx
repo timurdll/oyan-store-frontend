@@ -112,7 +112,7 @@ const StepAddress: React.FC<StepAddressProps> = ({
             </div>
             {!completed && (
               <div className={styles.button}>
-                <Button label="Далее" variant="filled" type="submit" />
+                <Button label="Далее" variant="primaryLarge" type="submit" />
               </div>
             )}
           </Form>

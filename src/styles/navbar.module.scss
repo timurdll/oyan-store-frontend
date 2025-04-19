@@ -1,6 +1,6 @@
 .buttons {
   display: flex;
-  gap: 14px;
+  gap: 13px;
   max-width: 1140px;
   justify-content: start;
   align-items: start;
@@ -35,17 +35,22 @@
     // font-family: "Gilroy-Regular";
     font-weight: 400;
     width: fit-content;
-    padding: 9px 12px;
-    border-radius: 20px;
-    border: 2px solid var(--primary-color);
+    padding: 10px 16px;
+    border-radius: 100px;
+    border: 1.5px solid var(--primary-color);
     cursor: pointer;
-    font-size: 14px;
+    font-size: 15px;
+    color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   /* Стили для активной кнопки */
   .active {
-    background: linear-gradient(90deg, #1869ff 0%, #0c4cc1 100%);
+    background: var(--primary-color);
     color: white; /* Убедитесь, что текст на активной кнопке белый */
-    border: 2px solid linear-gradient(90deg, #1869ff 0%, #0c4cc1 100%);
+    border: 1.5px solid var(--primary-color);
+    // font-weight: 600;
   }
 }

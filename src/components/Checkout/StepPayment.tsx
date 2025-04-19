@@ -67,7 +67,7 @@ const StepPayment: React.FC<StepPaymentProps> = ({
                 "Оформить заказ"
               )
             }
-            variant="filled"
+            variant="primaryLarge"
             disabled={isLoading} // Отключаем кнопку во время загрузки
           />
         </div>

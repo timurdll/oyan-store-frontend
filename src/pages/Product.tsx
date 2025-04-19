@@ -263,11 +263,11 @@ const ProductPage: React.FC = () => {
                       : "Добавить в корзину"
                   }
                   onClick={handleButtonClick}
-                  variant={isInBasket ? "outlined" : "filled"}
+                  variant={isInBasket ? "outlined" : "primaryLarge"}
                 />
                 <Button
                   label="Купить в 1 клик"
-                  variant="filled"
+                  variant="primaryLarge"
                   onClick={() => setIsQuickPurchaseModalOpen(true)}
                 />
               </>
@@ -283,7 +283,7 @@ const ProductPage: React.FC = () => {
               transition={{ duration: 0.5 }}
             >
               <div className={styles.marketplaceTitle}>
-                Купить на маркетплейсах:
+                Купить на маркетплейсах
               </div>
               <div className={styles.marketplaceIcons}>
                 {product.kaspiLink && (
@@ -367,6 +367,7 @@ const ProductPage: React.FC = () => {
                       {char.characteristic.name}:
                     </span>
                     <span className={styles.description}>
+                      {" "}
                       {char.description}
                     </span>
                   </div>
@@ -432,7 +433,7 @@ const ProductPage: React.FC = () => {
           <Button
             label={isQuickPurchaseLoading ? "Отправка..." : "Оформить заказ"}
             onClick={handleQuickPurchaseSubmit}
-            variant="filled"
+            variant="primaryLarge"
           />
         </div>
       </Modal>

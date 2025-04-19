@@ -21,7 +21,7 @@ const ProductInfo: React.FC<{
             : "Добавить в корзину"
         }
         onClick={handleButtonClick}
-        variant={isInBasket ? "outlined" : "filled"}
+        variant={isInBasket ? "outlined" : "primary"}
       />
     </div>
   </div>

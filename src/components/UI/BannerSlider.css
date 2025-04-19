@@ -2,6 +2,7 @@
   width: 100%;
   position: relative;
   overflow: hidden;
+  border-radius: 20px;
 }
 
 .slider-item {
@@ -15,4 +16,31 @@
   object-fit: cover;
 }
 
-/* На мобильных устройствах */
+/* Стили для контейнера с точками */
+.banner-slider .slick-dots {
+  bottom: auto;
+  margin-top: 8px;
+  position: relative;
+}
+.banner-slider .slick-dots li {
+  margin: 0 1px; /* Уменьшенное расстояние между точками (было 5px по умолчанию) */
+}
+
+/* Стили для точек */
+.banner-slider .slick-dots li button:before {
+  color: #e8e8e8; /* Серый цвет для неактивных точек */
+  font-size: 10px;
+  opacity: 1; /* Полная непрозрачность */
+  transition: color 0.3s ease; /* Плавный переход цвета */
+}
+
+/* Стили для активной точки */
+.banner-slider .slick-dots li.slick-active button:before {
+  color: #1869ff; /* Синий цвет для активной точки */
+  opacity: 1;
+}
+
+/* Стиль при наведении для более плавного взаимодействия */
+.banner-slider .slick-dots li button:hover:before {
+  color: #92b7ff; /* Промежуточный цвет при наведении */
+}

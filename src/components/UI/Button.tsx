@@ -1,12 +1,13 @@
 import React from "react";
 import styles from "@styles/button.module.scss";
+import cn from "classnames";
 
 interface ButtonProps {
-  label: React.ReactNode; // Принимает строку или JSX
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  variant: "filled" | "outlined" | "link";
-  type?: "button" | "submit" | "reset"; // Указание типа кнопки
-  disabled?: boolean; // Новый необязательный параметр
+  label: React.ReactNode;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  variant: "primary" | "primaryLarge" | "outlined" | "link";
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -14,14 +15,14 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   variant,
   type = "button",
-  disabled = false, // Значение по умолчанию
+  disabled = false,
 }) => {
   return (
     <button
       type={type}
       onClick={onClick}
-      className={`${styles.button} ${styles[variant]}`}
-      disabled={disabled} // Связываем с атрибутом кнопки
+      disabled={disabled}
+      className={cn(styles.button, styles[variant])}
     >
       {label}
     </button>

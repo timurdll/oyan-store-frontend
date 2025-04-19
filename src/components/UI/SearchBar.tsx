@@ -36,7 +36,7 @@ const SearchBar = () => {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Поиск продуктов..."
+          placeholder="Я ищу..."
           className={styles.input}
         />
         <button className={styles.button}>
