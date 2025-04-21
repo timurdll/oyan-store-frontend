@@ -13,6 +13,9 @@ import logo from "@assets/images/oyanlogo.svg";
 import phoneIcon from "@assets/images/call.svg";
 import { IoSearch, IoClose } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
+import bonuses from "@assets/images/bonuses.svg"; // Импорт иконки бонусов
+
+type Lang = "ru" | "kk";
 
 const Header = () => {
   const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn);
@@ -22,6 +25,8 @@ const Header = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const [lang, setLang] = useState<Lang>("ru");
 
   useEffect(() => {
     setIsVisible(true);
@@ -68,6 +73,17 @@ const Header = () => {
     },
   };
 
+  const headerVariants = {
+    closed: {
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
+    },
+    open: {
+      borderBottomLeftRadius: 40,
+      borderBottomRightRadius: 40,
+    },
+  };
+
   const searchVariants = {
     open: {
       height: "auto",
@@ -85,6 +101,10 @@ const Header = () => {
     <>
       <motion.header
         className={styles.header}
+        variants={headerVariants}
+        initial="closed"
+        animate={isMobileMenuOpen ? "open" : "closed"}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
         style={{ transform: isVisible ? "translateY(0)" : "translateY(-100%)" }}
       >
         <div className={styles.content}>
@@ -159,13 +179,37 @@ const Header = () => {
                       {/* <LanguageSelector /> */}
                       {isLoggedIn && (
                         <div className={styles.bonusInfo}>
-                          {data
-                            ? `Бонусы: ${data.bonuses} (${data.holdingBonuses} удержано)`
-                            : "Бонусы"}
+                          <img
+                            src={bonuses}
+                            alt="Бонусы"
+                            className={styles.bonusIcon}
+                          />
+                          <span className={styles.bonusText}>
+                            {data ? `${data.bonuses} бонусов` : "Бонусы"}
+                          </span>
                         </div>
                       )}
-                      {/* <UserMenu /> */}
-                      {/* <span className=""></span> */}
+                      <div className={styles.menuButtons}>
+                        <button className={styles.aboutButton}>О нас</button>
+                        <button
+                          className={`
+                            ${styles.langButton}
+                            ${lang === "ru" ? styles.activeLang : ""}
+                          `}
+                          onClick={() => setLang("ru")}
+                        >
+                          Рус
+                        </button>
+                        <button
+                          className={`
+                            ${styles.langButton}
+                         ${lang === "kk" ? styles.activeLang : ""}
+                          `}
+                          onClick={() => setLang("kk")}
+                        >
+                          Каз
+                        </button>
+                      </div>
                       <a href="tel:+77089045254" className={styles.callButton}>
                         <img src={phoneIcon} alt="Позвонить" />
                         <span>Позвонить</span>
@@ -211,7 +255,6 @@ const Header = () => {
           )}
         </div>
       </motion.header>
-
       <AnimatePresence>
         {(isMobileMenuOpen || isSearchOpen) && isMobile && (
           <motion.div

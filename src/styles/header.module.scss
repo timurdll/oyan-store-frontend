@@ -81,13 +81,88 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
+        padding: 0 15px;
+
+        .menuButtons {
+          display: flex;
+          width: 100%;
+          gap: 8px; // два промежутка по 8px = 16px
+
+          /* чтобы текст внутри не вылезал */
+          > button {
+            min-width: 0;
+            padding: 8px 0;
+            border: 2.5px solid #e8e8e8;
+            background-color: transparent;
+            color: #a1a1a1;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 20px;
+          }
+
+          /* flex‑коэффициенты: 2+1+1 = 4 доли */
+          .aboutButton {
+            flex: 1.29;
+            background-color: var(--primary-color);
+            color: #fff;
+          }
+          .langButton {
+            flex: 1; // 1/4 = 25%
+          }
+          .activeLang {
+            background-color: var(--primary-color);
+            color: #fff;
+            opacity: 1;
+          }
+        }
       }
 
+      // .mobileMenuContent {
+      //   display: flex;
+      //   flex-direction: column;
+      //   gap: 15px;
+      //   .menuButtons {
+      //     display: flex;
+      //     width: 100%;
+      //     gap: 8px; // пространство между кнопками
+
+      //     button {
+      //       padding: 8px 0;
+      //       border: none;
+      //       background-color: var(--primary-color);
+      //       color: #fff;
+      //       border-radius: 8px;
+      //       cursor: pointer;
+      //       font-weight: 500;
+      //     }
+
+      //     /* О нас — 50%, Рус и Каз по 25% */
+      //     .aboutButton {
+      //       flex: 0 0 50%;
+      //     }
+      //     .langButton {
+      //       flex: 0 0 25%;
+      //     }
+      //   }
+      // }
+
       .bonusInfo {
-        font-size: 16px;
+        font-size: 20px;
         font-weight: 400;
         line-height: 24px;
-        color: var(--text-color);
+        color: var(--primary-color);
+        text-align: center;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 85px;
+        border-radius: 25px;
+        border: 1.5px solid #e8e8e8;
+        .bonusText {
+          margin-top: 3px;
+        }
       }
 
       .callButton {
@@ -97,7 +172,7 @@
         padding: 10px;
         background-color: #1869ff;
         color: #fff;
-        border-radius: 8px;
+        border-radius: 25px;
         text-decoration: none;
         font-weight: 500;
         transition: background-color 0.3s;

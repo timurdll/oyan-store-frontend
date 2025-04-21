@@ -11,10 +11,10 @@ import ktabl from "@assets/images/k-tab.png?url";
 import vixiv from "@assets/images/vixiv.png?url";
 
 // мобильные картинки
-import x14m from "@assets/images/x14-mobile.png?url";
-import x15m from "@assets/images/x15-mobile.png?url";
-import ktabm from "@assets/images/k-tab-mobile.png?url";
-import vixivm from "@assets/images/vixiv-mobile.png?url";
+import x14m from "@assets/images/x14-m.png?url";
+import x15m from "@assets/images/x15-m.png?url";
+import ktabm from "@assets/images/ktab-m.png?url";
+import vixivm from "@assets/images/vixiv-m.png?url";
 const BannerSlider = () => {
   // детектим ширину экрана ≤768px
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -37,13 +37,34 @@ const BannerSlider = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 800,
+    speed: 1000,
     autoplay: true,
     autoplaySpeed: 5000,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: !isMobile, // стрелки только на десктопе
+    arrows: !isMobile,
     pauseOnHover: true,
+    centerMode: false,
+    centerPadding: "0px",
+    swipeToSlide: true,
+    touchThreshold: 10,
+    cssEase: "cubic-bezier(0.645, 0.045, 0.355, 1)",
+    fade: true,
+    responsive: [
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: false,
+          dots: true,
+          swipeToSlide: true,
+          touchThreshold: 10,
+          speed: 1000,
+          fade: true,
+        },
+      },
+    ],
   };
 
   return (

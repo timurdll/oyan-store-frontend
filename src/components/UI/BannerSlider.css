@@ -2,18 +2,22 @@
   width: 100%;
   position: relative;
   overflow: hidden;
-  border-radius: 20px;
+  /* border-radius: 20px; */
 }
 
 .slider-item {
   position: relative;
+  overflow: hidden;
+  border-radius: 20px;
 }
 
 .banner-image {
-  width: 100%;
+  width: calc(100% - 4px);
   height: auto;
   display: block;
   object-fit: cover;
+  border-radius: 20px; /* 25px - 2px border */
+  border: 2px solid #e8e8e8;
 }
 
 /* Стили для контейнера с точками */
@@ -43,4 +47,39 @@
 /* Стиль при наведении для более плавного взаимодействия */
 .banner-slider .slick-dots li button:hover:before {
   color: #92b7ff; /* Промежуточный цвет при наведении */
+}
+
+/* Плавные переходы для слайдов */
+.banner-slider .slick-slide {
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.banner-slider .slick-slide.slick-active {
+  opacity: 1;
+}
+
+.banner-slider .slick-list {
+  overflow: hidden;
+}
+
+/* Стили для эффекта fade */
+.banner-slider .slick-slide > div {
+  transition: opacity 0.8s ease-in-out;
+}
+
+/* Специальные стили для мобильных устройств */
+@media (max-width: 767px) {
+  .banner-slider .slick-slide {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+  }
+
+  .banner-slider .slick-slide.slick-active {
+    opacity: 1;
+  }
+
+  .banner-slider .slick-list {
+    overflow: hidden;
+  }
 }
