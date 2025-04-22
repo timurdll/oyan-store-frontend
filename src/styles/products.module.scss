@@ -11,7 +11,7 @@
   .products_container {
     /* desktop */
     display: flex;
-    gap: 37px;
+    gap: 20px;
     flex-wrap: wrap;
     margin-top: 25px;
     position: relative;
@@ -28,8 +28,7 @@
     }
 
     .cardContainer {
-      flex: 0 0 auto;
-      width: calc(33.333% - 25px);
+      // flex: 0 0 calc(33.333% - 14px);
       min-width: 280px;
       margin-bottom: 20px;
 
