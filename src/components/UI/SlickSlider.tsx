@@ -18,6 +18,61 @@ import x15m from "@assets/images/x15-m.png?url";
 import ktabm from "@assets/images/ktab-m.png?url";
 import vixivm from "@assets/images/vixiv-m.png?url";
 
+// Компоненты для кастомных стрелок
+const PrevArrow = (props: any) => {
+  const { onClick } = props;
+  return (
+    <button
+      onClick={onClick}
+      className="slick-arrow slick-prev"
+      aria-label="Previous"
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12.5 15L7.5 10L12.5 5"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
+  );
+};
+
+const NextArrow = (props: any) => {
+  const { onClick } = props;
+  return (
+    <button
+      onClick={onClick}
+      className="slick-arrow slick-next"
+      aria-label="Next"
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M7.5 15L12.5 10L7.5 5"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
+  );
+};
+
 const BannerSlider = () => {
   const [isLoading, setIsLoading] = useState(true);
   // детектим ширину экрана ≤768px
@@ -73,6 +128,8 @@ const BannerSlider = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: !isMobile,
+    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />,
     pauseOnHover: true,
     centerMode: false,
     centerPadding: "0px",

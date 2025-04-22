@@ -49,6 +49,62 @@
   color: #92b7ff; /* Промежуточный цвет при наведении */
 }
 
+/* Стили для стрелок навигации */
+.banner-slider .slick-arrow {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  padding: 0;
+}
+
+.banner-slider .slick-arrow:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.banner-slider .slick-arrow:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.banner-slider .slick-arrow svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+}
+
+.banner-slider .slick-arrow svg path {
+  stroke: var(--primary-color);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.banner-slider .slick-prev {
+  left: 10px;
+}
+
+.banner-slider .slick-next {
+  right: 10px;
+}
+
+/* Удаляем стандартные стрелки */
+.banner-slider .slick-arrow:before {
+  display: none;
+}
+
 /* Плавные переходы для слайдов */
 .banner-slider .slick-slide {
   opacity: 0;
@@ -70,6 +126,10 @@
 
 /* Специальные стили для мобильных устройств */
 @media (max-width: 767px) {
+  .banner-slider .slick-arrow {
+    display: none !important;
+  }
+
   .banner-slider .slick-slide {
     opacity: 0;
     transition: opacity 0.8s ease-in-out;
