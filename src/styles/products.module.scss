@@ -3,7 +3,6 @@
   flex-direction: column;
   max-width: calc(100% - 20px);
   @media (max-width: 768px) {
-    // max-width: calc(100% - 20px);
     align-items: center;
     justify-content: center;
     margin: 0 auto;
@@ -15,6 +14,9 @@
     gap: 37px;
     flex-wrap: wrap;
     margin-top: 25px;
+    position: relative;
+    min-height: 200px;
+    width: 100%;
 
     @media (max-width: 768px) {
       /* мобильная сетка 2 колонки */
@@ -23,13 +25,17 @@
       gap: 16px;
       width: 100%;
       margin: 25px auto 0;
-      // align-self: center;
     }
 
-    /* принудительно заставляем .cardContainer занимать всю свою ячейку */
-    @media (max-width: 768px) {
-      .cardContainer {
-        width: 100% !important;
+    .cardContainer {
+      flex: 0 0 auto;
+      width: calc(33.333% - 25px);
+      min-width: 280px;
+      margin-bottom: 20px;
+
+      @media (max-width: 768px) {
+        width: 100%;
+        min-width: unset;
       }
     }
   }

@@ -1,7 +1,7 @@
 import styles from "@styles/mobile-menu.module.scss";
-import BasketIcon from "@assets/images/cart.svg?react";
-import OrderIcon from "@assets/images/box.svg?react";
-import UserIcon from "@assets/images/user.svg?react";
+import BasketIcon from "@assets/images/mage_bag-a.svg?react";
+import OrderIcon from "@assets/images/mage_box-3d.svg?react";
+import UserIcon from "@assets/images/mage_user.svg?react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { openAuthModal } from "@redux/slices/authModalSlice";
@@ -46,13 +46,13 @@ const MobileMenu: React.FC = () => {
             {isLoggedIn && totalItems > 0 && (
               <span className={styles.itemCount}>{totalItems}</span>
             )}
-            <BasketIcon style={{ fill: "var(--text-color)" }} />
+            <BasketIcon />
           </div>
           <b>Корзина</b>
         </li>
         <li onClick={() => handleClick(() => navigate("/orders"))}>
           <div className={styles.icon}>
-            <OrderIcon style={{ fill: "var(--text-color)" }} />
+            <OrderIcon />
             {isLoggedIn && orders?.length > 0 && (
               <span className={styles.itemCount}>{orders.length}</span>
             )}
@@ -67,7 +67,7 @@ const MobileMenu: React.FC = () => {
             )
           }
         >
-          <UserIcon style={{ fill: "var(--text-color)" }} />
+          <UserIcon />
           <b>Профиль</b>
         </li>
       </ul>

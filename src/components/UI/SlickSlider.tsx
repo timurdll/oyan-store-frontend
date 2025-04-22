@@ -3,21 +3,51 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./BannerSlider.css";
+import { Skeleton } from "@mui/material";
+import { useState, useEffect } from "react";
 
 // десктопные картинки
-import x14l from "@assets/images/x14l.png?url";
-import x15l from "@assets/images/x15l.png?url";
-import ktabl from "@assets/images/k-tab.png?url";
-import vixiv from "@assets/images/vixiv.png?url";
+import x14l from "@assets/images/x14d.png?url";
+import x15l from "@assets/images/x15d.png?url";
+import ktab from "@assets/images/ktabd.png?url";
+import vixiv from "@assets/images/vixivd.png?url";
 
 // мобильные картинки
 import x14m from "@assets/images/x14-m.png?url";
 import x15m from "@assets/images/x15-m.png?url";
 import ktabm from "@assets/images/ktab-m.png?url";
 import vixivm from "@assets/images/vixiv-m.png?url";
+
 const BannerSlider = () => {
+  const [isLoading, setIsLoading] = useState(true);
   // детектим ширину экрана ≤768px
   const isMobile = useMediaQuery({ maxWidth: 767 });
+
+  useEffect(() => {
+    // Имитируем загрузку изображений
+    const loadImages = async () => {
+      const imagePromises = isMobile
+        ? [x14m, x15m, ktabm, vixivm]
+        : [x14l, x15l, ktab, vixiv];
+
+      try {
+        await Promise.all(
+          imagePromises.map((src) => {
+            return new Promise((resolve, reject) => {
+              const img = new Image();
+              img.src = src;
+              img.onload = resolve;
+              img.onerror = reject;
+            });
+          })
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadImages();
+  }, [isMobile]);
 
   // выбираем нужный массив
   const slides = isMobile
@@ -30,7 +60,7 @@ const BannerSlider = () => {
     : [
         { src: x14l, alt: "Banner Desktop 1" },
         { src: x15l, alt: "Banner Desktop 2" },
-        { src: ktabl, alt: "Banner Desktop 3" },
+        { src: ktab, alt: "Banner Desktop 3" },
         { src: vixiv, alt: "Banner Mobile 4" },
       ];
 
@@ -50,6 +80,9 @@ const BannerSlider = () => {
     touchThreshold: 10,
     cssEase: "cubic-bezier(0.645, 0.045, 0.355, 1)",
     fade: true,
+    waitForAnimate: false,
+    swipe: true,
+    touchMove: true,
     responsive: [
       {
         breakpoint: 767,
@@ -62,10 +95,54 @@ const BannerSlider = () => {
           touchThreshold: 10,
           speed: 1000,
           fade: true,
+          waitForAnimate: false,
+          swipe: true,
+          touchMove: true,
         },
       },
     ],
   };
+
+  if (isLoading) {
+    return (
+      <div className="banner-slider">
+        <div className="slider-item">
+          <Skeleton
+            variant="rectangular"
+            width="100%"
+            height={isMobile ? "180px" : "400px"}
+            sx={{
+              borderRadius: "20px",
+              backgroundColor: "#f4f4f4",
+              transform: "none",
+              border: "2px solid #e8e8e8",
+            }}
+          />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "8px",
+            marginTop: "8px",
+          }}
+        >
+          {[...Array(4)].map((_, index) => (
+            <Skeleton
+              key={index}
+              variant="circular"
+              width={10}
+              height={10}
+              sx={{
+                backgroundColor:
+                  index === 0 ? "var(--primary-color)" : "#e8e8e8",
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="banner-slider">

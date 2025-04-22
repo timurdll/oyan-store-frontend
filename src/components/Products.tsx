@@ -46,52 +46,39 @@ const ProductList: React.FC<ProductListProps> = ({ selectedType }) => {
     return <div>Error: {errorMessage}</div>;
   }
 
-  // Define the animation variants for the cards
-  const cardVariants = {
-    hidden: {
-      opacity: 0,
-      scale: 0.98, // Card starts small and fades out
-    },
-    visible: {
-      opacity: 1,
-      scale: 1, // Card becomes fully visible and scales to normal size
-      transition: {
-        duration: 0.5, // Duration of the transition
-        ease: "easeInOut", // Smooth easing for the transition
-      },
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.98, // Card fades out and shrinks when it is removed
-      transition: {
-        duration: 0.3, // Shorter duration when exiting
-        ease: "easeInOut",
-      },
-    },
-  };
-
   return (
     <div className={styles.products}>
-      <div className={styles.products_container}>
+      <motion.div className={styles.products_container} layout>
         <AnimatePresence mode="wait">
           {filteredProducts.map((product, index) => (
             <motion.div
-              key={product.id + (selectedType || 0)} // Use `key` with `selectedType` to force re-render on category change
+              key={product.id}
               className={styles.cardContainer}
-              variants={cardVariants} // Attach the variants to each card
-              initial="hidden" // Initial state when card enters
-              animate="visible" // Animation state for visible cards
-              exit="exit" // Exit animation state
-              transition={{
-                duration: 0.5,
-                delay: index * 0.3, // Delay to create staggered animation effect
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                transition: {
+                  duration: 0.3,
+                  delay: index * 0.05,
+                  ease: [0.43, 0.13, 0.23, 0.96],
+                },
               }}
+              exit={{
+                opacity: 0,
+                scale: 0.9,
+                transition: {
+                  duration: 0.2,
+                  ease: [0.43, 0.13, 0.23, 0.96],
+                },
+              }}
+              layout
             >
               <Card product={product} />
             </motion.div>
           ))}
         </AnimatePresence>
-      </div>
+      </motion.div>
     </div>
   );
 };

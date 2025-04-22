@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useGetUserBonusesQuery } from "@redux/services/userApi";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import LanguageSelector from "./UI/LanguageSelector";
 import UserMenu from "./UserMenu";
 import SearchBar from "./UI/SearchBar";
 import useIsMobile from "./Hooks/UseIsMobile";
@@ -160,7 +159,7 @@ const Header = () => {
                     exit="closed"
                     transition={{ duration: 0.4, ease: "easeInOut" }}
                   >
-                    <SearchBar />
+                    <SearchBar isSearchOpen={isSearchOpen} />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -192,19 +191,17 @@ const Header = () => {
                       <div className={styles.menuButtons}>
                         <button className={styles.aboutButton}>О нас</button>
                         <button
-                          className={`
-                            ${styles.langButton}
-                            ${lang === "ru" ? styles.activeLang : ""}
-                          `}
+                          className={`${styles.langButton} ${
+                            lang === "ru" ? styles.activeLang : ""
+                          }`}
                           onClick={() => setLang("ru")}
                         >
                           Рус
                         </button>
                         <button
-                          className={`
-                            ${styles.langButton}
-                         ${lang === "kk" ? styles.activeLang : ""}
-                          `}
+                          className={`${styles.langButton} ${
+                            lang === "kk" ? styles.activeLang : ""
+                          }`}
                           onClick={() => setLang("kk")}
                         >
                           Каз
@@ -227,17 +224,29 @@ const Header = () => {
                 </Link>
               </div>
 
-              <motion.div
-                className={styles.search}
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              >
+              <div className={styles.search}>
                 <SearchBar />
-              </motion.div>
+              </div>
 
               <div className={styles.navigation}>
-                <LanguageSelector />
+                <div className={styles.menuButtons}>
+                  <button
+                    className={`${styles.langButton} ${
+                      lang === "ru" ? styles.activeLang : ""
+                    }`}
+                    onClick={() => setLang("ru")}
+                  >
+                    Рус
+                  </button>
+                  <button
+                    className={`${styles.langButton} ${
+                      lang === "kk" ? styles.activeLang : ""
+                    }`}
+                    onClick={() => setLang("kk")}
+                  >
+                    Каз
+                  </button>
+                </div>
                 <div className={styles.divider} />
                 <span>
                   {data

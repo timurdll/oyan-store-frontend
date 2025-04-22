@@ -109,48 +109,69 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  width: 32px;
-  height: 32px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  font-size: 18px;
   cursor: pointer;
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.8;
   transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
   &:hover {
-    opacity: 1;
+    background: var(--primary-color);
+    color: white;
     transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
   &:focus {
     outline: none;
   }
 
+  &:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+
   &.left {
-    left: 5px;
+    left: 8px;
   }
 
   &.right {
-    right: 5px;
+    right: 8px;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover svg {
+    transform: scale(1.1);
   }
 
   @media (max-width: 1024px) {
-    width: 28px;
-    height: 28px;
-    font-size: 16px;
+    width: 32px;
+    height: 32px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 }
 
 /* Only show buttons on hover or if content is scrollable */
 .container:hover .scrollButton {
-  display: flex;
+  opacity: 1;
 }
 
 .scrollIndicator {

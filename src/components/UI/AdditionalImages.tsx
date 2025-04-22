@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import useIsMobile from "@components/Hooks/UseIsMobile";
 import styles from "@styles/additional-images.module.scss";
 import ImageModal from "./ImageModal";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 interface AdditionalImagesProps {
   images: string[];
@@ -118,90 +119,6 @@ const AdditionalImages: React.FC<AdditionalImagesProps> = ({
     setCurrentImageIndex(i);
   };
 
-  // Generate visible scroll indicator dots
-  const renderDots = () => {
-    // Show max 5 dots for desktop, 3 for mobile
-    const maxDots = isMobile ? 3 : 5;
-
-    if (images.length <= maxDots) {
-      return images.map((_, i) => (
-        <div
-          key={i}
-          className={`${styles.dot} ${
-            i === currentImageIndex ? styles.active : ""
-          }`}
-          onClick={() => handleSelect(i)}
-        />
-      ));
-    } else {
-      // Create a responsive dot indicator that always shows current position
-      const dots = [];
-      const halfMax = Math.floor(maxDots / 2);
-
-      // Determine range to display
-      let startIdx = Math.max(0, currentImageIndex - halfMax);
-      let endIdx = Math.min(images.length - 1, startIdx + maxDots - 1);
-
-      // Adjust if we're at the end
-      if (endIdx - startIdx < maxDots - 1) {
-        startIdx = Math.max(0, endIdx - maxDots + 1);
-      }
-
-      // Add starting dots
-      if (startIdx > 0) {
-        dots.push(
-          <div
-            key="start"
-            className={styles.dot}
-            onClick={() => handleSelect(0)}
-          />
-        );
-        if (startIdx > 1) {
-          dots.push(
-            <div
-              key="ellipsis1"
-              className={`${styles.dot} ${styles.ellipsis}`}
-            />
-          );
-        }
-      }
-
-      // Add visible range
-      for (let i = startIdx; i <= endIdx; i++) {
-        dots.push(
-          <div
-            key={i}
-            className={`${styles.dot} ${
-              i === currentImageIndex ? styles.active : ""
-            }`}
-            onClick={() => handleSelect(i)}
-          />
-        );
-      }
-
-      // Add ending dots
-      if (endIdx < images.length - 1) {
-        if (endIdx < images.length - 2) {
-          dots.push(
-            <div
-              key="ellipsis2"
-              className={`${styles.dot} ${styles.ellipsis}`}
-            />
-          );
-        }
-        dots.push(
-          <div
-            key="end"
-            className={styles.dot}
-            onClick={() => handleSelect(images.length - 1)}
-          />
-        );
-      }
-
-      return dots;
-    }
-  };
-
   // Don't render if no images
   if (!images || images.length === 0) return null;
 
@@ -233,11 +150,11 @@ const AdditionalImages: React.FC<AdditionalImagesProps> = ({
             onClick={() => scrollByWidth("left")}
             aria-label="Previous images"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.8 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            ←
+            <IoIosArrowBack size={24} />
           </motion.button>
         )}
 
@@ -247,19 +164,14 @@ const AdditionalImages: React.FC<AdditionalImagesProps> = ({
             onClick={() => scrollByWidth("right")}
             aria-label="Next images"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.8 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            →
+            <IoIosArrowForward size={24} />
           </motion.button>
         )}
       </AnimatePresence>
-
-      {/* Scroll indicator dots for better navigation */}
-      {images.length > 1 && (
-        <div className={styles.scrollIndicator}>{renderDots()}</div>
-      )}
 
       {isModalOpen && (
         <ImageModal

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useFetchProductBySlugQuery } from "@redux/services";
@@ -21,6 +21,8 @@ import satuIcon from "@assets/images/satu.svg";
 import Modal from "@components/UI/Modal";
 import { useQuickPurchaseMutation } from "@redux/services";
 import { formatPhoneNumber } from "@components/Functions/phoneUtils";
+import useIsMobile from "@components/Hooks/UseIsMobile";
+import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 
 const ProductPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -30,8 +32,12 @@ const ProductPage: React.FC = () => {
   const user = useSelector((state: any) => state.user.currentUser);
   const [quickPurchase, { isLoading: isQuickPurchaseLoading }] =
     useQuickPurchaseMutation();
+  const isMobile = useIsMobile();
 
   const [activeSection, setActiveSection] = useState("characteristics");
+  const [sectionDirection, setSectionDirection] = useState<"left" | "right">(
+    "right"
+  );
   const [showAllCharacteristics, setShowAllCharacteristics] = useState(false);
   const [alert, setAlert] = useState<{
     message: string;
@@ -84,46 +90,140 @@ const ProductPage: React.FC = () => {
     }
   };
 
+  const handleSectionChange = (section: string) => {
+    if (section === "characteristics" && activeSection === "description") {
+      setSectionDirection("right");
+    } else if (
+      section === "description" &&
+      activeSection === "characteristics"
+    ) {
+      setSectionDirection("left");
+    }
+    setActiveSection(section);
+  };
+
   if (isLoading) {
     return (
       <div className={styles.container}>
         <div className={styles.product}>
-          <Skeleton
-            variant="rectangular"
-            width="100%"
-            sx={{ minHeight: "233px", borderRadius: "30px" }}
-          />
+          <div className={styles.imageContainer}>
+            <Skeleton
+              variant="rectangular"
+              width="100%"
+              height={isMobile ? 350 : 488}
+              sx={{
+                borderRadius: "12px",
+                minHeight: isMobile ? "350px" : "488px",
+                backgroundColor: "#f4f4f4",
+              }}
+            />
+            {isMobile && (
+              <>
+                <div className={styles.mobileNavArrows}>
+                  <div className={`${styles.navArrow} ${styles.left}`}>
+                    <Skeleton
+                      variant="circular"
+                      width={40}
+                      height={40}
+                      sx={{ backgroundColor: "#f4f4f4" }}
+                    />
+                  </div>
+                  <div className={`${styles.navArrow} ${styles.right}`}>
+                    <Skeleton
+                      variant="circular"
+                      width={40}
+                      height={40}
+                      sx={{ backgroundColor: "#f4f4f4" }}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
           <div className={styles.info}>
-            <Skeleton variant="text" width="80%" height={48} />
-            <Skeleton variant="text" width="60%" height={36} />
+            <Skeleton
+              variant="text"
+              width="100%"
+              height={isMobile ? 32 : 48}
+              sx={{ backgroundColor: "#f4f4f4" }}
+            />
+            <Skeleton
+              variant="text"
+              width="40%"
+              height={isMobile ? 24 : 36}
+              sx={{ backgroundColor: "#f4f4f4" }}
+            />
             <div className={styles.buttons}>
               <Skeleton
                 variant="rectangular"
-                width="100%"
-                height={28}
-                sx={{ borderRadius: "30px" }}
+                width={isMobile ? "48%" : "100%"}
+                height={48}
+                sx={{ borderRadius: "30px", backgroundColor: "#f4f4f4" }}
+              />
+              <Skeleton
+                variant="rectangular"
+                width={isMobile ? "48%" : "100%"}
+                height={48}
+                sx={{ borderRadius: "30px", backgroundColor: "#f4f4f4" }}
               />
             </div>
-            <div className={styles.images}>
-              {[...Array(3)].map((_, i) => (
-                <Skeleton
-                  key={i}
-                  variant="rectangular"
-                  width={124}
-                  height={124}
-                  sx={{ borderRadius: "30px" }}
-                />
-              ))}
+
+            <div className={styles.marketplaceSection}>
+              <Skeleton
+                variant="text"
+                width="60%"
+                height={24}
+                sx={{ backgroundColor: "#f4f4f4" }}
+              />
+              <div className={styles.marketplaceIcons}>
+                {[...Array(3)].map((_, i) => (
+                  <Skeleton
+                    key={i}
+                    variant="circular"
+                    width={48}
+                    height={48}
+                    sx={{ backgroundColor: "#f4f4f4" }}
+                  />
+                ))}
+              </div>
             </div>
+
+            {!isMobile && (
+              <div style={{ display: "flex", gap: "16px", marginTop: "20px" }}>
+                {[...Array(4)].map((_, i) => (
+                  <Skeleton
+                    key={i}
+                    variant="rectangular"
+                    width={90}
+                    height={90}
+                    sx={{ borderRadius: "12px", backgroundColor: "#f4f4f4" }}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
         <div className={styles.sectionButtons}>
-          {[...Array(2)].map((_, i) => (
-            <Skeleton key={i} variant="text" width={120} height={30} />
-          ))}
+          <Skeleton
+            variant="rectangular"
+            width={120}
+            height={32}
+            sx={{ borderRadius: "8px", backgroundColor: "#f4f4f4" }}
+          />
+          <Skeleton
+            variant="rectangular"
+            width={120}
+            height={32}
+            sx={{ borderRadius: "8px", backgroundColor: "#f4f4f4" }}
+          />
         </div>
         <div className={styles.sectionContent}>
-          <Skeleton variant="text" width="100%" height={200} />
+          <Skeleton
+            variant="rectangular"
+            width="100%"
+            height={300}
+            sx={{ borderRadius: "30px", backgroundColor: "#f4f4f4" }}
+          />
         </div>
       </div>
     );
@@ -148,17 +248,13 @@ const ProductPage: React.FC = () => {
 
   const prevImage = () => {
     setCurrentImageIndex(
-      currentImageIndex === 0
-        ? product.images.length - 1
-        : currentImageIndex - 1
+      currentImageIndex === 0 ? product.images.length : currentImageIndex - 1
     );
   };
 
   const nextImage = () => {
     setCurrentImageIndex(
-      currentImageIndex === product.images.length - 1
-        ? 0
-        : currentImageIndex + 1
+      currentImageIndex === product.images.length ? 0 : currentImageIndex + 1
     );
   };
 
@@ -236,15 +332,55 @@ const ProductPage: React.FC = () => {
 
       <div className={styles.product}>
         <div className={styles.imageContainer}>
-          <motion.img
-            className={styles.image}
-            src={`${import.meta.env.VITE_API_URL}${product.cover_image}`}
-            alt={product.name}
-            onClick={() => openModal(0)}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          />
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={currentImageIndex}
+              className={styles.image}
+              src={`${import.meta.env.VITE_API_URL}${
+                currentImageIndex === 0
+                  ? product.cover_image
+                  : product.images[currentImageIndex - 1]
+              }`}
+              alt={product.name}
+              onClick={() => openModal(currentImageIndex)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            />
+          </AnimatePresence>
+
+          {isMobile && product.images.length > 0 && (
+            <>
+              <div className={styles.mobileNavArrows}>
+                <div
+                  className={`${styles.navArrow} ${styles.left}`}
+                  onClick={prevImage}
+                >
+                  <IoChevronBack size={24} />
+                </div>
+                <div
+                  className={`${styles.navArrow} ${styles.right}`}
+                  onClick={nextImage}
+                >
+                  <IoChevronForward size={24} />
+                </div>
+              </div>
+
+              {/* <div className={styles.imageIndicator}>
+                {Array.from({ length: product.images.length + 1 }).map(
+                  (_, index) => (
+                    <div
+                      key={index}
+                      className={`${styles.dot} ${
+                        currentImageIndex === index ? styles.active : ""
+                      }`}
+                    />
+                  )
+                )}
+              </div> */}
+            </>
+          )}
         </div>
         <div className={styles.info}>
           <span className={styles.name}>{product.name}</span>
@@ -317,16 +453,18 @@ const ProductPage: React.FC = () => {
             </motion.div>
           )}
 
-          <AdditionalImages
-            images={product.images}
-            currentImageIndex={currentImageIndex}
-            openModal={openModal}
-            closeModal={closeModal}
-            isModalOpen={isModalOpen}
-            prevImage={prevImage}
-            nextImage={nextImage}
-            setCurrentImageIndex={setCurrentImageIndex}
-          />
+          {!isMobile && (
+            <AdditionalImages
+              images={product.images}
+              currentImageIndex={currentImageIndex}
+              openModal={openModal}
+              closeModal={closeModal}
+              isModalOpen={isModalOpen}
+              prevImage={prevImage}
+              nextImage={nextImage}
+              setCurrentImageIndex={setCurrentImageIndex}
+            />
+          )}
         </div>
       </div>
 
@@ -334,16 +472,16 @@ const ProductPage: React.FC = () => {
         <button
           className={`${styles.sectionButton} ${
             activeSection === "characteristics" ? styles.active : ""
-          }`}
-          onClick={() => setActiveSection("characteristics")}
+          } ${sectionDirection === "right" ? styles.slideRight : ""}`}
+          onClick={() => handleSectionChange("characteristics")}
         >
           Характеристики
         </button>
         <button
           className={`${styles.sectionButton} ${
             activeSection === "description" ? styles.active : ""
-          }`}
-          onClick={() => setActiveSection("description")}
+          } ${sectionDirection === "left" ? styles.slideLeft : ""}`}
+          onClick={() => handleSectionChange("description")}
         >
           Описание
         </button>
@@ -352,62 +490,77 @@ const ProductPage: React.FC = () => {
       <AnimatePresence mode="wait">
         <div className={styles.sectionContent}>
           {activeSection === "characteristics" && (
-            <>
-              <motion.div
-                key="characteristics"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.5 }}
-                className={styles.characteristics}
-              >
-                {characteristicsToShow.map((char: ProductCharacteristic) => (
-                  <div className={styles.characteristic} key={char.id}>
-                    <span className={styles.name}>
-                      {char.characteristic.name}:
-                    </span>
-                    <span className={styles.description}>
-                      {" "}
-                      {char.description}
-                    </span>
-                  </div>
-                ))}
-              </motion.div>
-              {product.productCharacteristics.length > 4 && (
-                <button
-                  onClick={() =>
-                    setShowAllCharacteristics(!showAllCharacteristics)
-                  }
-                  className={styles.showAllButton}
+            <motion.div
+              key="characteristics"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className={styles.characteristics}
+            >
+              {characteristicsToShow.map((char: ProductCharacteristic) => (
+                <motion.div
+                  className={styles.characteristic}
+                  key={char.id}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
                 >
-                  <div className={styles.arrow}>
-                    <motion.img
-                      src={arrow}
-                      alt="arrow"
-                      animate={{ rotate: showAllCharacteristics ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </div>
-                  <span>
-                    {showAllCharacteristics
-                      ? "Скрыть характеристики"
-                      : "Показать все характеристики"}
+                  <span className={styles.name}>
+                    {char.characteristic.name}:
                   </span>
-                </button>
-              )}
-            </>
+                  <span className={styles.description}>
+                    {" "}
+                    {char.description}
+                  </span>
+                </motion.div>
+              ))}
+            </motion.div>
           )}
+
+          {activeSection === "characteristics" &&
+            product.productCharacteristics.length > 4 && (
+              <motion.button
+                onClick={() =>
+                  setShowAllCharacteristics(!showAllCharacteristics)
+                }
+                className={styles.showAllButton}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.2 }}
+              >
+                <div className={styles.arrow}>
+                  <motion.img
+                    src={arrow}
+                    alt="arrow"
+                    animate={{ rotate: showAllCharacteristics ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </div>
+                <span>
+                  {showAllCharacteristics
+                    ? "Скрыть характеристики"
+                    : "Показать все характеристики"}
+                </span>
+              </motion.button>
+            )}
 
           {activeSection === "description" && (
             <motion.div
               className={styles.description}
               key="description"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.5 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
-              <p>{product.productInfo.description}</p>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
+              >
+                {product.productInfo.description}
+              </motion.p>
             </motion.div>
           )}
         </div>

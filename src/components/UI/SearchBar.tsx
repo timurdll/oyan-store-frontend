@@ -6,7 +6,11 @@ import { Product } from "types/types";
 import { useNavigate } from "react-router-dom";
 import { createSlug } from "@components/Functions/createSlug";
 
-const SearchBar = () => {
+interface SearchBarProps {
+  isSearchOpen?: boolean;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ isSearchOpen }) => {
   const [query, setQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Product[]>([]);
   const { data: products } = useFetchProductsQuery({});
@@ -23,14 +27,25 @@ const SearchBar = () => {
     }
   }, [query, products]);
 
+  useEffect(() => {
+    if (!isSearchOpen) {
+      setQuery("");
+      setSearchResults([]);
+    }
+  }, [isSearchOpen]);
+
   const handleNavigate = (productName: string) => {
     const slug = createSlug(productName);
     navigate(`/product/${slug}`);
-    setQuery(""); // Сбросить поиск после выбора
+    setQuery("");
   };
 
   return (
-    <div className={styles.search_container}>
+    <div
+      className={`${styles.search_container} ${
+        isSearchOpen ? styles.active : ""
+      }`}
+    >
       <div className={styles.search_bar}>
         <input
           type="text"

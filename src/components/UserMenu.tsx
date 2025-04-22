@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styles from "@styles/user-menu.module.scss";
-import BasketIcon from "@assets/images/cart.svg?react";
-import OrderIcon from "@assets/images/box.svg?react";
-import UserIcon from "@assets/images/user.svg?react";
+import BasketIcon from "@assets/images/mage_bag-a.svg?react";
+import OrderIcon from "@assets/images/mage_box-3d.svg?react";
+import UserIcon from "@assets/images/mage_user.svg?react";
 import { useGetBasketQuery } from "@redux/services";
 import { useGetUserOrdersQuery } from "@redux/services/ordersApi";
 import { openAuthModal } from "@redux/slices/authModalSlice";
@@ -55,7 +55,7 @@ const UserMenu: React.FC = () => {
         data-tooltip="Корзина"
         onClick={() => handleClick(() => navigate("/basket"))}
       >
-        <BasketIcon style={{ fill: "var(--text-color)", cursor: "pointer" }} />
+        <BasketIcon style={{ cursor: "pointer" }} />
         {/* Display basket item count */}
         {!isLoggedIn ? null : isBasketLoading ? (
           <span className={styles.loader}>...</span>
@@ -71,7 +71,7 @@ const UserMenu: React.FC = () => {
         data-tooltip="Заказы"
         onClick={() => handleClick(() => navigate("/orders"))}
       >
-        <OrderIcon style={{ fill: "var(--text-color)", cursor: "pointer" }} />
+        <OrderIcon style={{ cursor: "pointer" }} />
         {/* Display orders count */}
         {!isLoggedIn ? null : isOrdersLoading ? (
           <span className={styles.loader}>...</span>
@@ -91,7 +91,7 @@ const UserMenu: React.FC = () => {
           )
         }
       >
-        <UserIcon style={{ fill: "var(--text-color)", cursor: "pointer" }} />
+        <UserIcon style={{ cursor: "pointer" }} />
       </li>
     </ul>
   );
