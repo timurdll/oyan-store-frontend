@@ -107,22 +107,22 @@ const BannerSlider = () => {
   // выбираем нужный массив
   const slides = isMobile
     ? [
+        { src: vixivm, alt: "Banner Desktop 4" },
         { src: x14m, alt: "Banner Mobile 1" },
         { src: x15m, alt: "Banner Mobile 2" },
         { src: ktabm, alt: "Banner Mobile 3" },
-        { src: vixivm, alt: "Banner Desktop 4" },
       ]
     : [
+        { src: vixiv, alt: "Banner Mobile 4" },
         { src: x14l, alt: "Banner Desktop 1" },
         { src: x15l, alt: "Banner Desktop 2" },
         { src: ktab, alt: "Banner Desktop 3" },
-        { src: vixiv, alt: "Banner Mobile 4" },
       ];
 
   const settings = {
     dots: true,
     infinite: true,
-    speed: 1000,
+    speed: 500,
     autoplay: true,
     autoplaySpeed: 5000,
     slidesToShow: 1,
@@ -134,12 +134,13 @@ const BannerSlider = () => {
     centerMode: false,
     centerPadding: "0px",
     swipeToSlide: true,
-    touchThreshold: 10,
-    cssEase: "cubic-bezier(0.645, 0.045, 0.355, 1)",
+    touchThreshold: 15,
+    cssEase: "ease-out",
     fade: true,
-    waitForAnimate: false,
+    waitForAnimate: true,
     swipe: true,
     touchMove: true,
+    edgeFriction: 0.35,
     responsive: [
       {
         breakpoint: 767,
@@ -149,12 +150,13 @@ const BannerSlider = () => {
           arrows: false,
           dots: true,
           swipeToSlide: true,
-          touchThreshold: 10,
-          speed: 1000,
+          touchThreshold: 5,
+          speed: 500,
           fade: true,
-          waitForAnimate: false,
+          waitForAnimate: true,
           swipe: true,
           touchMove: true,
+          edgeFriction: 0.35,
         },
       },
     ],
