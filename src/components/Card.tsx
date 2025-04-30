@@ -19,10 +19,12 @@ import CartModal from "./UI/CartModal";
 import { openAuthModal } from "@redux/slices/authModalSlice";
 import Modal from "./UI/Modal";
 import { formatPhoneNumber } from "@components/Functions/phoneUtils";
+import { useTranslation } from "react-i18next";
 
 type Product = {
   id: number;
   name: string;
+  originalName?: string;
   cover_image: string;
   images: string[];
   price: number;
@@ -35,6 +37,7 @@ interface CardProps {
 }
 
 export const Card: React.FC<CardProps> = ({ product }) => {
+  const { i18n } = useTranslation();
   const [deleteProduct] = useDeleteProductMutation();
   const [createPreOrder] = useCreatePreOrderMutation();
   const {
@@ -124,8 +127,8 @@ export const Card: React.FC<CardProps> = ({ product }) => {
 
   const handleRedirect = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
-    const slug = createSlug(product.name);
-    navigate(`/product/${slug}`);
+    const slug = createSlug(product.name, product.originalName);
+    navigate(`/${i18n.language}/product/${slug}`);
   };
 
   const handleGoToBasket = () => {
@@ -235,7 +238,9 @@ export const Card: React.FC<CardProps> = ({ product }) => {
         <>
           <Button
             label="Редактировать"
-            onClick={() => navigate(`/admin/edit/${product.id}`)}
+            onClick={() =>
+              navigate(`/${i18n.language}/admin/edit/${product.id}`)
+            }
             variant="primary"
           />
           <Button

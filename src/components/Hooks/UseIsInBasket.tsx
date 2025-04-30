@@ -14,7 +14,7 @@ const useIsProductInBasket = (productId: number) => {
     data: basket,
     isLoading,
     isError,
-  } = useGetBasketQuery(undefined, { skip: !isLoggedIn });
+  } = useGetBasketQuery({}, { skip: !isLoggedIn });
 
   // Определяем, есть ли продукт в корзине
   const isInBasket =

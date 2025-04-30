@@ -1,393 +1,273 @@
 .header {
-  background-color: var(--body-background);
+  width: 100%;
+  background: white;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 20;
-  width: 100%;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  will-change: auto;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-y;
+  z-index: 100;
+  transition: transform 0.3s ease;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.04);
 
   .content {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 19px 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 15px 40px;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 21;
+    gap: 32px;
 
-    @media (max-width: 1200px) {
-      padding: 15px 30px;
+    @media (max-width: 1024px) {
+      padding: 16px 20px;
       gap: 20px;
     }
 
-    @media (max-width: 1024px) {
-      padding: 15px 20px;
-      gap: 16px;
-    }
-
-    @media (max-width: 768px) {
-      padding: 14px 20px;
-      padding-top: 60px;
-    }
-
-    .top {
-      display: none;
-
-      @media (max-width: 768px) {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        align-items: center;
-      }
-    }
-
-    .searchButton,
-    .menuToggle {
-      display: none;
-
-      @media (max-width: 768px) {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: none;
-        border: none;
-        color: var(--text-color);
-        cursor: pointer;
-        padding: 5px;
-
-        &:hover {
-          opacity: 0.7;
-        }
-      }
-    }
-
-    .searchContainer {
-      width: 100%;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      // margin-top контролируется анимацией
-      // margin-top: 40px !important;
-    }
-
-    .mobileMenu {
-      width: 100%;
-      overflow: hidden;
-      // background-color: var(--body-background);
-      position: relative;
-      z-index: 21;
-      // Удаляем отступы, которые могут мешать анимации
-      padding: 0;
-      margin: 0;
-
-      .mobileMenuContent {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        padding: 0 15px;
-
-        .menuButtons {
-          display: flex;
-          width: 100%;
-          gap: 8px; // два промежутка по 8px = 16px
-
-          /* чтобы текст внутри не вылезал */
-          > button {
-            min-width: 0;
-            padding: 8px 0;
-            border: 2.5px solid #e8e8e8;
-            background-color: transparent;
-            color: #a1a1a1;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 20px;
-          }
-
-          /* flex‑коэффициенты: 2+1+1 = 4 доли */
-          .aboutButton {
-            flex: 1.29;
-            background-color: var(--primary-color);
-            color: #fff;
-          }
-          .langButton {
-            flex: 1; // 1/4 = 25%
-          }
-          .activeLang {
-            background-color: var(--primary-color);
-            color: #fff;
-            opacity: 1;
-          }
-        }
-      }
-
-      // .mobileMenuContent {
-      //   display: flex;
-      //   flex-direction: column;
-      //   gap: 15px;
-      //   .menuButtons {
-      //     display: flex;
-      //     width: 100%;
-      //     gap: 8px; // пространство между кнопками
-
-      //     button {
-      //       padding: 8px 0;
-      //       border: none;
-      //       background-color: var(--primary-color);
-      //       color: #fff;
-      //       border-radius: 8px;
-      //       cursor: pointer;
-      //       font-weight: 500;
-      //     }
-
-      //     /* О нас — 50%, Рус и Каз по 25% */
-      //     .aboutButton {
-      //       flex: 0 0 50%;
-      //     }
-      //     .langButton {
-      //       flex: 0 0 25%;
-      //     }
-      //   }
-      // }
-
-      .bonusInfo {
-        font-size: 20px;
-        font-weight: 400;
-        line-height: 24px;
-        color: var(--primary-color);
-        text-align: center;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        justify-content: center;
-        padding: 12px 85px;
-        border-radius: 25px;
-        border: 1.5px solid #e8e8e8;
-        .bonusText {
-          margin-top: 3px;
-        }
-      }
-
-      .callButton {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px;
-        background-color: #1869ff;
-        color: #fff;
-        border-radius: 25px;
-        text-decoration: none;
-        font-weight: 500;
-        transition: background-color 0.3s;
-        justify-content: center;
-
-        img {
-          width: 18px;
-          height: 18px;
-        }
-
-        span {
-          color: #fff;
-        }
-
-        &:hover {
-          background-color: #0053cc;
-        }
-      }
-    }
-
     .logo {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      width: 200px;
-
-      @media (max-width: 1200px) {
-        width: 160px;
-      }
-
-      @media (max-width: 1024px) {
-        width: 140px;
-      }
-
+      flex-shrink: 0;
       img {
-        display: block;
-        height: 30px;
-        object-fit: contain;
-      }
-
-      @media (max-width: 768px) {
+        height: 21px;
         width: auto;
-        margin: 0 auto;
       }
     }
 
     .search {
-      margin-right: auto;
-      max-width: fit-content;
-      overflow: visible;
+      flex: 1;
+      max-width: 500px;
+      min-width: 200px;
 
       @media (max-width: 1200px) {
-        flex: 1;
-        min-width: 150px;
+        max-width: 400px;
       }
 
-      @media (max-width: 768px) {
-        width: 100%;
-        margin-right: 0;
-        margin-top: 10px;
-        order: 2;
-        height: fit-content;
-        overflow: hidden;
-        background-color: var(--body-background);
-        position: relative;
-        z-index: 21;
+      @media (max-width: 1024px) {
+        max-width: 170px;
       }
     }
 
     .navigation {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 24px;
 
       @media (max-width: 1200px) {
-        gap: 10px;
+        gap: 20px;
       }
 
       @media (max-width: 1024px) {
-        gap: 8px;
-      }
-
-      @media (max-width: 768px) {
-        display: none;
-      }
-
-      .menuButtons {
-        display: flex;
-        gap: 8px;
-
-        @media (max-width: 1024px) {
-          gap: 6px;
-        }
-
-        .langButton {
-          min-width: 45px;
-          padding: 6px 12px;
-          border: 1.5px solid #e8e8e8;
-          background-color: transparent;
-          color: #a1a1a1;
-          border-radius: 25px;
-          cursor: pointer;
-          font-weight: 500;
-          font-size: 14px;
-          height: 32px;
-          transition: all 0.2s ease;
-
-          @media (max-width: 1024px) {
-            min-width: 40px;
-            padding: 6px 10px;
-            font-size: 13px;
-            height: 30px;
-          }
-
-          &:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-          }
-        }
-
-        .activeLang {
-          background-color: var(--primary-color);
-          color: #fff;
-          border-color: var(--primary-color);
-
-          &:hover {
-            color: #fff;
-            opacity: 0.9;
-          }
-        }
-      }
-
-      .divider {
-        background: #efefef;
-        width: 1.5px;
-        height: 24px;
-
-        @media (max-width: 1024px) {
-          height: 20px;
-        }
-      }
-
-      span {
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 24px;
-        cursor: pointer;
-        color: var(--text-color);
-
-        @media (max-width: 1200px) {
-          font-size: 14px;
-        }
-
-        @media (max-width: 1024px) {
-          font-size: 13px;
-          max-width: 200px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
+        gap: 16px;
       }
 
       .callButton {
-        padding: 8px;
-        background-color: #1869ff;
-        color: #fff;
-        border-radius: 50%;
-        text-decoration: none;
-        font-weight: bold;
-        transition: background-color 0.3s;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 5px;
-        font-size: 12px;
-
-        @media (max-width: 1024px) {
-          padding: 6px;
-        }
+        width: 36px;
+        height: 36px;
+        background: var(--primary-color);
+        border-radius: 18px;
+        transition: opacity 0.2s ease;
 
         &:hover {
-          background-color: #0053cc;
+          opacity: 0.9;
+        }
+
+        img {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      .bonusInfo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border: 1.5px solid #e8e8e8;
+        border-radius: 25px;
+        transition: border-color 0.2s ease;
+
+        &:hover {
+          border-color: var(--primary-color);
+        }
+
+        .bonusIcon {
+          width: 20px;
+          height: 20px;
+        }
+
+        .bonusText {
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--text-color);
         }
       }
     }
   }
 }
 
-.glassOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 19;
-  background-color: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  touch-action: none;
+// Mobile styles
+@media (max-width: 768px) {
+  .header {
+    .content {
+      flex-direction: column;
+      padding: 0px 34px;
+      padding-top: 60px;
+      padding-bottom: 26px;
+      gap: 12px;
 
-  @supports not (backdrop-filter: blur(8px)) {
-    background-color: rgba(255, 255, 255, 0.8);
+      .top {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .searchButton,
+        .menuToggle {
+          background: none;
+          border: none;
+          padding: 8px;
+          cursor: pointer;
+          color: var(--text-color);
+          transition: opacity 0.2s ease;
+
+          &:hover {
+            opacity: 0.7;
+          }
+        }
+
+        .logo {
+          img {
+            height: 18px;
+          }
+        }
+      }
+
+      .searchContainer {
+        width: 100%;
+      }
+
+      .mobileMenu {
+        width: 100%;
+        overflow: hidden;
+        background: white;
+        border-radius: 0 0 40px 40px;
+        margin: 0 -15px;
+        padding: 15px;
+
+        .mobileMenuContent {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+
+          .menuButtons {
+            display: flex;
+            align-items: stretch;
+            gap: 8px;
+            width: 100%;
+
+            .aboutButton {
+              width: 50%;
+              padding: 10px 20px;
+              border: 1.5px solid #282828;
+              border-radius: 20px;
+              background: white;
+              color: var(--text-color);
+              font-weight: 500;
+              font-size: 16px;
+              cursor: pointer;
+              transition: all 0.2s ease;
+
+              &:hover {
+                border-color: #3300ff;
+              }
+            }
+
+            .languageSwitcher {
+              width: 50%;
+              display: flex;
+              gap: 8px;
+
+              button {
+                flex: 1;
+                padding: 10px;
+                border: 1.5px solid #3300ff;
+                border-radius: 20px;
+                background: white;
+                color: var(--text-color);
+                font-weight: 500;
+                font-size: 16px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+
+                &:hover {
+                  background: #3300ff;
+                  color: white;
+                }
+              }
+            }
+          }
+
+          .bonusInfo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border: 1.5px solid #282828;
+            border-radius: 20px;
+            background: white;
+            transition: border-color 0.2s ease;
+
+            &:hover {
+              border-color: #3300ff;
+            }
+
+            .bonusIcon {
+              width: 20px;
+              height: 20px;
+            }
+
+            .bonusText {
+              font-size: 16px;
+              font-weight: 500;
+              color: var(--text-color);
+            }
+          }
+
+          .callButton {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #3300ff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+            width: 100%;
+            &:hover {
+              opacity: 0.9;
+            }
+
+            img {
+              width: 20px;
+              height: 20px;
+              filter: brightness(0) invert(1);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .glassOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+    z-index: 99;
   }
 }

@@ -1,29 +1,26 @@
+import React from "react";
 import { useGetUserOrdersQuery } from "@redux/services/ordersApi";
 import styles from "@styles/orders-page.module.scss";
 import { formatPrice } from "@components/Functions/formatPrice";
 import { Order } from "types/types";
 import { useEffect } from "react";
 import socket from "../socket";
+import { useTranslation } from "react-i18next";
 
-const OrderStatusTranslation: Record<string, string> = {
-  PENDING: "Ожидает обработки",
-  CONFIRMED: "Ожидает оплаты",
-  PAID: "Оплачен",
-  COMPLETED: "Завершен",
-  CANCELED: "Отменен",
-};
-
-const Orders = () => {
+const Orders: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const {
     data: orders,
     isLoading,
     isError,
     refetch,
-  } = useGetUserOrdersQuery({});
+  } = useGetUserOrdersQuery(
+    { language: i18n.language.toUpperCase() },
+    { refetchOnMountOrArgChange: true }
+  );
 
   useEffect(() => {
     // Set up WebSocket listeners
-
     socket.on(
       "orderStatusUpdate",
       (data: { orderId: number; status: string }) => {
@@ -40,37 +37,37 @@ const Orders = () => {
   }, []); // No dependency array ensures this runs only once on mount
 
   if (isLoading) {
-    return <div className={styles.loader}>Загрузка...</div>;
+    return <div className={styles.loader}>{t("orders.loading")}</div>;
   }
 
   if (isError) {
-    return <div className={styles.error}>Ошибка при загрузке заказов</div>;
+    return <div className={styles.error}>{t("orders.error")}</div>;
   }
 
   if (!orders || orders.length === 0) {
-    return <div className={styles.empty}>У вас пока нет заказов</div>;
+    return <div className={styles.empty}>{t("orders.empty")}</div>;
   }
 
   return (
     <div className={styles.container}>
-      <h1>Мои заказы</h1>
+      <h1>{t("orders.title")}</h1>
       <ul className={styles.orderList}>
         {orders.map((order: Order) => (
           <li key={order.id} className={styles.orderItem}>
             <div className={styles.orderInfo}>
               <span className={styles.orderId}>
-                Номер заказа: <span className={styles.value}>{order.id}</span>
+                {t("orders.orderNumber", { number: order.id })}
               </span>
               <span className={styles.orderDate}>
-                Дата заказа:{" "}
+                {t("orders.date")}:{" "}
                 <span className={styles.value}>
-                  {new Date(order.createdAt).toLocaleDateString()}
+                  {new Date(order.createdAt).toLocaleDateString(i18n.language)}
                 </span>
               </span>
               <span className={styles.orderStatus}>
-                Статус:{" "}
+                {t("orders.status.title")}:{" "}
                 <span className={styles.value}>
-                  {OrderStatusTranslation[order.status] || "Неизвестный статус"}
+                  {t(`orders.status.${order.status}`)}
                 </span>
               </span>
             </div>
@@ -81,23 +78,29 @@ const Orders = () => {
                     src={`${import.meta.env.VITE_API_URL}${
                       product.product.cover_image
                     }`}
-                    alt={product.product.name}
+                    alt={
+                      product.product.translations?.[0]?.name ||
+                      product.product.name
+                    }
                     className={styles.productImage}
                   />
                   <div className={styles.productDetails}>
                     <span className={styles.productName}>
-                      {product.product.name}
+                      {product.product.translations?.[0]?.name ||
+                        product.product.name}
                     </span>
                     <span className={styles.productPrice}>
                       {formatPrice(product.product.price)} ₸ x{" "}
-                      {product.quantity}
+                      <span className={styles.quantity}>
+                        {product.quantity}
+                      </span>
                     </span>
                   </div>
                 </li>
               ))}
             </ul>
             <div className={styles.totalPrice}>
-              Сумма:{" "}
+              {t("orders.totalAmount")}:{" "}
               <span className={styles.value}>
                 {formatPrice(order.totalPrice)} ₸
               </span>

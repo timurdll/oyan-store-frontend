@@ -12,14 +12,19 @@ import StepAddress from "@components/Checkout/StepAddress";
 import StepPayment from "@components/Checkout/StepPayment";
 import OrderSuccessModal from "@components/OrderSuccessModal";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const CheckOut = () => {
+  const { t, i18n } = useTranslation();
   const stepRefs = [
     useRef<HTMLDivElement>(null),
     useRef<HTMLDivElement>(null),
     useRef<HTMLDivElement>(null),
   ];
-  const { data: basketProducts = [] } = useGetBasketQuery();
+  const { data: basketProducts = [] } = useGetBasketQuery(
+    { language: i18n.language.toUpperCase() },
+    { skip: false }
+  );
   const [createOrder] = useCreateOrderMutation();
   const [clearBasket] = useClearBasketMutation();
   const [currentStep, setCurrentStep] = useState(1);
@@ -176,7 +181,7 @@ const CheckOut = () => {
       },
       product: basketProducts.map((item) => ({
         productId: item.product.id,
-        productName: item.product.name,
+        productName: item.product.translations?.[0]?.name || item.product.name,
         quantity: item.quantity,
       })),
       totalAmount: totalSum,
@@ -200,7 +205,7 @@ const CheckOut = () => {
 
   return (
     <div className={styles.container}>
-      <h1>Оформление заказа</h1>
+      <h1>{t("checkout.title")}</h1>
       <div className={styles.order}>
         <div className={styles.form}>
           <div className={styles.toggleButtons}>
@@ -210,7 +215,7 @@ const CheckOut = () => {
               }`}
               onClick={() => setIsLegalEntity(false)}
             >
-              Физическое лицо
+              {t("checkout.individual")}
             </button>
             <button
               className={`${styles.toggleButton} ${
@@ -218,7 +223,7 @@ const CheckOut = () => {
               }`}
               onClick={() => setIsLegalEntity(true)}
             >
-              Юридическое лицо
+              {t("checkout.legal")}
             </button>
           </div>
 
@@ -281,9 +286,13 @@ const CheckOut = () => {
               variants={stepVariants}
             >
               <StepPayment
-                paymentMethod={paymentMethod}
-                setPaymentMethod={setPaymentMethod}
-                handleOrderSubmit={handleOrderSubmit}
+                initialValues={{
+                  paymentMethod: paymentMethod[0] || "",
+                }}
+                onSubmit={async (values) => {
+                  setPaymentMethod([values.paymentMethod]);
+                  await handleOrderSubmit();
+                }}
                 completed={completedSteps[2]}
                 isLoading={isLoading}
               />

@@ -1,77 +1,100 @@
 import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import styles from "@styles/steps.module.scss";
 import Button from "@components/UI/Button";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 
 interface StepPaymentProps {
-  paymentMethod: string[];
-  setPaymentMethod: React.Dispatch<React.SetStateAction<string[]>>; // Update here
-  handleOrderSubmit: () => void;
+  initialValues: {
+    paymentMethod: string;
+  };
+  onSubmit: (data: any) => void;
   completed: boolean;
-  isLoading: boolean; // Новое свойство
+  isLoading?: boolean;
 }
 
 const StepPayment: React.FC<StepPaymentProps> = ({
-  paymentMethod,
-  setPaymentMethod,
-  handleOrderSubmit,
+  initialValues,
   completed,
-  isLoading,
+  onSubmit,
+  isLoading = false,
 }) => {
-  const paymentOptions = [
-    { id: "credit_card", label: "Kaspi удаленный счет на оплату" },
-  ];
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
 
-  const handleCheckboxChange = (method: string) => {
-    setPaymentMethod((prevMethods) =>
-      prevMethods.includes(method)
-        ? prevMethods.filter((item) => item !== method)
-        : [...prevMethods, method]
-    );
+  const validationSchema = Yup.object({
+    paymentMethod: Yup.string().required(
+      t("checkout.steps.payment.validation.methodRequired")
+    ),
+  });
+
+  const handleFormSubmit = async (values: { paymentMethod: string }) => {
+    try {
+      await onSubmit(values);
+      navigate(`/${i18n.language}/order-success`);
+    } catch (error) {
+      console.error("Error during payment:", error);
+    }
   };
 
   return (
     <div className={styles.step}>
       <div className={styles.info}>
         <span className={styles.number}>3</span>
-        <span className={styles.text}>Способ оплаты:</span>
+        <span className={styles.text}>
+          {t("checkout.steps.payment.title")}:
+        </span>
       </div>
-      <div className={styles.inputs_3}>
-        <div className={styles.fields}>
-          <div className={styles.field}>
-            <label htmlFor="paymentMethod">Выберите способ оплаты:</label>
-            <div className={styles.checkboxGroup}>
-              {paymentOptions.map((option) => (
-                <div className={styles.checkbox} key={option.id}>
-                  <input
-                    type="checkbox"
-                    id={option.id}
-                    checked={paymentMethod.includes(option.id)}
-                    onChange={() => handleCheckboxChange(option.id)}
-                  />
-                  <label htmlFor={option.id}>{option.label}</label>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleFormSubmit}
+      >
+        {() => (
+          <Form className={styles.inputs}>
+            <div className={styles.fields}>
+              <div className={styles.field}>
+                <label>{t("checkout.steps.payment.selectMethod")}:</label>
+                <div className={styles.radioGroup}>
+                  <label>
+                    <Field
+                      type="radio"
+                      name="paymentMethod"
+                      value="kaspi"
+                      className={styles.radio}
+                    />
+                    {t("checkout.steps.payment.methods.kaspi")}
+                  </label>
                 </div>
-              ))}
+                <ErrorMessage
+                  name="paymentMethod"
+                  component="div"
+                  className={styles.error}
+                />
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      {!completed && (
-        <div className={styles.button}>
-          <Button
-            onClick={handleOrderSubmit}
-            label={
-              isLoading ? (
-                <CircularProgress size={20} color="inherit" />
-              ) : (
-                "Оформить заказ"
-              )
-            }
-            variant="primaryLarge"
-            disabled={isLoading} // Отключаем кнопку во время загрузки
-          />
-        </div>
-      )}
+            {!completed && (
+              <div className={styles.button}>
+                <Button
+                  label={
+                    isLoading ? (
+                      <CircularProgress size={20} color="inherit" />
+                    ) : (
+                      t("checkout.steps.payment.submit")
+                    )
+                  }
+                  variant="primaryLarge"
+                  type="submit"
+                  disabled={isLoading}
+                />
+              </div>
+            )}
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };

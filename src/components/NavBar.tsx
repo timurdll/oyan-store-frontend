@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { useFetchTypesQuery } from "@redux/services";
+import { useFetchTypesQuery } from "@redux/services/typeApi";
 import { Skeleton } from "@mui/material";
 import styles from "@styles/navbar.module.scss";
+import { useTranslation } from "react-i18next";
 
 interface Type {
   id: number;
@@ -11,12 +12,17 @@ interface Type {
 const Navbar: React.FC<{ onTypeSelect: (typeId: number | null) => void }> = ({
   onTypeSelect,
 }) => {
-  const { data: types, isLoading, error } = useFetchTypesQuery({});
+  const { t, i18n } = useTranslation();
+  const {
+    data: types,
+    isLoading,
+    error,
+  } = useFetchTypesQuery({ language: i18n.language.toUpperCase() });
   const [selectedTypeId, setSelectedTypeId] = useState<number | null>(null);
 
   const handleTypeSelect = (typeId: number | null) => {
-    setSelectedTypeId(typeId); // Устанавливаем выбранный id
-    onTypeSelect(typeId); // Передаем в родительский компонент
+    setSelectedTypeId(typeId);
+    onTypeSelect(typeId);
   };
 
   if (isLoading)
@@ -91,7 +97,7 @@ const Navbar: React.FC<{ onTypeSelect: (typeId: number | null) => void }> = ({
         />
       </nav>
     );
-  if (error) return <div>Error loading types</div>;
+  if (error) return <div>{t("navbar.error")}</div>;
 
   return (
     <nav className={styles.buttons}>
@@ -101,7 +107,7 @@ const Navbar: React.FC<{ onTypeSelect: (typeId: number | null) => void }> = ({
         }`}
         onClick={() => handleTypeSelect(null)}
       >
-        Каталог товаров
+        {t("navigation.catalog")}
       </button>
       {types?.map((type: Type) => (
         <button
@@ -109,7 +115,7 @@ const Navbar: React.FC<{ onTypeSelect: (typeId: number | null) => void }> = ({
           className={`${styles.categoryButton} ${
             selectedTypeId === type.id ? styles.active : ""
           }`}
-          onClick={() => handleTypeSelect(type.id)} // Ensure id is a number
+          onClick={() => handleTypeSelect(type.id)}
         >
           {type.name}
         </button>

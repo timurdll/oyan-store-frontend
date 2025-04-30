@@ -11,55 +11,65 @@ import AdminOrders from "@components/AdminPanel/AdminOrders";
 import OrderSuccessPage from "@pages/OrderSuccessPage";
 import AboutUsPage from "@pages/AboutUs";
 import StockManagement from "@components/AdminPanel/StockManagment";
+import TypesManager from "@components/AdminPanel/TypesManager";
+import CharacteristicsTranslationsPage from "@components/AdminPanel/CharacteristicsTranslationsPage";
 
 export const publicRoutes = [
-  { path: "/", Component: Home },
-  { path: "/product/:slug", Component: ProductPage },
+  { path: "*", Component: Home },
+  { path: "product/:slug", Component: ProductPage },
   { path: "about-us", Component: AboutUsPage },
 ];
 
 export const userRoutes = [
   {
-    path: "/profile",
+    path: "profile",
     Component: Profile,
   },
   {
-    path: "/checkout",
+    path: "checkout",
     Component: CheckOut,
   },
   {
-    path: "/orders",
+    path: "orders",
     Component: Orders,
   },
   {
-    path: "/basket",
+    path: "basket",
     Component: BasketPage,
   },
   {
-    path: "/order-success",
+    path: "order-success",
     Component: OrderSuccessPage,
   },
 ];
 
 export const adminRoutes = [
   {
-    path: "/admin",
+    path: "admin",
     Component: AdminPanel,
   },
   {
-    path: "/admin/add-product",
+    path: "admin/add-product",
     Component: AddProduct,
   },
   {
-    path: "/admin/edit/:id",
+    path: "admin/edit/:id",
     Component: EditProduct,
   },
   {
-    path: "/admin/orders",
+    path: "admin/orders",
     Component: AdminOrders,
   },
   {
-    path: "/admin/stock",
+    path: "admin/stock",
     Component: StockManagement,
+  },
+  {
+    path: "admin/types",
+    Component: TypesManager,
+  },
+  {
+    path: "admin/characteristics-translations",
+    Component: CharacteristicsTranslationsPage,
   },
 ];

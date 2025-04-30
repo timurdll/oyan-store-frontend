@@ -1,0 +1,267 @@
+{
+  "welcome": "Добро пожаловать в Oyan-store!",
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Произошла ошибка",
+    "search": "Поиск",
+    "close": "Закрыть",
+    "submit": "Отправить",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "backToHome": "Вернуться на главную"
+  },
+  "header": {
+    "search": {
+      "open": "Открыть поиск",
+      "close": "Закрыть поиск"
+    },
+    "menu": {
+      "open": "Открыть меню",
+      "close": "Закрыть меню"
+    },
+    "bonuses": "бонусов",
+    "bonusesLabel": "Бонусы",
+    "about": "О нас",
+    "call": "Позвонить"
+  },
+  "navigation": {
+    "home": "Главная",
+    "catalog": "Каталог",
+    "about": "О нас",
+    "contacts": "Контакты",
+    "basket": "Корзина",
+    "profile": "Профиль",
+    "login": "Войти",
+    "register": "Зарегистрироваться",
+    "orders": "Заказы",
+    "favorites": "Избранное"
+  },
+  "product": {
+    "price": "Цена",
+    "addToCart": "Добавить в корзину",
+    "addToFavorites": "Добавить в избранное",
+    "characteristics": "Характеристики",
+    "description": "Описание",
+    "inStock": "В наличии",
+    "outOfStock": "Товар закончился",
+    "reviews": "Отзывы",
+    "leaveReview": "Оставить отзыв",
+    "preOrder": "Предзаказ",
+    "goToCart": "Перейти в корзину",
+    "quickPurchase": "Купить в 1 клик",
+    "adding": "Добавляется...",
+    "marketplaces": {
+      "title": "Купить на маркетплейсах"
+    },
+    "quickPurchaseModal": {
+      "title": "Быстрая покупка",
+      "namePlaceholder": "Ваше имя",
+      "phonePlaceholder": "Ваш телефон",
+      "submit": "Оформить заказ",
+      "submitting": "Отправка...",
+      "success": "Ваш заказ принят, мы свяжемся с вами!",
+      "error": {
+        "fillFields": "Пожалуйста, заполните все поля корректно",
+        "general": "Ошибка. Попробуйте позже."
+      }
+    },
+    "showMore": "Показать все характеристики",
+    "showLess": "Скрыть характеристики"
+  },
+  "cart": {
+    "title": "Корзина",
+    "empty": "Ваша корзина пуста",
+    "total": "Итого",
+    "checkout": "Оформить заказ",
+    "continueShopping": "Продолжить покупки",
+    "removeItem": "Удалить товар",
+    "clearCart": "Очистить корзину"
+  },
+  "auth": {
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "login": "Войти",
+    "register": "Зарегистрироваться",
+    "forgotPassword": "Забыли пароль?",
+    "alreadyHaveAccount": "Уже есть аккаунт?",
+    "dontHaveAccount": "Нет аккаунта?",
+    "resetPassword": "Сбросить пароль"
+  },
+  "profile": {
+    "personalInfo": "Личная информация",
+    "orders": "Заказы",
+    "favorites": "Избранное",
+    "settings": "Настройки",
+    "logout": "Выйти",
+    "bonuses": "Бонусы",
+    "holdingBonuses": "Накопленные бонусы"
+  },
+  "admin": {
+    "dashboard": "Панель управления",
+    "products": "Товары",
+    "addProduct": "Добавить товар",
+    "editProduct": "Редактировать товар",
+    "orders": "Заказы",
+    "users": "Пользователи",
+    "types": "Типы товаров",
+    "stock": "Управление запасами",
+    "manageTypes": "Управление типами товаров",
+    "addType": "Добавить тип",
+    "editType": "Редактировать тип",
+    "deleteType": "Удалить тип",
+    "confirmation": "Вы уверены?"
+  },
+  "searchBar": {
+    "placeholder": "Я ищу...",
+    "noResults": "Нет результатов",
+    "searchButton": "Поиск"
+  },
+  "footer": {
+    "company": {
+      "title": "Компания:",
+      "about": "О нас",
+      "products": "Товары",
+      "services": "Услуги"
+    },
+    "customers": {
+      "title": "Клиентам:",
+      "delivery": "Доставка",
+      "help": "Помощь",
+      "warranty": "Условия гарантии",
+      "howToOrder": "Как оформить заказ"
+    },
+    "contacts": {
+      "title": "Оставайтесь на связи:",
+      "workingHours": "График работы",
+      "address": "Астана, ул. Б. Майлина 37, 4 этаж, 412 каб."
+    },
+    "copyright": "Интернет-магазин Oyan Store. Oyan® Все права защищены"
+  },
+  "basket": {
+    "title": "Корзина",
+    "empty": "Здесь пока пусто...",
+    "pleaseLogin": "Пожалуйста, войдите в систему, чтобы увидеть вашу корзину.",
+    "loading": "Загрузка...",
+    "error": "Ошибка при загрузке корзины",
+    "delete": "Удалить",
+    "stockLimit": "Вы не можете добавить больше {{stock}} единиц товара.",
+    "alerts": {
+      "addSuccess": "Товар успешно добавлен в корзину!",
+      "addError": "Не удалось добавить товар в корзину. Попробуйте еще раз."
+    }
+  },
+  "checkout": {
+    "title": "Оформление заказа",
+    "individual": "Физическое лицо",
+    "legal": "Юридическое лицо",
+    "steps": {
+      "userData": {
+        "title": "Ваши данные",
+        "phoneNumber": "Ваш номер телефона",
+        "fullName": "ФИО",
+        "email": "Электронная почта",
+        "loading": "Загрузка данных...",
+        "legal": {
+          "companyName": "Название компании",
+          "bin": "БИН",
+          "companyAddress": "Юридический адрес",
+          "companyPhone": "Телефон компании",
+          "postalCode": "Почтовый индекс",
+          "iik": "ИИК",
+          "bik": "БИК",
+          "bankName": "Название банка"
+        },
+        "validation": {
+          "phoneFormat": "Введите корректный номер телефона (+7 XXX XXX-XX-XX)",
+          "required": "Обязательное поле",
+          "minLength": "Минимальная длина 3 символа",
+          "email": "Введите корректный email",
+          "bin": "БИН должен содержать 12 цифр",
+          "postalCode": "Почтовый индекс должен содержать 6 цифр",
+          "iik": "ИИК должен содержать 2 буквы и 20 цифр",
+          "bik": "БИК должен содержать 8 символов"
+        }
+      },
+      "address": {
+        "title": "Ваш адрес",
+        "city": "Город",
+        "street": "Улица",
+        "house": "Дом",
+        "entrance": "Подъезд",
+        "apartment": "Квартира",
+        "next": "Далее",
+        "validation": {
+          "cityRequired": "Город обязателен для заполнения",
+          "streetRequired": "Улица обязательна для заполнения",
+          "houseRequired": "Номер дома обязателен для заполнения"
+        }
+      },
+      "payment": {
+        "title": "Способ оплаты",
+        "selectMethod": "Выберите способ оплаты",
+        "methods": {
+          "kaspi": "Kaspi удаленный счет на оплату"
+        },
+        "submit": "Оформить заказ"
+      }
+    }
+  },
+  "receipt": {
+    "totalAmount": "Сумма к оплате",
+    "emptyCart": "Корзина пуста",
+    "checkout": "Оформить заказ",
+    "goToProducts": "Перейти к продуктам"
+  },
+  "orderSuccess": {
+    "congratulations": "Поздравляем!",
+    "orderCreated": "Ваш заказ был успешно создан!",
+    "thankYou": "Спасибо за покупку в нашем магазине.",
+    "goToOrders": "На страницу заказов",
+    "goToHome": "На домашнюю страницу"
+  },
+  "orders": {
+    "title": "Мои заказы",
+    "empty": "У вас пока нет заказов",
+    "loading": "Загрузка заказов...",
+    "error": "Ошибка при загрузке заказов",
+    "orderNumber": "Заказ №{{number}}",
+    "status": {
+      "title": "Статус",
+      "PENDING": "Ожидает обработки",
+      "CONFIRMED": "Подтвержден",
+      "PAID": "Оплачен",
+      "COMPLETED": "Завершен",
+      "CANCELED": "Отменен"
+    },
+    "date": "Дата заказа",
+    "totalAmount": "Сумма заказа",
+    "products": "Товары",
+    "quantity": "Количество",
+    "price": "Цена",
+    "total": "Итого",
+    "details": {
+      "title": "Детали заказа",
+      "customerInfo": "Информация о покупателе",
+      "name": "Имя",
+      "phone": "Телефон",
+      "email": "Email",
+      "deliveryAddress": "Адрес доставки",
+      "paymentMethod": "Способ оплаты",
+      "orderStatus": "Статус заказа",
+      "close": "Закрыть"
+    },
+    "legal": {
+      "title": "Информация о юридическом лице",
+      "companyName": "Название компании",
+      "bin": "БИН",
+      "address": "Юридический адрес",
+      "phone": "Телефон компании",
+      "postalCode": "Почтовый индекс",
+      "iik": "ИИК",
+      "bik": "БИК",
+      "bankName": "Название банка"
+    }
+  }
+}

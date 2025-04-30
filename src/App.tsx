@@ -4,22 +4,22 @@ import Footer from "@components/Footer";
 import Header from "@components/Header";
 import useIsMobile from "@components/Hooks/UseIsMobile";
 import MobileMenu from "@components/MobileMenu";
-import Loader from "@components/UI/Loader";
 import Auth from "@pages/Auth";
 import AppRouter from "@routes/AppRouter";
-import ScrollToTopWrapper from "@routes/ScrollToTopWrapper";
-import { Suspense, useEffect, useState } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import socket from "./socket";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/store";
 import { jwtDecode } from "jwt-decode";
+import { useTranslation } from "react-i18next";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
   const isMobile = useIsMobile();
   const { token } = useSelector((state: RootState) => state.user);
-  console.log(token);
   const [userId, setUserId] = useState<string | null>(null);
+  const { i18n } = useTranslation();
 
   // Эффект для декодирования токена и установки userId
   useEffect(() => {
@@ -69,27 +69,28 @@ function App() {
   }, [userId]); // Эффект срабатывает при изменении userId
 
   return (
-    <Suspense
-      fallback={
-        <div>
-          <Loader />
-        </div>
-      }
-    >
+    <ErrorBoundary>
       <BrowserRouter>
-        <ScrollToTopWrapper>
-          <div className="app-container">
-            <Header />
-            <main className="content">
-              <AppRouter />
-            </main>
-            {isMobile ? <MobileMenu /> : <></>}
-            <Auth />
-            <Footer />
-          </div>
-        </ScrollToTopWrapper>
+        <div className="app-container">
+          <Header />
+          <main className="content">
+            <Routes>
+              {/* Root redirects to current language */}
+              <Route
+                path="/"
+                element={<Navigate to={`/${i18n.language}`} replace />}
+              />
+
+              {/* Render routes for each language */}
+              <Route path="/:lang/*" element={<AppRouter />} />
+            </Routes>
+          </main>
+          {isMobile ? <MobileMenu /> : <></>}
+          <Auth />
+          <Footer />
+        </div>
       </BrowserRouter>
-    </Suspense>
+    </ErrorBoundary>
   );
 }
 

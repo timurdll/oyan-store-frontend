@@ -3,7 +3,10 @@ import { baseApi } from "./baseApi";
 export const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     fetchProducts: builder.query({
-      query: () => "/products",
+      query: (params) => {
+        const language = params?.language;
+        return language ? `/products?language=${language}` : "/products";
+      },
       providesTags: (result) =>
         result
           ? [
@@ -50,16 +53,36 @@ export const productApi = baseApi.injectEndpoints({
       invalidatesTags: ({ id }) => [{ type: "Products", id }],
     }),
     fetchProductById: builder.query({
-      query: (id) => `/products/${id}`,
-      providesTags: (id) => [{ type: "Products", id }],
+      query: (params) => {
+        const id = typeof params === "object" ? params.id : params;
+        const language =
+          typeof params === "object" ? params.language : undefined;
+        return language
+          ? `/products/${id}?language=${language}`
+          : `/products/${id}`;
+      },
+      providesTags: (_, __, params) => {
+        const id = typeof params === "object" ? params.id : params;
+        return [{ type: "Products", id }];
+      },
     }),
     fetchProductByName: builder.query({
       query: (name) => `/products/name/${name}`,
       providesTags: (name) => [{ type: "Products", id: `NAME_${name}` }],
     }),
     fetchProductBySlug: builder.query({
-      query: (slug) => `/products/slug/${slug}`,
-      providesTags: (slug) => [{ type: "Products", id: `SLUG_${slug}` }],
+      query: (params) => {
+        const slug = typeof params === "object" ? params.slug : params;
+        const language =
+          typeof params === "object" ? params.language : undefined;
+        return language
+          ? `/products/slug/${slug}?language=${language}`
+          : `/products/slug/${slug}`;
+      },
+      providesTags: (_, __, params) => {
+        const slug = typeof params === "object" ? params.slug : params;
+        return [{ type: "Products", id: `SLUG_${slug}` }];
+      },
     }),
     createPreOrder: builder.mutation({
       query: ({ productId, phoneNumber }) => ({

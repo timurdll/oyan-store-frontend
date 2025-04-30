@@ -6,9 +6,11 @@ import {
 } from "@redux/services";
 import { useParams } from "react-router-dom";
 import EditProductForm from "@components/AdminPanel/ProductEditForm";
+import { useTranslation } from "react-i18next";
 
 const EditProduct = () => {
   const { id } = useParams();
+  const { i18n } = useTranslation();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -22,19 +24,24 @@ const EditProduct = () => {
     data: product,
     isLoading: isProductLoading,
     error: productError,
-  } = useFetchProductByIdQuery(id);
+  } = useFetchProductByIdQuery({ id, language: i18n.language.toUpperCase() });
 
   const {
     data: type,
     isLoading: isTypeLoading,
     error: typeError,
-  } = useFetchTypeByIdQuery(product?.typeId, { skip: !product });
+  } = useFetchTypeByIdQuery(
+    { id: product?.typeId || 0, language: i18n.language.toUpperCase() },
+    { skip: !product || !product.typeId }
+  );
 
   const {
     data: availableCharacteristics,
     isLoading: isCharLoading,
     error: charError,
-  } = useFetchCharacteristicByIdQuery(product?.typeId, { skip: !product });
+  } = useFetchCharacteristicByIdQuery(product?.typeId || 0, {
+    skip: !product || !product.typeId,
+  });
 
   useEffect(() => {
     if (isProductLoading || isTypeLoading || isCharLoading) {

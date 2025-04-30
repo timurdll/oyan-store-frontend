@@ -106,10 +106,6 @@ body {
     // border: 2px solid var(--container-color); // Промежуток между треком и ползунком
   }
 
-  &::-webkit-scrollbar-thumb:hover {
-    // background: var(--primary-color-dark); // Цвет при наведении
-  }
-
   &::-webkit-scrollbar-corner {
     background: var(
       --background-dark

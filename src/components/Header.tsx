@@ -8,34 +8,30 @@ import SearchBar from "./UI/SearchBar";
 import useIsMobile from "./Hooks/UseIsMobile";
 import styles from "@styles/header.module.scss";
 import logo from "@assets/images/oyanlogo.svg";
-// import BurgerMenu from "./UI/BurgerMenu";
 import phoneIcon from "@assets/images/call.svg";
 import { IoSearch, IoClose } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
-import bonuses from "@assets/images/bonuses.svg"; // Импорт иконки бонусов
-
-type Lang = "ru" | "kk";
+import bonuses from "@assets/images/bonuses.svg";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
-  const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn);
+  const isLoggedIn = useSelector((state: any) => state.user.currentUser);
   const { data } = useGetUserBonusesQuery(undefined, { skip: !isLoggedIn });
   const isMobile = useIsMobile();
+  const { t, i18n } = useTranslation();
 
   const [isVisible, setIsVisible] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const [lang, setLang] = useState<Lang>("ru");
-
   useEffect(() => {
     setIsVisible(true);
-
     if (isMobileMenuOpen || isSearchOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
-
     return () => {
       document.body.style.overflow = "";
     };
@@ -56,7 +52,7 @@ const Header = () => {
     setIsSearchOpen(false);
   };
 
-  // Варианты анимации для контейнеров
+  // Animation variants
   const menuVariants = {
     open: {
       height: "auto",
@@ -113,7 +109,11 @@ const Header = () => {
                 <button
                   className={styles.searchButton}
                   onClick={toggleSearch}
-                  aria-label={isSearchOpen ? "Закрыть поиск" : "Открыть поиск"}
+                  aria-label={
+                    isSearchOpen
+                      ? t("header.search.close")
+                      : t("header.search.open")
+                  }
                 >
                   {isSearchOpen ? (
                     <IoClose size={22} />
@@ -123,7 +123,7 @@ const Header = () => {
                 </button>
 
                 <div className={styles.logo}>
-                  <Link to="/">
+                  <Link to={`/${i18n.language}`}>
                     <img src={logo} alt="logo" />
                   </Link>
                 </div>
@@ -134,7 +134,9 @@ const Header = () => {
                   }`}
                   onClick={toggleMobileMenu}
                   aria-label={
-                    isMobileMenuOpen ? "Закрыть меню" : "Открыть меню"
+                    isMobileMenuOpen
+                      ? t("header.menu.close")
+                      : t("header.menu.open")
                   }
                 >
                   <IoIosArrowDown
@@ -175,41 +177,28 @@ const Header = () => {
                     transition={{ duration: 0.4, ease: "easeInOut" }}
                   >
                     <div className={styles.mobileMenuContent}>
-                      {/* <LanguageSelector /> */}
                       {isLoggedIn && (
                         <div className={styles.bonusInfo}>
                           <img
                             src={bonuses}
-                            alt="Бонусы"
+                            alt={t("header.bonusesLabel")}
                             className={styles.bonusIcon}
                           />
                           <span className={styles.bonusText}>
-                            {data ? `${data.bonuses} бонусов` : "Бонусы"}
+                            {data
+                              ? `${data.bonuses} ${t("header.bonuses")}`
+                              : t("header.bonusesLabel")}
                           </span>
                         </div>
                       )}
                       <div className={styles.menuButtons}>
-                        <button className={styles.aboutButton}>О нас</button>
-                        <button
-                          className={`${styles.langButton} ${
-                            lang === "ru" ? styles.activeLang : ""
-                          }`}
-                          onClick={() => setLang("ru")}
-                        >
-                          Рус
+                        <button className={styles.aboutButton}>
+                          {t("header.about")}
                         </button>
-                        <button
-                          className={`${styles.langButton} ${
-                            lang === "kk" ? styles.activeLang : ""
-                          }`}
-                          onClick={() => setLang("kk")}
-                        >
-                          Каз
-                        </button>
+                        <LanguageSwitcher className={styles.languageSwitcher} />
                       </div>
                       <a href="tel:+77089045254" className={styles.callButton}>
-                        <img src={phoneIcon} alt="Позвонить" />
-                        <span>Позвонить</span>
+                        <img src={phoneIcon} alt={t("header.call")} />
                       </a>
                     </div>
                   </motion.div>
@@ -219,59 +208,53 @@ const Header = () => {
           ) : (
             <>
               <div className={styles.logo}>
-                <Link to="/">
+                <Link to={`/${i18n.language}`}>
                   <img src={logo} alt="logo" />
                 </Link>
               </div>
 
               <div className={styles.search}>
-                <SearchBar />
+                <SearchBar isSearchOpen={true} />
               </div>
 
               <div className={styles.navigation}>
-                <div className={styles.menuButtons}>
-                  <button
-                    className={`${styles.langButton} ${
-                      lang === "ru" ? styles.activeLang : ""
-                    }`}
-                    onClick={() => setLang("ru")}
-                  >
-                    Рус
-                  </button>
-                  <button
-                    className={`${styles.langButton} ${
-                      lang === "kk" ? styles.activeLang : ""
-                    }`}
-                    onClick={() => setLang("kk")}
-                  >
-                    Каз
-                  </button>
-                </div>
-                <div className={styles.divider} />
-                <span>
-                  {data
-                    ? `Бонусы: ${data.bonuses} (${data.holdingBonuses} удержано)`
-                    : "Бонусы"}
-                </span>
-                <div className={styles.divider} />
-                <UserMenu />
-                <div className={styles.divider} />
-                <a href="tel:+77089045254" className={styles.callButton}>
-                  <img src={phoneIcon} alt="Позвонить" />
+                <LanguageSwitcher className={styles.languageSwitcher} />
+
+                <a href="tel:+77088040354" className={styles.callButton}>
+                  <img
+                    src={phoneIcon}
+                    alt={t("header.call")}
+                    className={styles.phoneIcon}
+                  />
                 </a>
+
+                {isLoggedIn && (
+                  <div className={styles.bonusInfo}>
+                    <img
+                      src={bonuses}
+                      alt={t("header.bonusesLabel")}
+                      className={styles.bonusIcon}
+                    />
+                    <span className={styles.bonusText}>
+                      {data ? data.bonuses : "0"}
+                    </span>
+                  </div>
+                )}
+
+                <UserMenu className={styles.userMenuDesktop} />
               </div>
             </>
           )}
         </div>
       </motion.header>
+
       <AnimatePresence>
-        {(isMobileMenuOpen || isSearchOpen) && isMobile && (
+        {(isMobileMenuOpen || isSearchOpen) && (
           <motion.div
             className={styles.glassOverlay}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
             onClick={closeOverlay}
           />
         )}

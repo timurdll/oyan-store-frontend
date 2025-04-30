@@ -3,9 +3,17 @@ import styles from "@styles/stockManagement.module.scss";
 import { useFetchProductsQuery, useUpdateStockMutation } from "@redux/services";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@components/UI/Alert";
+import { useTranslation } from "react-i18next";
 
 const StockManagement: React.FC = () => {
-  const { data: products, error, isLoading } = useFetchProductsQuery({});
+  const { i18n } = useTranslation();
+  const {
+    data: products,
+    error,
+    isLoading,
+  } = useFetchProductsQuery({
+    language: i18n.language.toUpperCase(),
+  });
   const [updateStock] = useUpdateStockMutation();
   const [alert, setAlert] = useState<{
     message: string;

@@ -1,7 +1,7 @@
 .container {
   padding: 20px;
   h1 {
-    font-weight: bold;
+    font-family: var(--font-family-bold);
     font-size: 24px;
     @media (max-width: 768px) {
       font-size: 18px;
@@ -30,7 +30,7 @@
         .orderId,
         .orderDate,
         .orderStatus {
-          font-family: "Gilroy-Bold";
+          font-family: var(--font-family-bold);
           font-size: 24px;
           color: #575757;
           @media (max-width: 768px) {
@@ -71,11 +71,11 @@
             font-size: 18px;
           }
           .productName {
-            // font-family: "Gilroy-Regular";
+            font-family: var(--font-family-regular);
             font-weight: 500;
           }
           .productPrice {
-            // font-family: "Gilroy-Black";
+            font-family: var(--font-family-bold);
             font-weight: 700;
           }
         }
@@ -83,7 +83,7 @@
     }
     .totalPrice {
       margin: 20px 30px;
-      // font-family: "Gilroy-Bold";
+      font-family: var(--font-family-bold);
       font-weight: 700;
       font-size: 24px;
       color: #575757;
@@ -109,4 +109,5 @@
   text-align: center;
   margin: 20px 0;
   font-size: 18px;
+  font-family: var(--font-family-regular);
 }

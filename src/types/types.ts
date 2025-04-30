@@ -28,6 +28,7 @@ export interface BasketProduct {
 export interface Product {
   id: number;
   name: string;
+  originalName?: string; // Оригинальное название на русском языке
   price: number;
   rating?: number;
   cover_image: string;
@@ -40,6 +41,7 @@ export interface Product {
   ratings: Rating[];
   favorites: Favorite[];
   productCharacteristics: ProductCharacteristic[];
+  translations?: ProductTranslation[];
 
   // Новые поля для ссылок на маркетплейсы
   halyqLink?: string;
@@ -51,6 +53,22 @@ export interface ProductInfo {
   id: number;
   product_id: number;
   product: Product;
+  title: string;
+  description: string;
+  translations?: ProductInfoTranslation[];
+}
+
+export interface ProductTranslation {
+  id: number;
+  productId: number;
+  language: string;
+  name: string;
+}
+
+export interface ProductInfoTranslation {
+  id: number;
+  productInfoId: number;
+  language: string;
   title: string;
   description: string;
 }
@@ -82,10 +100,16 @@ export interface Characteristic {
 export interface ProductCharacteristic {
   id: number;
   description: string;
-  productId: number;
-  product: Product;
-  characteristicId: number;
-  characteristic: Characteristic;
+  characteristic: {
+    id: number;
+    name: string;
+    translation?: {
+      name: string;
+    };
+  };
+  translation?: {
+    description: string;
+  };
 }
 
 export interface Favorite {

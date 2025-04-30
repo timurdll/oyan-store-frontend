@@ -23,12 +23,21 @@ import { useQuickPurchaseMutation } from "@redux/services";
 import { formatPhoneNumber } from "@components/Functions/phoneUtils";
 import useIsMobile from "@components/Hooks/UseIsMobile";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
+import { useTranslation } from "react-i18next";
 
 const ProductPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data: product, error, isLoading } = useFetchProductBySlugQuery(slug);
+  const { t, i18n } = useTranslation();
+  const {
+    data: product,
+    error,
+    isLoading,
+  } = useFetchProductBySlugQuery({
+    slug,
+    language: i18n.language.toUpperCase(),
+  });
   const user = useSelector((state: any) => state.user.currentUser);
   const [quickPurchase, { isLoading: isQuickPurchaseLoading }] =
     useQuickPurchaseMutation();
@@ -258,9 +267,59 @@ const ProductPage: React.FC = () => {
     );
   };
 
-  const characteristicsToShow = showAllCharacteristics
-    ? product.productCharacteristics
-    : product.productCharacteristics.slice(0, 4);
+  const renderCharacteristics = () => {
+    if (!product?.productCharacteristics) return null;
+
+    const characteristics = showAllCharacteristics
+      ? product.productCharacteristics
+      : product.productCharacteristics.slice(0, 4);
+
+    return (
+      <>
+        {characteristics.map((char: ProductCharacteristic) => (
+          <motion.div
+            className={styles.characteristic}
+            key={char.id}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
+            <span className={styles.name}>
+              {char.characteristic.translation?.name ||
+                char.characteristic.name}
+              :
+            </span>
+            <span className={styles.description}>
+              {char.translation?.description || char.description}
+            </span>
+          </motion.div>
+        ))}
+        {product.productCharacteristics.length > 4 && (
+          <motion.button
+            onClick={() => setShowAllCharacteristics(!showAllCharacteristics)}
+            className={styles.showAllButton}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
+          >
+            <div className={styles.arrow}>
+              <motion.img
+                src={arrow}
+                alt="arrow"
+                animate={{ rotate: showAllCharacteristics ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
+            <span>
+              {showAllCharacteristics
+                ? t("product.showLess")
+                : t("product.showMore")}
+            </span>
+          </motion.button>
+        )}
+      </>
+    );
+  };
 
   const handleButtonClick = async () => {
     if (!user) {
@@ -269,7 +328,7 @@ const ProductPage: React.FC = () => {
     }
 
     if (isInBasket) {
-      navigate("/basket");
+      navigate(`/${i18n.language}/basket`);
     } else {
       try {
         await handleAddToBasket(product.id, 1);
@@ -387,22 +446,26 @@ const ProductPage: React.FC = () => {
           <span className={styles.price}>{formatPrice(product.price)} ₸</span>
           <div className={styles.buttons}>
             {product.stock === 0 ? (
-              <Button label="Товар закончился" variant="outlined" disabled />
+              <Button
+                label={t("product.outOfStock")}
+                variant="outlined"
+                disabled
+              />
             ) : (
               <>
                 <Button
                   label={
                     isLoadingBasket
-                      ? "Добавляется..."
+                      ? t("product.adding")
                       : isInBasket
-                      ? "Перейти в корзину"
-                      : "Добавить в корзину"
+                      ? t("product.goToCart")
+                      : t("product.addToCart")
                   }
                   onClick={handleButtonClick}
                   variant={isInBasket ? "outlined" : "primaryLarge"}
                 />
                 <Button
-                  label="Купить в 1 клик"
+                  label={t("product.quickPurchase")}
                   variant="primaryLarge"
                   onClick={() => setIsQuickPurchaseModalOpen(true)}
                 />
@@ -419,7 +482,7 @@ const ProductPage: React.FC = () => {
               transition={{ duration: 0.5 }}
             >
               <div className={styles.marketplaceTitle}>
-                Купить на маркетплейсах
+                {t("product.marketplaces.title")}
               </div>
               <div className={styles.marketplaceIcons}>
                 {product.kaspiLink && (
@@ -475,7 +538,7 @@ const ProductPage: React.FC = () => {
           } ${sectionDirection === "right" ? styles.slideRight : ""}`}
           onClick={() => handleSectionChange("characteristics")}
         >
-          Характеристики
+          {t("product.characteristics")}
         </button>
         <button
           className={`${styles.sectionButton} ${
@@ -483,7 +546,7 @@ const ProductPage: React.FC = () => {
           } ${sectionDirection === "left" ? styles.slideLeft : ""}`}
           onClick={() => handleSectionChange("description")}
         >
-          Описание
+          {t("product.description")}
         </button>
       </div>
 
@@ -498,52 +561,9 @@ const ProductPage: React.FC = () => {
               transition={{ duration: 0.4, ease: "easeOut" }}
               className={styles.characteristics}
             >
-              {characteristicsToShow.map((char: ProductCharacteristic) => (
-                <motion.div
-                  className={styles.characteristic}
-                  key={char.id}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}
-                >
-                  <span className={styles.name}>
-                    {char.characteristic.name}:
-                  </span>
-                  <span className={styles.description}>
-                    {" "}
-                    {char.description}
-                  </span>
-                </motion.div>
-              ))}
+              {renderCharacteristics()}
             </motion.div>
           )}
-
-          {activeSection === "characteristics" &&
-            product.productCharacteristics.length > 4 && (
-              <motion.button
-                onClick={() =>
-                  setShowAllCharacteristics(!showAllCharacteristics)
-                }
-                className={styles.showAllButton}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.2 }}
-              >
-                <div className={styles.arrow}>
-                  <motion.img
-                    src={arrow}
-                    alt="arrow"
-                    animate={{ rotate: showAllCharacteristics ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </div>
-                <span>
-                  {showAllCharacteristics
-                    ? "Скрыть характеристики"
-                    : "Показать все характеристики"}
-                </span>
-              </motion.button>
-            )}
 
           {activeSection === "description" && (
             <motion.div
@@ -568,23 +588,27 @@ const ProductPage: React.FC = () => {
       <Modal
         isOpen={isQuickPurchaseModalOpen}
         onClose={() => setIsQuickPurchaseModalOpen(false)}
-        title="Быстрая покупка"
+        title={t("product.quickPurchaseModal.title")}
       >
         <div className={styles.quickPurchaseForm}>
           <input
             type="text"
-            placeholder="Ваше имя"
+            placeholder={t("product.quickPurchaseModal.namePlaceholder")}
             value={quickPurchaseName}
             onChange={(e) => setQuickPurchaseName(e.target.value)}
           />
           <input
             type="tel"
-            placeholder="+7 (___) ___-__-__"
+            placeholder={t("product.quickPurchaseModal.phonePlaceholder")}
             value={quickPurchasePhone}
             onChange={handleQuickPurchasePhoneChange}
           />
           <Button
-            label={isQuickPurchaseLoading ? "Отправка..." : "Оформить заказ"}
+            label={
+              isQuickPurchaseLoading
+                ? t("product.quickPurchaseModal.submitting")
+                : t("product.quickPurchaseModal.submit")
+            }
             onClick={handleQuickPurchaseSubmit}
             variant="primaryLarge"
           />

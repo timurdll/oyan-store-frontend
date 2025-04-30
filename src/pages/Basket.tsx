@@ -12,6 +12,7 @@ import { formatPrice } from "@components/Functions/formatPrice";
 import Receipt from "@components/UI/Receipt";
 import { RootState } from "@redux/store"; // Убедитесь, что правильно импортируете RootState
 import AlertComponent from "@components/AlertComponent";
+import { useTranslation } from "react-i18next";
 
 const BasketPage = () => {
   const [alert, setAlert] = useState<{
@@ -19,21 +20,21 @@ const BasketPage = () => {
     type: "success" | "error";
   } | null>(null);
 
+  const { t, i18n } = useTranslation();
   const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
 
   if (!isLoggedIn) {
-    return (
-      <div className={styles.message}>
-        Пожалуйста, войдите в систему, чтобы увидеть вашу корзину.
-      </div>
-    );
+    return <div className={styles.message}>{t("basket.pleaseLogin")}</div>;
   }
 
   const {
     data: basketProducts,
     isLoading,
     isError,
-  } = useGetBasketQuery(undefined, { skip: !isLoggedIn });
+  } = useGetBasketQuery(
+    { language: i18n.language.toUpperCase() },
+    { skip: !isLoggedIn }
+  );
   const [removeFromBasket] = useRemoveFromBasketMutation();
   const [updateBasketQuantity] = useUpdateBasketProductQuantityMutation();
 
@@ -53,7 +54,7 @@ const BasketPage = () => {
     if (newQuantity < 1) return;
     if (newQuantity > stock) {
       setAlert({
-        message: `Вы не можете добавить больше ${stock} единиц товара.`,
+        message: t("basket.stockLimit", { stock }),
         type: "error",
       });
       return;
@@ -71,16 +72,16 @@ const BasketPage = () => {
     }, 0) ?? 0;
 
   if (isLoading) {
-    return <div className={styles.loader}>Загрузка...</div>;
+    return <div className={styles.loader}>{t("basket.loading")}</div>;
   }
 
   if (isError) {
-    return <div className={styles.error}>Ошибка при загрузке корзины</div>;
+    return <div className={styles.error}>{t("basket.error")}</div>;
   }
 
   return (
     <div className={styles.container}>
-      <h1>Корзина</h1>
+      <h1>{t("basket.title")}</h1>
       <AlertComponent alert={alert} onClose={() => setAlert(null)} />
       <div className={styles.basket}>
         <div className={styles.products}>
@@ -99,7 +100,8 @@ const BasketPage = () => {
                       />
                       <div className={styles.info}>
                         <span className={styles.name}>
-                          {product.product.name}
+                          {product.product.translations?.[0]?.name ||
+                            product.product.name}
                         </span>
                         <span className={styles.price}>
                           {formatPrice(product.product.price)} ₸
@@ -110,7 +112,7 @@ const BasketPage = () => {
                       <img
                         className={styles.bucket}
                         src={bucket}
-                        alt="Удалить"
+                        alt={t("basket.delete")}
                         onClick={() =>
                           handleRemoveFromBasket(product.product_id)
                         }
@@ -142,7 +144,7 @@ const BasketPage = () => {
               </ul>
             </>
           ) : (
-            <p className={styles.message}>Здесь пока пусто...</p>
+            <p className={styles.message}>{t("basket.empty")}</p>
           )}
         </div>
         <Receipt

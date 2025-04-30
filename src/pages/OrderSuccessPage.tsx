@@ -3,9 +3,11 @@ import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 import styles from "@styles/order-success-page.module.scss";
 import Button from "@components/UI/Button";
+import { useTranslation } from "react-i18next";
 
 const OrderSuccessPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const [windowDimensions, setWindowDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -25,10 +27,11 @@ const OrderSuccessPage: React.FC = () => {
   }, []);
 
   const handleGoHome = () => {
-    navigate("/"); // Редирект на главную страницу
+    navigate(`/${i18n.language}`);
   };
+
   const handleGoToOrders = () => {
-    navigate("/"); // Редирект на главную страницу
+    navigate(`/${i18n.language}/orders`);
   };
 
   return (
@@ -39,18 +42,18 @@ const OrderSuccessPage: React.FC = () => {
         height={windowDimensions.height}
       />
       <div className={styles.content}>
-        <h1>🎉 Поздравляем!</h1>
-        <p>Ваш заказ был успешно создан!</p>
-        <p>Спасибо за покупку в нашем магазине.</p>
+        <h1>🎉 {t("orderSuccess.congratulations")}</h1>
+        <p>{t("orderSuccess.orderCreated")}</p>
+        <p>{t("orderSuccess.thankYou")}</p>
         <div className={styles.buttons}>
           <Button
-            label="На страницу заказов"
-            onClick={handleGoHome}
+            label={t("orderSuccess.goToOrders")}
+            onClick={handleGoToOrders}
             variant="primary"
           />
           <Button
-            label="На домашнюю страницу"
-            onClick={handleGoToOrders}
+            label={t("orderSuccess.goToHome")}
+            onClick={handleGoHome}
             variant="outlined"
           />
         </div>

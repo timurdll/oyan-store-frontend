@@ -8,12 +8,19 @@ import { useGetBasketQuery } from "@redux/services";
 import { useGetUserOrdersQuery } from "@redux/services/ordersApi";
 import { openAuthModal } from "@redux/slices/authModalSlice";
 import NotificationsMenu from "./UI/NotificationsMenu";
+import { useTranslation } from "react-i18next";
 
-const UserMenu: React.FC = () => {
+interface UserMenuProps {
+  className?: string;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ className }) => {
   const user = useSelector((state: any) => state.user.currentUser);
   const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn);
+  const isAdmin = user?.role === "admin";
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { i18n } = useTranslation();
   // const { data: user, isLoading, isError } = useGetUserByIdQuery(userId);
   // bonuses: user.bonuses,
   // holdingBonuses: user.holdingBonuses,
@@ -23,7 +30,7 @@ const UserMenu: React.FC = () => {
     data: basket,
     isLoading: isBasketLoading,
     isError: isBasketError,
-  } = useGetBasketQuery(undefined, { skip: !isLoggedIn });
+  } = useGetBasketQuery({}, { skip: !isLoggedIn });
 
   // Fetch user orders only if the user is logged in
   const {
@@ -46,14 +53,24 @@ const UserMenu: React.FC = () => {
     }
   };
 
+  const handleProfileClick = () => {
+    if (!isLoggedIn) {
+      dispatch(openAuthModal());
+    } else {
+      navigate(
+        isAdmin ? `/${i18n.language}/admin` : `/${i18n.language}/profile`
+      );
+    }
+  };
+
   return (
-    <ul className={styles.menu}>
+    <ul className={`${styles.menu} ${className || ""}`}>
       <li data-tooltip="Уведомления">
         <NotificationsMenu />
       </li>
       <li
         data-tooltip="Корзина"
-        onClick={() => handleClick(() => navigate("/basket"))}
+        onClick={() => handleClick(() => navigate(`/${i18n.language}/basket`))}
       >
         <BasketIcon style={{ cursor: "pointer" }} />
         {/* Display basket item count */}
@@ -69,7 +86,7 @@ const UserMenu: React.FC = () => {
       </li>
       <li
         data-tooltip="Заказы"
-        onClick={() => handleClick(() => navigate("/orders"))}
+        onClick={() => handleClick(() => navigate(`/${i18n.language}/orders`))}
       >
         <OrderIcon style={{ cursor: "pointer" }} />
         {/* Display orders count */}
@@ -84,12 +101,8 @@ const UserMenu: React.FC = () => {
         )}
       </li>
       <li
-        data-tooltip="Профиль"
-        onClick={() =>
-          handleClick(() =>
-            navigate(user?.role === "admin" ? "/admin" : "/profile")
-          )
-        }
+        data-tooltip={isAdmin ? "Админ панель" : "Профиль"}
+        onClick={handleProfileClick}
       >
         <UserIcon style={{ cursor: "pointer" }} />
       </li>

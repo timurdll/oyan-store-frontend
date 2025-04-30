@@ -53,6 +53,11 @@
   }
 }
 
+.fieldWithAction {
+  flex: 1;
+  margin-right: 8px;
+}
+
 .errorMessage {
   color: #dc3545;
   font-size: 14px;

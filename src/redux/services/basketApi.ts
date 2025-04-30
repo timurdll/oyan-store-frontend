@@ -29,9 +29,9 @@ export const basketApi = baseApi.injectEndpoints({
     }),
 
     // Получение всех продуктов в корзине пользователя
-    getBasket: builder.query<BasketProduct[], void>({
-      query: () => ({
-        url: "/basket", // Эндпоинт для получения продуктов корзины
+    getBasket: builder.query<BasketProduct[], { language?: string }>({
+      query: ({ language }) => ({
+        url: language ? `/basket?language=${language}` : "/basket", // Эндпоинт для получения продуктов корзины
         method: "GET",
       }),
       providesTags: [{ type: "Basket", id: "LIST" }], // Тег для кеширования

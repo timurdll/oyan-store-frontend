@@ -3,33 +3,49 @@ import { baseApi } from "./baseApi";
 export const typeApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     fetchTypes: builder.query({
-      query: () => "/types",
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }: { id: number }) => ({
-                type: "Types" as const,
-                id,
-              })),
-              { type: "Types", id: "LIST" },
-            ]
-          : [{ type: "Types", id: "LIST" }],
+      query: (params) => {
+        const language = params?.language;
+        return language ? `types?language=${language}` : "types";
+      },
+      providesTags: ["Types"],
     }),
     fetchTypeById: builder.query({
-      query: (id) => `/types/${id}`,
-      providesTags: (id) => [{ type: "Types", id }],
+      query: ({ id, language }) => {
+        if (!id || id === 0) {
+          return { url: "types/null", method: "GET" };
+        }
+        return language ? `/types/${id}?language=${language}` : `/types/${id}`;
+      },
+      providesTags: (_, __, arg) => [{ type: "Types", id: arg.id }],
     }),
     fetchCharacteristicById: builder.query({
       query: (id) => `/types/${id}/characteristics`,
-      providesTags: (id) => [{ type: "Types", id: `CHARACTERISTICS_${id}` }],
+      providesTags: (_, __, id) => [
+        { type: "Types", id: `CHARACTERISTICS_${id}` },
+      ],
     }),
     addType: builder.mutation({
-      query: (newType) => ({
-        url: "/types",
+      query: (type) => ({
+        url: "types",
         method: "POST",
-        body: newType,
+        body: type,
       }),
-      invalidatesTags: [{ type: "Types", id: "LIST" }],
+      invalidatesTags: ["Types"],
+    }),
+    updateType: builder.mutation({
+      query: ({ id, ...type }) => ({
+        url: `types/${id}`,
+        method: "PUT",
+        body: type,
+      }),
+      invalidatesTags: ["Types"],
+    }),
+    deleteType: builder.mutation({
+      query: (id) => ({
+        url: `types/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Types"],
     }),
   }),
 });
@@ -39,4 +55,6 @@ export const {
   useFetchTypeByIdQuery,
   useFetchCharacteristicByIdQuery,
   useAddTypeMutation,
+  useUpdateTypeMutation,
+  useDeleteTypeMutation,
 } = typeApi;

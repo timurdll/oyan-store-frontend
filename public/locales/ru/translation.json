@@ -1,3 +1,82 @@
 {
-  "welcome": "Добро пожаловать в Oyan-store!"
+  "welcome": "Добро пожаловать в Oyan-store!",
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Произошла ошибка",
+    "search": "Поиск",
+    "close": "Закрыть",
+    "submit": "Отправить",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "backToHome": "Вернуться на главную"
+  },
+  "navigation": {
+    "home": "Главная",
+    "catalog": "Каталог",
+    "about": "О нас",
+    "contacts": "Контакты",
+    "basket": "Корзина",
+    "profile": "Профиль",
+    "login": "Вход",
+    "register": "Регистрация",
+    "orders": "Заказы",
+    "favorites": "Избранное"
+  },
+  "product": {
+    "price": "Цена",
+    "addToCart": "Добавить в корзину",
+    "addToFavorites": "Добавить в избранное",
+    "characteristics": "Характеристики",
+    "description": "Описание",
+    "inStock": "В наличии",
+    "outOfStock": "Нет в наличии",
+    "reviews": "Отзывы",
+    "leaveReview": "Оставить отзыв",
+    "preOrder": "Предзаказ"
+  },
+  "cart": {
+    "title": "Корзина",
+    "empty": "Ваша корзина пуста",
+    "total": "Итого",
+    "checkout": "Оформить заказ",
+    "continueShopping": "Продолжить покупки",
+    "removeItem": "Удалить товар",
+    "clearCart": "Очистить корзину"
+  },
+  "auth": {
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "login": "Войти",
+    "register": "Зарегистрироваться",
+    "forgotPassword": "Забыли пароль?",
+    "alreadyHaveAccount": "Уже есть аккаунт?",
+    "dontHaveAccount": "Нет аккаунта?",
+    "resetPassword": "Сбросить пароль"
+  },
+  "profile": {
+    "personalInfo": "Личная информация",
+    "orders": "Заказы",
+    "favorites": "Избранное",
+    "settings": "Настройки",
+    "logout": "Выйти",
+    "bonuses": "Бонусы",
+    "holdingBonuses": "Накопленные бонусы"
+  },
+  "admin": {
+    "dashboard": "Панель управления",
+    "products": "Товары",
+    "addProduct": "Добавить товар",
+    "editProduct": "Редактировать товар",
+    "orders": "Заказы",
+    "users": "Пользователи",
+    "types": "Типы товаров",
+    "stock": "Управление запасами",
+    "manageTypes": "Управление типами товаров",
+    "addType": "Добавить тип",
+    "editType": "Редактировать тип",
+    "deleteType": "Удалить тип",
+    "confirmation": "Вы уверены?"
+  }
 }

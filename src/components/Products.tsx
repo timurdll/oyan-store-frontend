@@ -5,13 +5,21 @@ import { Product } from "types/types";
 import { useFetchProductsQuery } from "@redux/services";
 import { motion, AnimatePresence } from "framer-motion";
 import { SkeletonCard } from "./UI/SkeletonCard";
+import { useTranslation } from "react-i18next";
 
 interface ProductListProps {
   selectedType: number | null; // Ensure the type is number | null
 }
 
 const ProductList: React.FC<ProductListProps> = ({ selectedType }) => {
-  const { data: products, error, isLoading } = useFetchProductsQuery({});
+  const { i18n } = useTranslation();
+  const {
+    data: products,
+    error,
+    isLoading,
+  } = useFetchProductsQuery({
+    language: i18n.language.toUpperCase(),
+  });
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
   useEffect(() => {

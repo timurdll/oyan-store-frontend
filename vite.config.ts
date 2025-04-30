@@ -3,6 +3,8 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path-browserify";
 import svgr from "vite-plugin-svgr";
+import { visualizer } from "rollup-plugin-visualizer";
+import { compression } from "vite-plugin-compression2";
 
 export default defineConfig({
   css: {
@@ -18,6 +20,19 @@ export default defineConfig({
   plugins: [
     react(),
     svgr(),
+    compression({
+      algorithm: "gzip",
+      exclude: [/\.(br)$/, /\.(gz)$/],
+    }),
+    compression({
+      algorithm: "brotliCompress",
+      exclude: [/\.(br)$/, /\.(gz)$/],
+    }),
+    visualizer({
+      open: true,
+      gzipSize: true,
+      brotliSize: true,
+    }),
     VitePWA({
       registerType: "prompt",
       injectRegister: false,
@@ -32,11 +47,16 @@ export default defineConfig({
         theme_color: "#ffffff",
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,svg,png,ico,woff2}"],
+        globPatterns: ["**/*.{js,css,html,svg,ico,woff2}"],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
-        globIgnores: ["**/x14l-*.png", "**/x15l-*.png"],
-        maximumFileSizeToCacheInBytes: 6 * 1024 * 1024, // увеличен лимит до 6MB
+        globIgnores: [
+          "**/x14l-*.png",
+          "**/x15l-*.png",
+          "**/*-large.png",
+          "**/*-original.png",
+        ],
+        maximumFileSizeToCacheInBytes: 2 * 1024 * 1024, // reduced to 2MB
       },
       devOptions: {
         enabled: true,
@@ -47,16 +67,32 @@ export default defineConfig({
     }),
   ],
   build: {
-    chunkSizeWarningLimit: 1500, // увеличим лимит предупреждения до 1.5MB
+    chunkSizeWarningLimit: 1000,
+    reportCompressedSize: true,
+    minify: "terser",
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            return "vendor";
-          }
-          if (id.includes("react") || id.includes("redux")) {
-            return "framework";
-          }
+        manualChunks: {
+          vendor: [
+            "react",
+            "react-dom",
+            "react-router-dom",
+            "@reduxjs/toolkit",
+            "react-redux",
+          ],
+          mui: [
+            "@mui/material",
+            "@mui/icons-material",
+            "@emotion/react",
+            "@emotion/styled",
+          ],
+          antd: ["antd"],
         },
       },
     },

@@ -8,15 +8,17 @@ import { openAuthModal } from "@redux/slices/authModalSlice";
 import { useGetBasketQuery } from "@redux/services";
 import { useGetUserOrdersQuery } from "@redux/services/ordersApi";
 import NotificationsMenu from "./UI/NotificationsMenu";
+import { useTranslation } from "react-i18next";
 
 const MobileMenu: React.FC = () => {
   const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn);
   const user = useSelector((state: any) => state.user.currentUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { i18n } = useTranslation();
 
   // Fetch basket data only if the user is logged in
-  const { data: basket } = useGetBasketQuery(undefined, { skip: !isLoggedIn });
+  const { data: basket } = useGetBasketQuery({}, { skip: !isLoggedIn });
   // Fetch user orders only if the user is logged in
   const { data: orders } = useGetUserOrdersQuery(undefined, {
     skip: !isLoggedIn,
@@ -41,7 +43,11 @@ const MobileMenu: React.FC = () => {
           <NotificationsMenu />
           <b>Уведомления</b>
         </li>
-        <li onClick={() => handleClick(() => navigate("/basket"))}>
+        <li
+          onClick={() =>
+            handleClick(() => navigate(`/${i18n.language}/basket`))
+          }
+        >
           <div className={styles.icon}>
             {isLoggedIn && totalItems > 0 && (
               <span className={styles.itemCount}>{totalItems}</span>
@@ -50,7 +56,11 @@ const MobileMenu: React.FC = () => {
           </div>
           <b>Корзина</b>
         </li>
-        <li onClick={() => handleClick(() => navigate("/orders"))}>
+        <li
+          onClick={() =>
+            handleClick(() => navigate(`/${i18n.language}/orders`))
+          }
+        >
           <div className={styles.icon}>
             <OrderIcon />
             {isLoggedIn && orders?.length > 0 && (
@@ -63,7 +73,11 @@ const MobileMenu: React.FC = () => {
         <li
           onClick={() =>
             handleClick(() =>
-              navigate(user?.role === "admin" ? "/admin" : "/profile")
+              navigate(
+                user?.role === "admin"
+                  ? `/${i18n.language}/admin`
+                  : `/${i18n.language}/profile`
+              )
             )
           }
         >

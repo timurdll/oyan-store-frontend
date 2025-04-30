@@ -5,6 +5,8 @@ import { useUpdateProductMutation } from "@redux/services";
 import CreatableFieldArray from "./CreatableFieldSelector";
 import { Product } from "types/types";
 import Dropzone from "react-dropzone";
+import ProductTranslationManager from "./ProductTranslationManager";
+import { Box } from "@mui/material";
 
 interface CharacteristicForm {
   name: string;
@@ -118,7 +120,26 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
         <Form className={styles.formContainer}>
           <div className={styles.field}>
             <label htmlFor="name">Название</label>
-            <Field name="name" type="text" />
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Field
+                name="name"
+                type="text"
+                className={styles.fieldWithAction}
+              />
+              <ProductTranslationManager
+                productId={product.id}
+                productName={product.name}
+                productInfo={
+                  product.productInfo
+                    ? {
+                        id: product.productInfo.id,
+                        title: product.productInfo.title,
+                        description: product.productInfo.description,
+                      }
+                    : undefined
+                }
+              />
+            </Box>
             <ErrorMessage
               name="name"
               component="div"

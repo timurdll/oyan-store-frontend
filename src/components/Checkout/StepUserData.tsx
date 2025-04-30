@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@redux/store";
 import { jwtDecode } from "jwt-decode";
 import { useGetUserByIdQuery } from "@redux/services/userApi";
+import { useTranslation } from "react-i18next";
 
 interface StepUserDataProps {
   initialValues: {
@@ -47,6 +48,7 @@ const StepUserData: React.FC<StepUserDataProps> = ({
   completed,
   isLegalEntity,
 }) => {
+  const { t } = useTranslation();
   const { token } = useSelector((state: RootState) => state.user);
   const decoded = token ? jwtDecode<{ userId: string }>(token) : null;
   const userId = decoded?.userId || null;
@@ -73,36 +75,48 @@ const StepUserData: React.FC<StepUserDataProps> = ({
     phoneNumber: Yup.string()
       .matches(
         /^(\+7\s\d{3}\s\d{3}-\d{2}-\d{2})$/,
-        "Введите корректный номер телефона (+7 XXX XXX-XX-XX)"
+        t("checkout.steps.userData.validation.phoneFormat")
       )
-      .required("Обязательное поле"),
+      .required(t("checkout.steps.userData.validation.required")),
     fullName: Yup.string()
-      .min(3, "Минимальная длина 3 символа")
-      .required("Обязательное поле"),
+      .min(3, t("checkout.steps.userData.validation.minLength"))
+      .required(t("checkout.steps.userData.validation.required")),
     email: Yup.string()
-      .email("Введите корректный email")
-      .required("Обязательное поле"),
+      .email(t("checkout.steps.userData.validation.email"))
+      .required(t("checkout.steps.userData.validation.required")),
     ...(isLegalEntity && {
-      companyName: Yup.string().required("Название компании обязательно"),
+      companyName: Yup.string().required(
+        t("checkout.steps.userData.validation.required")
+      ),
       bin: Yup.string()
-        .matches(/^\d{12}$/, "БИН должен содержать 12 цифр")
-        .required("БИН обязателен"),
-      companyAddress: Yup.string().required("Юридический адрес обязателен"),
+        .matches(/^\d{12}$/, t("checkout.steps.userData.validation.bin"))
+        .required(t("checkout.steps.userData.validation.required")),
+      companyAddress: Yup.string().required(
+        t("checkout.steps.userData.validation.required")
+      ),
       companyPhone: Yup.string().matches(
         /^(\+7\s\d{3}\s\d{3}-\d{2}-\d{2})$/,
-        "Введите корректный номер телефона (+7 XXX XXX-XX-XX)"
+        t("checkout.steps.userData.validation.phoneFormat")
       ),
       postalCode: Yup.string().matches(
         /^\d{6}$/,
-        "Почтовый индекс должен содержать 6 цифр"
+        t("checkout.steps.userData.validation.postalCode")
       ),
       iik: Yup.string()
-        .matches(/^[A-Z]{2}\d{20}$/, "ИИК должен содержать 2 буквы и 20 цифр")
-        .required("ИИК обязателен"),
+        .matches(
+          /^[A-Z]{2}\d{20}$/,
+          t("checkout.steps.userData.validation.iik")
+        )
+        .required(t("checkout.steps.userData.validation.required")),
       bik: Yup.string()
-        .matches(/^[A-Z]{5}[A-Z0-9]{3}$/, "БИК должен содержать 8 символов")
-        .required("БИК обязателен"),
-      bankName: Yup.string().required("Название банка обязательно"),
+        .matches(
+          /^[A-Z]{5}[A-Z0-9]{3}$/,
+          t("checkout.steps.userData.validation.bik")
+        )
+        .required(t("checkout.steps.userData.validation.required")),
+      bankName: Yup.string().required(
+        t("checkout.steps.userData.validation.required")
+      ),
     }),
   });
 
@@ -124,14 +138,16 @@ const StepUserData: React.FC<StepUserDataProps> = ({
   };
 
   if (isLoading) {
-    return <div>Загрузка данных...</div>;
+    return <div>{t("checkout.steps.userData.loading")}</div>;
   }
 
   return (
     <div className={styles.step}>
       <div className={styles.info}>
         <span className={styles.number}>1</span>
-        <span className={styles.text}>Ваши данные:</span>
+        <span className={styles.text}>
+          {t("checkout.steps.userData.title")}:
+        </span>
       </div>
       <Formik
         initialValues={initialValues}
@@ -143,7 +159,9 @@ const StepUserData: React.FC<StepUserDataProps> = ({
           <Form className={styles.inputs}>
             <div className={styles.fields}>
               <div className={styles.field}>
-                <label htmlFor="phoneNumber">Ваш номер телефона:</label>
+                <label htmlFor="phoneNumber">
+                  {t("checkout.steps.userData.phoneNumber")}:
+                </label>
                 <Field
                   type="text"
                   id="phoneNumber"
@@ -163,7 +181,9 @@ const StepUserData: React.FC<StepUserDataProps> = ({
                 />
               </div>
               <div className={styles.field}>
-                <label htmlFor="fullName">ФИО:</label>
+                <label htmlFor="fullName">
+                  {t("checkout.steps.userData.fullName")}:
+                </label>
                 <Field type="text" id="fullName" name="fullName" />
                 <ErrorMessage
                   name="fullName"
@@ -172,7 +192,9 @@ const StepUserData: React.FC<StepUserDataProps> = ({
                 />
               </div>
               <div className={styles.field}>
-                <label htmlFor="email">Электронная почта:</label>
+                <label htmlFor="email">
+                  {t("checkout.steps.userData.email")}:
+                </label>
                 <Field type="email" id="email" name="email" />
                 <ErrorMessage
                   name="email"
@@ -184,7 +206,9 @@ const StepUserData: React.FC<StepUserDataProps> = ({
               {isLegalEntity && (
                 <div className={styles.legalFields}>
                   <div className={styles.field}>
-                    <label htmlFor="companyName">Название компании:</label>
+                    <label htmlFor="companyName">
+                      {t("checkout.steps.userData.legal.companyName")}:
+                    </label>
                     <Field type="text" id="companyName" name="companyName" />
                     <ErrorMessage
                       name="companyName"
@@ -193,7 +217,9 @@ const StepUserData: React.FC<StepUserDataProps> = ({
                     />
                   </div>
                   <div className={styles.field}>
-                    <label htmlFor="bin">БИН:</label>
+                    <label htmlFor="bin">
+                      {t("checkout.steps.userData.legal.bin")}:
+                    </label>
                     <Field type="text" id="bin" name="bin" />
                     <ErrorMessage
                       name="bin"
@@ -202,7 +228,9 @@ const StepUserData: React.FC<StepUserDataProps> = ({
                     />
                   </div>
                   <div className={styles.field}>
-                    <label htmlFor="companyAddress">Юридический адрес:</label>
+                    <label htmlFor="companyAddress">
+                      {t("checkout.steps.userData.legal.companyAddress")}:
+                    </label>
                     <Field
                       type="text"
                       id="companyAddress"
@@ -215,7 +243,9 @@ const StepUserData: React.FC<StepUserDataProps> = ({
                     />
                   </div>
                   <div className={styles.field}>
-                    <label htmlFor="companyPhone">Телефон компании:</label>
+                    <label htmlFor="companyPhone">
+                      {t("checkout.steps.userData.legal.companyPhone")}:
+                    </label>
                     <Field
                       type="text"
                       id="companyPhone"
@@ -235,7 +265,9 @@ const StepUserData: React.FC<StepUserDataProps> = ({
                     />
                   </div>
                   <div className={styles.field}>
-                    <label htmlFor="postalCode">Почтовый индекс:</label>
+                    <label htmlFor="postalCode">
+                      {t("checkout.steps.userData.legal.postalCode")}:
+                    </label>
                     <Field type="text" id="postalCode" name="postalCode" />
                     <ErrorMessage
                       name="postalCode"
@@ -244,7 +276,9 @@ const StepUserData: React.FC<StepUserDataProps> = ({
                     />
                   </div>
                   <div className={styles.field}>
-                    <label htmlFor="iik">ИИК:</label>
+                    <label htmlFor="iik">
+                      {t("checkout.steps.userData.legal.iik")}:
+                    </label>
                     <Field type="text" id="iik" name="iik" />
                     <ErrorMessage
                       name="iik"
@@ -253,7 +287,9 @@ const StepUserData: React.FC<StepUserDataProps> = ({
                     />
                   </div>
                   <div className={styles.field}>
-                    <label htmlFor="bik">БИК:</label>
+                    <label htmlFor="bik">
+                      {t("checkout.steps.userData.legal.bik")}:
+                    </label>
                     <Field type="text" id="bik" name="bik" />
                     <ErrorMessage
                       name="bik"
@@ -262,7 +298,9 @@ const StepUserData: React.FC<StepUserDataProps> = ({
                     />
                   </div>
                   <div className={styles.field}>
-                    <label htmlFor="bankName">Название банка:</label>
+                    <label htmlFor="bankName">
+                      {t("checkout.steps.userData.legal.bankName")}:
+                    </label>
                     <Field type="text" id="bankName" name="bankName" />
                     <ErrorMessage
                       name="bankName"
@@ -275,7 +313,11 @@ const StepUserData: React.FC<StepUserDataProps> = ({
             </div>
             {!completed && (
               <div className={styles.button}>
-                <Button type="submit" label="Далее" variant="primaryLarge" />
+                <Button
+                  label={t("checkout.steps.address.next")}
+                  variant="primaryLarge"
+                  type="submit"
+                />
               </div>
             )}
           </Form>

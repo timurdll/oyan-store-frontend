@@ -5,21 +5,30 @@ import { useFetchProductsQuery } from "@redux/services";
 import { Product } from "types/types";
 import { useNavigate } from "react-router-dom";
 import { createSlug } from "@components/Functions/createSlug";
+import { useTranslation } from "react-i18next";
 
 interface SearchBarProps {
   isSearchOpen?: boolean;
 }
 
+interface ProductWithOriginal extends Product {
+  originalName?: string;
+}
+
 const SearchBar: React.FC<SearchBarProps> = ({ isSearchOpen }) => {
   const [query, setQuery] = useState<string>("");
-  const [searchResults, setSearchResults] = useState<Product[]>([]);
-  const { data: products } = useFetchProductsQuery({});
+  const [searchResults, setSearchResults] = useState<ProductWithOriginal[]>([]);
+  const { t, i18n } = useTranslation();
+  const { data: products } = useFetchProductsQuery({
+    language: i18n.language.toUpperCase(),
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
     if (query.trim()) {
-      const filteredProducts = products?.filter((product: Product) =>
-        product.name.toLowerCase().includes(query.toLowerCase())
+      const filteredProducts = products?.filter(
+        (product: ProductWithOriginal) =>
+          product.name.toLowerCase().includes(query.toLowerCase())
       );
       setSearchResults(filteredProducts || []);
     } else {
@@ -34,9 +43,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ isSearchOpen }) => {
     }
   }, [isSearchOpen]);
 
-  const handleNavigate = (productName: string) => {
-    const slug = createSlug(productName);
-    navigate(`/product/${slug}`);
+  const handleNavigate = (product: ProductWithOriginal) => {
+    const slug = createSlug(product.name, product.originalName);
+    navigate(`/${i18n.language}/product/${slug}`);
     setQuery("");
   };
 
@@ -51,11 +60,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ isSearchOpen }) => {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Я ищу..."
+          placeholder={t("searchBar.placeholder")}
           className={styles.input}
         />
         <button className={styles.button}>
-          <img src={searchIcon} alt="Search" />
+          <img src={searchIcon} alt={t("searchBar.searchButton")} />
         </button>
       </div>
       {query && searchResults.length > 0 && (
@@ -64,7 +73,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ isSearchOpen }) => {
             <div
               key={product.id}
               className={styles.search_result_item}
-              onClick={() => handleNavigate(product.name)}
+              onClick={() => handleNavigate(product)}
             >
               {product.name}
             </div>
@@ -72,7 +81,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ isSearchOpen }) => {
         </div>
       )}
       {query && searchResults.length === 0 && (
-        <div className={styles.no_results}>Нет результатов</div>
+        <div className={styles.no_results}>{t("searchBar.noResults")}</div>
       )}
     </div>
   );

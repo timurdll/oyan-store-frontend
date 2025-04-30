@@ -30,7 +30,10 @@ export const ordersApi = baseApi.injectEndpoints({
     }),
 
     getUserOrders: builder.query({
-      query: () => `/orders`,
+      query: ({ language }: { language?: string } = {}) => ({
+        url: language ? `/orders?language=${language}` : "/orders",
+        method: "GET",
+      }),
       providesTags: (result) =>
         result
           ? [
