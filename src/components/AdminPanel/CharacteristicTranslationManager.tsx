@@ -11,9 +11,10 @@ import {
   Card,
   IconButton,
   CircularProgress,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { TranslateOutlined } from "@mui/icons-material";
-import { message } from "antd";
 import {
   useGetSupportedLanguagesQuery,
   useGetCharacteristicTranslationQuery,
@@ -31,6 +32,15 @@ const CharacteristicTranslationManager: React.FC<
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<string>("");
   const [nameTranslation, setNameTranslation] = useState("");
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    message: string;
+    severity: "success" | "error";
+  }>({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   const { data: languages } = useGetSupportedLanguagesQuery({});
   const { data: translation, isFetching: isTranslationLoading } =
@@ -61,13 +71,15 @@ const CharacteristicTranslationManager: React.FC<
 
   const handleLanguageChange = (lang: string) => {
     setSelectedLanguage(lang);
-    // Не очищаем nameTranslation здесь,
-    // оно будет обновлено через useEffect когда придут новые данные
   };
 
   const handleSaveTranslation = async () => {
     if (!selectedLanguage) {
-      message.error("Пожалуйста, выберите язык");
+      setSnackbar({
+        open: true,
+        message: "Пожалуйста, выберите язык",
+        severity: "error",
+      });
       return;
     }
 
@@ -78,11 +90,17 @@ const CharacteristicTranslationManager: React.FC<
         name: nameTranslation,
       }).unwrap();
 
-      message.success(
-        `Перевод характеристики успешно обновлен для языка ${selectedLanguage}`
-      );
+      setSnackbar({
+        open: true,
+        message: `Перевод характеристики успешно обновлен для языка ${selectedLanguage}`,
+        severity: "success",
+      });
     } catch (error) {
-      message.error("Ошибка при сохранении перевода характеристики");
+      setSnackbar({
+        open: true,
+        message: "Ошибка при сохранении перевода характеристики",
+        severity: "error",
+      });
       console.error(error);
     }
   };
@@ -170,6 +188,20 @@ const CharacteristicTranslationManager: React.FC<
           <Button onClick={handleCloseDialog}>Закрыть</Button>
         </DialogActions>
       </Dialog>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
+      >
+        <Alert
+          onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

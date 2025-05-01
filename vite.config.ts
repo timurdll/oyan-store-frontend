@@ -23,23 +23,19 @@ export default defineConfig({
     compression({
       algorithm: "gzip",
       exclude: [/\.(br)$/, /\.(gz)$/],
-    }),
+    }) as any,
     compression({
       algorithm: "brotliCompress",
       exclude: [/\.(br)$/, /\.(gz)$/],
-    }),
+    }) as any,
     visualizer({
       open: true,
       gzipSize: true,
       brotliSize: true,
-    }),
+    }) as any,
     VitePWA({
       registerType: "prompt",
       injectRegister: false,
-      pwaAssets: {
-        disabled: false,
-        config: true,
-      },
       manifest: {
         name: "oyan-store",
         short_name: "Oyan store",
@@ -92,7 +88,6 @@ export default defineConfig({
             "@emotion/react",
             "@emotion/styled",
           ],
-          antd: ["antd"],
         },
       },
     },

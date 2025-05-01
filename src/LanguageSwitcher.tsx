@@ -1,57 +1,63 @@
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
-import { Menu, Button, Portal, Box } from "@chakra-ui/react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import { Menu, Button, Box } from "@mui/material";
+import { KeyboardArrowDown } from "@mui/icons-material";
+import { useState } from "react";
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
-  const [selectedLang, setSelectedLang] = useState<string>(
-    i18n.language || "ru"
-  );
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
-  const changeLanguage = (lang: string) => {
-    i18n.changeLanguage(lang);
-    setSelectedLang(lang);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  useEffect(() => {
-    setSelectedLang(i18n.language);
-  }, [i18n.language]);
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-  const getLanguageName = (code: string) => {
-    switch (code) {
-      case "ru":
-        return "Русский";
-      case "kk":
-        return "Қазақша";
-      default:
-        return "Русский";
-    }
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    handleClose();
   };
 
   return (
-    <Menu.Root>
-      <Menu.Trigger asChild>
-        <Button size="sm" variant="ghost">
-          <Box display="flex" alignItems="center" gap={2}>
-            {getLanguageName(selectedLang)}
-            <ChevronDownIcon />
-          </Box>
+    <Box>
+      <Button
+        onClick={handleClick}
+        endIcon={<KeyboardArrowDown />}
+        sx={{
+          color: "inherit",
+          textTransform: "none",
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
+        }}
+      >
+        {i18n.language.toUpperCase()}
+      </Button>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <Button
+          onClick={() => changeLanguage("ru")}
+          sx={{ width: "100%", justifyContent: "flex-start" }}
+        >
+          RU
         </Button>
-      </Menu.Trigger>
-      <Portal>
-        <Menu.Positioner>
-          <Menu.Content>
-            <Menu.Item value="ru" onClick={() => changeLanguage("ru")}>
-              Русский
-            </Menu.Item>
-            <Menu.Item value="kk" onClick={() => changeLanguage("kk")}>
-              Қазақша
-            </Menu.Item>
-          </Menu.Content>
-        </Menu.Positioner>
-      </Portal>
-    </Menu.Root>
+        <Button
+          onClick={() => changeLanguage("en")}
+          sx={{ width: "100%", justifyContent: "flex-start" }}
+        >
+          EN
+        </Button>
+      </Menu>
+    </Box>
   );
 };
 

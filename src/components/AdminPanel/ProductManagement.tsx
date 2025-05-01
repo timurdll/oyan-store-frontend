@@ -3,8 +3,25 @@ import {
   useFetchProductsQuery,
   useDeleteProductMutation,
 } from "@redux/services";
-import { Button, Table, Space, Modal, message } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Box,
+  IconButton,
+  Typography,
+  Stack,
+} from "@mui/material";
+import { Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import ProductTranslationManager from "./ProductTranslationManager";
 import { useTranslation } from "react-i18next";
@@ -39,107 +56,118 @@ const ProductManagement: React.FC = () => {
   } = useFetchProductsQuery({ language: i18n.language.toUpperCase() });
   const [deleteProduct] = useDeleteProductMutation();
   const navigate = useNavigate();
+  const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
+  const [selectedProductId, setSelectedProductId] = React.useState<
+    number | null
+  >(null);
 
   const handleEdit = (id: number) => {
     navigate(`/${i18n.language}/admin/edit/${id}`);
   };
 
   const handleDelete = async (id: number) => {
-    Modal.confirm({
-      title: "Подтверждение удаления",
-      content: "Вы уверены, что хотите удалить этот товар?",
-      okText: "Да",
-      okType: "danger",
-      cancelText: "Нет",
-      onOk: async () => {
-        try {
-          await deleteProduct(id).unwrap();
-          message.success("Товар успешно удален");
-          refetch();
-        } catch (error) {
-          message.error("Ошибка при удалении товара");
-          console.error("Error deleting product:", error);
-        }
-      },
-    });
+    setSelectedProductId(id);
+    setDeleteDialogOpen(true);
   };
 
-  const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Название",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Цена",
-      dataIndex: "price",
-      key: "price",
-      render: (price: number) => `${price.toFixed(2)} ₸`,
-    },
-    {
-      title: "Количество",
-      dataIndex: "stock",
-      key: "stock",
-    },
-    {
-      title: "Действия",
-      key: "actions",
-      render: (_: any, record: Product) => (
-        <Space size="middle">
-          <Button
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={() => handleEdit(record.id)}
-          />
-          <ProductTranslationManager
-            productId={record.id}
-            productName={record.name}
-            productInfo={record.productInfo}
-            productCharacteristics={record.productCharacteristics}
-          />
-          <Button
-            type="primary"
-            danger
-            icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record.id)}
-          />
-        </Space>
-      ),
-    },
-  ];
+  const confirmDelete = async () => {
+    if (!selectedProductId) return;
+
+    try {
+      await deleteProduct(selectedProductId).unwrap();
+      refetch();
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    } finally {
+      setDeleteDialogOpen(false);
+      setSelectedProductId(null);
+    }
+  };
 
   if (isLoading) return <div>Загрузка продуктов...</div>;
   if (isError) return <div>Ошибка загрузки продуктов</div>;
 
   return (
-    <div>
-      <div
-        style={{
+    <Box>
+      <Box
+        sx={{
           display: "flex",
           justifyContent: "space-between",
-          marginBottom: 16,
+          alignItems: "center",
+          mb: 2,
         }}
       >
-        <h2>Управление товарами</h2>
+        <Typography variant="h4">Управление товарами</Typography>
         <Button
-          type="primary"
+          variant="contained"
+          color="primary"
           onClick={() => navigate(`/${i18n.language}/admin/add`)}
         >
           Добавить товар
         </Button>
-      </div>
-      <Table
-        columns={columns}
-        dataSource={products}
-        rowKey="id"
-        pagination={{ pageSize: 10 }}
-      />
-    </div>
+      </Box>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Название</TableCell>
+              <TableCell>Цена</TableCell>
+              <TableCell>Количество</TableCell>
+              <TableCell>Действия</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {products?.map((product: Product) => (
+              <TableRow key={product.id}>
+                <TableCell>{product.id}</TableCell>
+                <TableCell>{product.name}</TableCell>
+                <TableCell>{product.price.toFixed(2)} ₸</TableCell>
+                <TableCell>{product.stock}</TableCell>
+                <TableCell>
+                  <Stack direction="row" spacing={1}>
+                    <IconButton
+                      color="primary"
+                      onClick={() => handleEdit(product.id)}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <ProductTranslationManager
+                      productId={product.id}
+                      productName={product.name}
+                      productInfo={product.productInfo}
+                      productCharacteristics={product.productCharacteristics}
+                    />
+                    <IconButton
+                      color="error"
+                      onClick={() => handleDelete(product.id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Stack>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+      >
+        <DialogTitle>Подтверждение удаления</DialogTitle>
+        <DialogContent>
+          Вы уверены, что хотите удалить этот товар?
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteDialogOpen(false)}>Нет</Button>
+          <Button onClick={confirmDelete} color="error" variant="contained">
+            Да
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };
 

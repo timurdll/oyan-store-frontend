@@ -20,15 +20,16 @@ import {
   Card,
   IconButton,
   Tooltip,
-  Alert,
+  Alert as MuiAlert,
   Chip,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import {
   Edit as EditIcon,
   Save as SaveIcon,
   Close as CloseIcon,
 } from "@mui/icons-material";
-import { message } from "antd";
 import {
   useGetSupportedLanguagesQuery,
   useGetCharacteristicTranslationQuery,
@@ -203,6 +204,15 @@ const CharacteristicsTranslationsPage: React.FC = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<string>("");
   const [selectedType, setSelectedType] = useState<number | null>(null);
   const [isEditing, setIsEditing] = useState<{ [key: number]: boolean }>({});
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    message: string;
+    severity: "success" | "error";
+  }>({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   const { data: languages, isLoading: isLanguagesLoading } =
     useGetSupportedLanguagesQuery(undefined);
@@ -252,13 +262,21 @@ const CharacteristicsTranslationsPage: React.FC = () => {
       }
     } catch (error) {
       console.error("Error updating translation:", error);
-      message.error("Не удалось обновить перевод");
+      setSnackbar({
+        open: true,
+        message: "Не удалось обновить перевод",
+        severity: "error",
+      });
     }
   };
 
   const handleSaveTranslation = async (characteristicId: number) => {
     if (!selectedLanguage) {
-      message.error("Пожалуйста, выберите язык");
+      setSnackbar({
+        open: true,
+        message: "Пожалуйста, выберите язык",
+        severity: "error",
+      });
       return;
     }
 
@@ -267,7 +285,11 @@ const CharacteristicsTranslationsPage: React.FC = () => {
         ...prev,
         [characteristicId]: false,
       }));
-      message.success("Переводы успешно сохранены");
+      setSnackbar({
+        open: true,
+        message: "Переводы успешно сохранены",
+        severity: "success",
+      });
     } catch (error: any) {
       console.error("Error saving translations:", error);
       let errorMessage = "Ошибка при сохранении переводов";
@@ -278,7 +300,11 @@ const CharacteristicsTranslationsPage: React.FC = () => {
         errorMessage = error.data.message;
       }
 
-      message.error(errorMessage);
+      setSnackbar({
+        open: true,
+        message: errorMessage,
+        severity: "error",
+      });
     }
   };
 
@@ -302,11 +328,11 @@ const CharacteristicsTranslationsPage: React.FC = () => {
           <Typography variant="h4" gutterBottom>
             Переводы характеристик
           </Typography>
-          <Alert severity="warning">
+          <MuiAlert severity="warning">
             {!languages?.length
               ? "Нет доступных языков"
               : "Нет доступных типов"}
-          </Alert>
+          </MuiAlert>
         </Box>
       </Container>
     );
@@ -384,12 +410,26 @@ const CharacteristicsTranslationsPage: React.FC = () => {
               </Table>
             </TableContainer>
           ) : (
-            <Alert severity="info">
+            <MuiAlert severity="info">
               Пожалуйста, выберите язык и тип для управления переводами
-            </Alert>
+            </MuiAlert>
           )}
         </Card>
       </Box>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
+      >
+        <Alert
+          onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };

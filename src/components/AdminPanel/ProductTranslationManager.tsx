@@ -28,7 +28,6 @@ import {
   Divider,
 } from "@mui/material";
 import { Save as SaveIcon, TranslateOutlined } from "@mui/icons-material";
-import { message } from "antd";
 
 interface ProductTranslationManagerProps {
   productId: number;
@@ -174,12 +173,11 @@ const ProductTranslationManager: React.FC<ProductTranslationManagerProps> = ({
         name: productNameTranslation,
       }).unwrap();
 
-      message.success(
+      console.log(
         `Перевод названия товара успешно обновлен для языка ${selectedLanguage}`
       );
     } catch (error) {
-      message.error("Ошибка при сохранении перевода названия товара");
-      console.error(error);
+      console.error("Ошибка при сохранении перевода названия товара", error);
     }
   };
 
@@ -194,12 +192,14 @@ const ProductTranslationManager: React.FC<ProductTranslationManagerProps> = ({
         description: productInfoDescTranslation,
       }).unwrap();
 
-      message.success(
+      console.log(
         `Перевод информации о товаре успешно обновлен для языка ${selectedLanguage}`
       );
     } catch (error) {
-      message.error("Ошибка при сохранении перевода информации о товаре");
-      console.error(error);
+      console.error(
+        "Ошибка при сохранении перевода информации о товаре",
+        error
+      );
     }
   };
 
@@ -230,12 +230,11 @@ const ProductTranslationManager: React.FC<ProductTranslationManagerProps> = ({
         }
       }
 
-      message.success(
+      console.log(
         `Переводы характеристик успешно обновлены для языка ${selectedLanguage}`
       );
     } catch (error) {
-      message.error("Ошибка при сохранении переводов характеристик");
-      console.error(error);
+      console.error("Ошибка при сохранении переводов характеристик", error);
     }
   };
 
