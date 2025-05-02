@@ -14,6 +14,7 @@ import { RootState } from "@redux/store";
 import { jwtDecode } from "jwt-decode";
 import { useTranslation } from "react-i18next";
 import ErrorBoundary from "./components/ErrorBoundary";
+import SEO from "@components/SEO";
 
 function App() {
   const isMobile = useIsMobile();
@@ -71,6 +72,7 @@ function App() {
   return (
     <ErrorBoundary>
       <BrowserRouter>
+        <SEO />
         <div className="app-container">
           <Header />
           <main className="content">

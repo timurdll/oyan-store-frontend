@@ -1,11 +1,11 @@
 User-agent: *
 Allow: /
 
-Disallow: /admin
 Disallow: /admin/
-Disallow: /admin/add-product
-Disallow: /admin/edit
-Disallow: /admin/orders
-Disallow: /admin/stock
+Disallow: /api/
+Disallow: /private/
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /profile/
 
 Sitemap: https://oyan-store.kz/sitemap.xml
