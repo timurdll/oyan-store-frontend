@@ -1,13 +1,10 @@
 // colors
 $primary-color: #1869ff;
-$primary-color-dark: #ffffff;
 $primary-black: #212121;
 $primary-white: #ffffff;
 $primary-gray: #979da5;
-$background-dark: #212121;
 $background-light: #ffffff;
 $container-color: #e8e8e8;
-$container-color-dark: #424242;
 
 $main-font: "Montserrat-Regular", sans-serif;
 
@@ -86,46 +83,21 @@ $main-font: "Montserrat-Regular", sans-serif;
 
 // styles
 html,
-// Scrollbar Styles
 body {
   backface-visibility: hidden;
   &::-webkit-scrollbar {
-    width: 5px; // Ширина скроллбара
-    height: 5px; // Высота для горизонтального скроллбара
+    width: 5px;
+    height: 5px;
   }
 
   &::-webkit-scrollbar-track {
-    // background: var(--container-color); // Цвет трека
     background: transparent;
-    border-radius: 10px; // Скругленные края трека
+    border-radius: 10px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: var(--primary-color); // Цвет ползунка
-    border-radius: 10px; // Скругленные края ползунка
-    // border: 2px solid var(--container-color); // Промежуток между треком и ползунком
-  }
-
-  &::-webkit-scrollbar-corner {
-    background: var(
-      --background-dark
-    ); // Цвет в углу, где встречаются горизонтальный и вертикальный скроллбары
-  }
-}
-
-// Dark Theme Adjustments
-body.dark {
-  &::-webkit-scrollbar-track {
-    background: var(--background-dark);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--primary-gray);
-    border: 2px solid var(--background-dark);
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-white);
+    background: var(--primary-color);
+    border-radius: 10px;
   }
 
   &::-webkit-scrollbar-corner {
@@ -139,14 +111,12 @@ body.dark {
 
   // Primary Colors
   --primary-color: #{$primary-color};
-  --primary-color-dark: #{$primary-color-dark};
   --primary-black: #{$primary-black};
   --primary-white: #{$primary-white};
   --primary-gray: #{$primary-gray};
 
   // Backgrounds
   --background-light: #{$background-light};
-  --background-dark: #{$background-dark};
   --body-background: var(--background-light);
 
   // Text
@@ -157,7 +127,7 @@ body.dark {
 }
 
 body {
-  color: var(--text-color-light);
+  color: var(--text-color);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -165,13 +135,6 @@ body {
   font-family: $main-font;
   background-color: var(--body-background);
   overflow-x: hidden;
-  &.dark {
-    --body-background: var(--background-dark);
-    --text-color: var(--primary-white);
-    --container-color: #{$container-color-dark};
-    color: var(--text-color-dark);
-    background-color: var(--body-background);
-  }
 }
 
 body,

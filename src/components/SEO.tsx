@@ -32,7 +32,6 @@ const SEO: React.FC<SEOProps> = ({
   locale,
   alternateLocales = [],
   location = "Казахстан",
-  price = "доступные",
 }) => {
   const { t, i18n } = useTranslation();
   const siteName = "Oyan Store";

@@ -83,6 +83,8 @@ export const Card: React.FC<CardProps> = ({ product }) => {
     return preOrders.some((order) => order.productId === product.id);
   }, [preOrders, product.id]);
 
+  const [isImageLoading, setIsImageLoading] = useState(true);
+
   const handleDeleteProduct = async () => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
@@ -232,6 +234,10 @@ export const Card: React.FC<CardProps> = ({ product }) => {
     }
   };
 
+  const handleImageLoad = () => {
+    setIsImageLoading(false);
+  };
+
   const renderActionButton = () => {
     if (isAdmin) {
       return (
@@ -301,11 +307,19 @@ export const Card: React.FC<CardProps> = ({ product }) => {
           />
         )}
         <div className={styles.content}>
+          {isImageLoading && (
+            <div className={styles.skeleton}>
+              <div className={styles.skeletonImage} />
+            </div>
+          )}
           <img
             src={`${import.meta.env.VITE_API_URL}${product.cover_image}`}
             alt={product.name}
-            className={styles.cover_image}
+            className={`${styles.cover_image} ${
+              isImageLoading ? styles.hidden : ""
+            }`}
             onClick={handleRedirect}
+            onLoad={handleImageLoad}
           />
           <div className={styles.info}>
             <h2 className={styles.title} onClick={handleRedirect}>

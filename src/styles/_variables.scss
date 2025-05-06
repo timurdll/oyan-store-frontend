@@ -1,7 +1,35 @@
 $primary-color: #1869ff;
-$primary-color-dark: #ffffff;
 $primary-black: #212121;
 $primary-white: #ffffff;
 $primary-gray: #979da5;
-$body-background-dark: #212121;
-$body-background-light: #fff;
+
+// Light theme (default)
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --border-color: #dee2e6;
+  --card-background: #ffffff;
+  --header-background: #ffffff;
+  --footer-background: #f8f9fa;
+  --input-background: #ffffff;
+  --input-border: #ced4da;
+  --button-text: #ffffff;
+  --link-color: #007bff;
+  --hover-color: #0056b3;
+  --error-color: #dc3545;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+}
+
+// Common variables
+$font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+  Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-size-base: 1rem;
+$line-height-base: 1.5;
+$border-radius: 0.25rem;
+$transition-base: all 0.2s ease-in-out;
+$box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+$box-shadow-lg: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);

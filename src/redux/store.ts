@@ -1,6 +1,5 @@
 // src/store.ts
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import themeReducer from "./slices/themeSlice";
 import userReducer from "./slices/userSlice";
 import authModalSlice from "./slices/authModalSlice";
 import {
@@ -18,11 +17,9 @@ import { baseApi } from "./services"; // Импортируйте базовый
 import { authMiddleware } from "./middleware/authMiddleware";
 
 // Combine reducers
-// src/store.ts
 const rootReducer = combineReducers({
-  theme: themeReducer,
   user: userReducer,
-  authModal: authModalSlice, // Добавляем новый срез
+  authModal: authModalSlice,
   [baseApi.reducerPath]: baseApi.reducer,
 });
 

@@ -38,9 +38,62 @@
       border-radius: 8px;
       cursor: pointer;
       background-color: transparent;
+      transition: opacity 0.3s ease;
+
+      &.hidden {
+        opacity: 0;
+      }
 
       @media (max-width: 768px) {
         height: 120px;
+      }
+    }
+
+    .skeleton {
+      width: 100%;
+      height: 140px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f0f0f0;
+      position: relative;
+      animation: pulse 1.5s infinite;
+
+      @media (max-width: 768px) {
+        height: 120px;
+      }
+
+      .skeletonImage {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          #f0f0f0 25%,
+          #e0e0e0 50%,
+          #f0f0f0 75%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+      100% {
+        background-position: 200% 0;
       }
     }
 
@@ -253,4 +306,40 @@
   text-align: center;
   color: #444;
   margin-bottom: 20px;
+}
+
+// Preload banner images
+@keyframes preload {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+
+.preload-banners {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: -1;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    background-image: url("@assets/images/vixivd.png"),
+      url("@assets/images/x14d.png"), url("@assets/images/x15d.png"),
+      url("@assets/images/ktabd.png"), url("@assets/images/vixiv-m.png"),
+      url("@assets/images/x14-m.png"), url("@assets/images/x15-m.png"),
+      url("@assets/images/ktab-m.png"), url("@assets/images/vixivd-kk.png"),
+      url("@assets/images/x14d-kk.png"), url("@assets/images/x15d-kk.png"),
+      url("@assets/images/ktab-kk.png"), url("@assets/images/vixiv-m-kk.png"),
+      url("@assets/images/x14-m-kk.png"), url("@assets/images/x15-m-kk.png"),
+      url("@assets/images/ktab-m-kk.png");
+    background-repeat: no-repeat;
+    background-size: 0 0;
+  }
 }

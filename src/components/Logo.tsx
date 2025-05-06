@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "../styles/logo.module.scss";
-import logoImage from "../assets/images/logo.svg";
+import logoImage from "../assets/images/tumbler.svg";
 
 export const Logo = () => {
   return (
