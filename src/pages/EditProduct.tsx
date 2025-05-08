@@ -4,13 +4,16 @@ import {
   useFetchTypeByIdQuery,
   useFetchCharacteristicByIdQuery,
 } from "@redux/services";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import EditProductForm from "@components/AdminPanel/ProductEditForm";
 import { useTranslation } from "react-i18next";
+import styles from "@styles/product-edit-form.module.scss";
+import { CircularProgress } from "@mui/material";
 
 const EditProduct = () => {
   const { id } = useParams();
   const { i18n } = useTranslation();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -50,7 +53,9 @@ const EditProduct = () => {
     }
 
     if (productError || typeError || charError) {
-      setError("Ошибка при загрузке данных");
+      const errorMessage =
+        "Ошибка при загрузке данных. Пожалуйста, попробуйте позже.";
+      setError(errorMessage);
       setLoading(false);
       return;
     }
@@ -77,22 +82,51 @@ const EditProduct = () => {
   ]);
 
   if (loading) {
-    return <div>Загрузка...</div>;
+    return (
+      <div className={styles.loadingSpinner}>
+        <CircularProgress />
+      </div>
+    );
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <div className={styles.errorContainer}>
+        <h3>Ошибка</h3>
+        <p>{error}</p>
+        <button
+          onClick={() => navigate(-1)}
+          className={styles.submitButton}
+          style={{ marginTop: "16px" }}
+        >
+          Вернуться назад
+        </button>
+      </div>
+    );
   }
 
   if (!productData.product) {
-    return <div>Продукт не найден</div>;
+    return (
+      <div className={styles.errorContainer}>
+        <h3>Продукт не найден</h3>
+        <p>Запрашиваемый продукт не существует или был удален.</p>
+        <button
+          onClick={() => navigate(-1)}
+          className={styles.submitButton}
+          style={{ marginTop: "16px" }}
+        >
+          Вернуться назад
+        </button>
+      </div>
+    );
   }
 
   return (
-    <div>
+    <div className={styles.formContainer}>
+      <h2 className={styles.sectionTitle}>Редактирование продукта</h2>
       <EditProductForm
         product={productData.product}
-        availableCharacteristics={productData.availableCharacteristics || []} // Pass an empty array if null
+        availableCharacteristics={productData.availableCharacteristics || []}
       />
     </div>
   );

@@ -42,7 +42,10 @@ export const productApi = baseApi.injectEndpoints({
         method: "PUT",
         body: formData,
       }),
-      invalidatesTags: ({ id }) => [{ type: "Products", id }],
+      invalidatesTags: (result, error, { id }) => [
+        { type: "Products", id },
+        { type: "Products", id: "LIST" },
+      ],
     }),
     updateStock: builder.mutation({
       query: ({ id, stock }) => ({
