@@ -26,97 +26,48 @@ const AdditionalImages: React.FC<AdditionalImagesProps> = ({
   nextImage,
   setCurrentImageIndex,
 }) => {
+  const isMobile = useIsMobile();
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const isMobile = useIsMobile();
-  const [showLeftButton, setShowLeftButton] = useState(false);
-  const [showRightButton, setShowRightButton] = useState(true);
   const [isScrollable, setIsScrollable] = useState(false);
+  const [showLeftButton, setShowLeftButton] = useState(false);
+  const [showRightButton, setShowRightButton] = useState(false);
 
-  // Check if content is scrollable
-  useEffect(() => {
-    const checkScrollable = () => {
-      if (scrollContainerRef.current) {
-        const { scrollWidth, clientWidth } = scrollContainerRef.current;
-        setIsScrollable(scrollWidth > clientWidth);
-      }
-    };
+  const checkScroll = useCallback(() => {
+    if (!scrollContainerRef.current || !containerRef.current) return;
 
-    checkScrollable();
-    window.addEventListener("resize", checkScrollable);
-    return () => window.removeEventListener("resize", checkScrollable);
-  }, [images]);
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+    const containerWidth = containerRef.current.clientWidth;
 
-  // Check scroll position to show/hide navigation buttons
-  const checkScrollButtons = useCallback(() => {
-    if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } =
-        scrollContainerRef.current;
-      const isAtStart = scrollLeft <= 10;
-      const isAtEnd = scrollLeft >= scrollWidth - clientWidth - 10;
-
-      setShowLeftButton(!isAtStart);
-      setShowRightButton(!isAtEnd);
-    }
+    setIsScrollable(scrollWidth > containerWidth);
+    setShowLeftButton(scrollLeft > 0);
+    setShowRightButton(scrollLeft < scrollWidth - clientWidth - 1);
   }, []);
 
-  // Add scroll listener
   useEffect(() => {
-    const scrollContainer = scrollContainerRef.current;
-    if (scrollContainer) {
-      scrollContainer.addEventListener("scroll", checkScrollButtons);
-      checkScrollButtons();
-      return () =>
-        scrollContainer.removeEventListener("scroll", checkScrollButtons);
-    }
-  }, [checkScrollButtons]);
+    checkScroll();
+    window.addEventListener("resize", checkScroll);
+    return () => window.removeEventListener("resize", checkScroll);
+  }, [checkScroll]);
 
-  // Scroll to selected item
-  useEffect(() => {
-    if (scrollContainerRef.current && images.length > 0) {
-      const container = scrollContainerRef.current;
-      const imageElements = container.querySelectorAll(
-        `.${styles.additionalImage}`
-      );
+  const scrollByWidth = useCallback((direction: "left" | "right") => {
+    if (!scrollContainerRef.current) return;
 
-      if (imageElements[currentImageIndex]) {
-        const imageElement = imageElements[currentImageIndex];
-        const containerLeft = container.getBoundingClientRect().left;
-        const imageLeft = imageElement.getBoundingClientRect().left;
-        const imageWidth = imageElement.clientWidth;
-        const containerWidth = container.clientWidth;
+    const scrollAmount = scrollContainerRef.current.clientWidth * 0.8;
+    const newScrollLeft =
+      direction === "left"
+        ? scrollContainerRef.current.scrollLeft - scrollAmount
+        : scrollContainerRef.current.scrollLeft + scrollAmount;
 
-        // Center the image in the container
-        container.scrollTo({
-          left:
-            container.scrollLeft +
-            (imageLeft - containerLeft) -
-            containerWidth / 2 +
-            imageWidth / 2,
-          behavior: "smooth",
-        });
-      }
-    }
-  }, [currentImageIndex, images.length]);
-
-  // Scroll by specific width
-  const scrollByWidth = useCallback(
-    (direction: "left" | "right") => {
-      if (!scrollContainerRef.current) return;
-
-      const scrollAmount = scrollContainerRef.current.clientWidth * 0.75;
-      scrollContainerRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-
-      setTimeout(checkScrollButtons, 400);
-    },
-    [checkScrollButtons]
-  );
+    scrollContainerRef.current.scrollTo({
+      left: newScrollLeft,
+      behavior: "smooth",
+    });
+  }, []);
 
   const handleSelect = (i: number) => {
     setCurrentImageIndex(i);
+    openModal(i);
   };
 
   // Don't render if no images
@@ -133,7 +84,7 @@ const AdditionalImages: React.FC<AdditionalImagesProps> = ({
             className={`${styles.additionalImage} ${
               i === currentImageIndex ? styles.active : ""
             }`}
-            onClick={() => openModal(i)}
+            onClick={() => handleSelect(i)}
             whileHover={{ scale: !isMobile ? 1.05 : 1 }}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -142,7 +93,6 @@ const AdditionalImages: React.FC<AdditionalImagesProps> = ({
         ))}
       </div>
 
-      {/* Show navigation arrows only when needed */}
       <AnimatePresence>
         {!isMobile && isScrollable && showLeftButton && (
           <motion.button

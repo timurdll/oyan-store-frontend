@@ -184,7 +184,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
         }
       }}
     >
-      {({ setFieldValue, isSubmitting, errors, touched }) => (
+      {({ setFieldValue, isSubmitting }) => (
         <Form className={styles.formContainer}>
           <div className={styles.field}>
             <label htmlFor="name">Название</label>

@@ -8,7 +8,7 @@
   z-index: 99;
   background: #fff;
   font-weight: 450;
-  height: 75px;
+  height: 70px;
   .content {
     display: flex;
     flex: 1;
@@ -26,14 +26,20 @@
       img {
         max-width: 100%;
       }
+
+      svg {
+        width: 26px;
+        height: 26px;
+      }
+
       b {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        font-size: 12px;
+        font-size: 11px;
         // font-family: "Gilroy-Regular";
         font-weight: 400;
-        margin-top: 10px;
+        margin-top: 6px;
       }
       .icon {
         display: flex;
@@ -42,20 +48,21 @@
           // font-family: "Gilroy-Regular";
           font-weight: 400;
           position: absolute;
-          right: -5px;
-          font-size: 8px !important;
+          right: -6px;
+          top: -6px;
+          font-size: 11px !important;
           font-style: normal;
-          font-weight: 400;
+          font-weight: 500;
           line-height: 16px;
           color: #fff !important;
           background: var(--primary-color);
-          width: 14px;
-          height: 14px;
+          width: 16px;
+          height: 16px;
           display: flex;
           align-items: center;
           justify-content: center;
           border-radius: 100%;
-          border: 1px solid #fff;
+          border: 1.5px solid #fff;
         }
       }
     }

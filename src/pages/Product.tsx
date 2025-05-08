@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useFetchProductBySlugQuery } from "@redux/services";
@@ -110,6 +110,30 @@ const ProductPage: React.FC = () => {
       setSectionDirection("left");
     }
     setActiveSection(section);
+  };
+
+  const allImages = useMemo(() => {
+    if (!product) return [];
+    return [product.cover_image, ...(product.images || [])];
+  }, [product]);
+
+  const openModal = (index: number) => {
+    setCurrentImageIndex(index);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex(
+      (prev) => (prev - 1 + allImages.length) % allImages.length
+    );
   };
 
   if (isLoading) {
@@ -248,25 +272,6 @@ const ProductPage: React.FC = () => {
   }
 
   if (!product) return <div>Товар не найден</div>;
-
-  const openModal = (index: number) => {
-    setCurrentImageIndex(index);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => setIsModalOpen(false);
-
-  const prevImage = () => {
-    setCurrentImageIndex(
-      currentImageIndex === 0 ? product.images.length : currentImageIndex - 1
-    );
-  };
-
-  const nextImage = () => {
-    setCurrentImageIndex(
-      currentImageIndex === product.images.length ? 0 : currentImageIndex + 1
-    );
-  };
 
   const renderCharacteristics = () => {
     if (!product?.productCharacteristics) return null;
@@ -522,25 +527,19 @@ const ProductPage: React.FC = () => {
 
         <div className={styles.product}>
           <div className={styles.imageContainer}>
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={currentImageIndex}
-                className={styles.image}
-                src={`${import.meta.env.VITE_API_URL}${
-                  currentImageIndex === 0
-                    ? product.cover_image
-                    : product.images[currentImageIndex - 1]
-                }`}
-                alt={product.name}
-                onClick={() => openModal(currentImageIndex)}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              />
-            </AnimatePresence>
+            <motion.img
+              className={styles.image}
+              src={`${import.meta.env.VITE_API_URL}${
+                allImages[currentImageIndex]
+              }`}
+              alt={product.name}
+              onClick={() => openModal(currentImageIndex)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            />
 
-            {isMobile && product.images.length > 0 && (
+            {isMobile && allImages.length > 1 && (
               <>
                 <div className={styles.mobileNavArrows}>
                   <div
@@ -557,18 +556,16 @@ const ProductPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* <div className={styles.imageIndicator}>
-                  {Array.from({ length: product.images.length + 1 }).map(
-                    (_, index) => (
-                      <div
-                        key={index}
-                        className={`${styles.dot} ${
-                          currentImageIndex === index ? styles.active : ""
-                        }`}
-                      />
-                    )
-                  )}
-                </div> */}
+                <div className={styles.imageIndicator}>
+                  {allImages.map((_: string, index: number) => (
+                    <div
+                      key={index}
+                      className={`${styles.dot} ${
+                        currentImageIndex === index ? styles.active : ""
+                      }`}
+                    />
+                  ))}
+                </div>
               </>
             )}
           </div>
@@ -649,7 +646,7 @@ const ProductPage: React.FC = () => {
 
             {!isMobile && (
               <AdditionalImages
-                images={product.images}
+                images={allImages}
                 currentImageIndex={currentImageIndex}
                 openModal={openModal}
                 closeModal={closeModal}
