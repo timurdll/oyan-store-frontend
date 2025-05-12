@@ -5,9 +5,19 @@ export interface User {
   email: string;
   password: string;
   role: string;
+  firstName?: string;
+  lastName?: string;
+  dateOfBirth?: Date;
+  profileImage?: string;
+  phoneNumber?: string;
   basket?: Basket;
   ratings: Rating[];
   favorites: Favorite[];
+  orders: Order[];
+  bonuses: number;
+  holdingBonuses: number;
+  notifications: Notification[];
+  preOrders: PreOrder[];
 }
 
 export interface Basket {
@@ -147,4 +157,13 @@ export enum OrderStatus {
   PAID = "PAID", // Оплачен
   COMPLETED = "COMPLETED", // Завершен
   CANCELED = "CANCELED", // Отменен
+}
+
+export interface PreOrder {
+  id: number;
+  userId: number;
+  productId: number;
+  user: User;
+  product: Product;
+  createdAt: Date;
 }

@@ -14,6 +14,7 @@ interface AdditionalImagesProps {
   prevImage: () => void;
   nextImage: () => void;
   setCurrentImageIndex: (index: number) => void;
+  coverImage: string;
 }
 
 const AdditionalImages: React.FC<AdditionalImagesProps> = ({
@@ -25,6 +26,7 @@ const AdditionalImages: React.FC<AdditionalImagesProps> = ({
   prevImage,
   nextImage,
   setCurrentImageIndex,
+  coverImage,
 }) => {
   const isMobile = useIsMobile();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -131,6 +133,7 @@ const AdditionalImages: React.FC<AdditionalImagesProps> = ({
           onPrev={prevImage}
           onNext={nextImage}
           onSelect={handleSelect}
+          coverImage={coverImage}
         />
       )}
     </div>

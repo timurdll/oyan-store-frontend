@@ -56,6 +56,22 @@ const Orders = () => {
                   {OrderStatusTranslation[order.status] || "Неизвестный статус"}
                 </span>
               </span>
+              <span className={styles.customerInfo}>
+                Клиент:{" "}
+                <span className={styles.value}>
+                  {order.user
+                    ? `${order.user.firstName || ""} ${
+                        order.user.lastName || ""
+                      }`.trim() || "Не указано"
+                    : "Не указано"}
+                </span>
+              </span>
+              <span className={styles.customerPhone}>
+                Телефон:{" "}
+                <span className={styles.value}>
+                  {order.phoneNumber || "Не указано"}
+                </span>
+              </span>
               {/* Status Update */}
               <select
                 value={order.status}

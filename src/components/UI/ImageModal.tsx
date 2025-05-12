@@ -11,6 +11,7 @@ interface ImageModalProps {
   onPrev: () => void;
   onNext: () => void;
   onSelect: (index: number) => void;
+  coverImage: string;
 }
 
 const ImageModal: React.FC<ImageModalProps> = ({
@@ -20,7 +21,9 @@ const ImageModal: React.FC<ImageModalProps> = ({
   onPrev,
   onNext,
   onSelect,
+  coverImage,
 }) => {
+  const allImages = [coverImage, ...images].filter(Boolean);
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
       <motion.div
@@ -33,7 +36,9 @@ const ImageModal: React.FC<ImageModalProps> = ({
       >
         <div className={styles.imageWrapper}>
           <motion.img
-            src={`${import.meta.env.VITE_API_URL}${images[currentImageIndex]}`}
+            src={`${import.meta.env.VITE_API_URL}${
+              allImages[currentImageIndex]
+            }`}
             alt={`Image ${currentImageIndex + 1}`}
             className={styles.image}
             key={currentImageIndex}
@@ -48,7 +53,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
         </div>
 
         <div className={styles.thumbnailContainer}>
-          {images.map((image, index) => (
+          {allImages.map((image, index) => (
             <img
               key={index}
               src={`${import.meta.env.VITE_API_URL}${image}`}

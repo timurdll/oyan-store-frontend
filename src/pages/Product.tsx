@@ -114,7 +114,7 @@ const ProductPage: React.FC = () => {
 
   const allImages = useMemo(() => {
     if (!product) return [];
-    return [product.cover_image, ...(product.images || [])];
+    return [product.cover_image, ...(product.images || [])].filter(Boolean);
   }, [product]);
 
   const openModal = (index: number) => {
@@ -529,11 +529,17 @@ const ProductPage: React.FC = () => {
           <div className={styles.imageContainer}>
             <motion.img
               className={styles.image}
-              src={`${import.meta.env.VITE_API_URL}${
-                allImages[currentImageIndex]
-              }`}
+              src={
+                isMobile
+                  ? `${import.meta.env.VITE_API_URL}${
+                      allImages[currentImageIndex]
+                    }`
+                  : `${import.meta.env.VITE_API_URL}${product.cover_image}`
+              }
               alt={product.name}
-              onClick={() => openModal(currentImageIndex)}
+              onClick={() =>
+                isMobile ? openModal(currentImageIndex) : openModal(0)
+              }
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
@@ -646,14 +652,15 @@ const ProductPage: React.FC = () => {
 
             {!isMobile && (
               <AdditionalImages
-                images={allImages}
+                images={product.images || []}
                 currentImageIndex={currentImageIndex}
-                openModal={openModal}
+                openModal={(i) => openModal(i + 1)}
                 closeModal={closeModal}
                 isModalOpen={isModalOpen}
                 prevImage={prevImage}
                 nextImage={nextImage}
                 setCurrentImageIndex={setCurrentImageIndex}
+                coverImage={product.cover_image}
               />
             )}
           </div>

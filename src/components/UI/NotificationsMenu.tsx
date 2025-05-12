@@ -91,7 +91,7 @@ const NotificationsMenu: React.FC = () => {
         aria-label="notifications"
         sx={{ padding: 0 }}
       >
-        <NotificationsNoneIcon />
+        <NotificationsNoneIcon style={{ width: "26px", height: "26px" }} />
         {isLoggedIn && unreadCount > 0 && (
           <span className={styles.itemCount}>{unreadCount}</span>
         )}
