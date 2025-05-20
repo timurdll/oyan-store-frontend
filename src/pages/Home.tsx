@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const [selectedType, setSelectedType] = useState<number | null>(null);
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -26,8 +26,8 @@ const Home = () => {
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "KZT",
-      lowPrice: "150000",
-      highPrice: "2000000",
+      lowPrice: "79990",
+      highPrice: "360000",
       offerCount: "100",
       itemCondition: "https://schema.org/NewCondition",
       availability: "https://schema.org/InStock",
@@ -39,13 +39,13 @@ const Home = () => {
         address: {
           "@type": "PostalAddress",
           addressCountry: "KZ",
-          addressLocality: "Алматы",
-          postalCode: "050000",
-          streetAddress: "ул. Абая, 150",
+          addressLocality: "Астна",
+          postalCode: "010000",
+          streetAddress: "ул. Майлина, 31",
         },
         contactPoint: {
           "@type": "ContactPoint",
-          telephone: "+7 (777) 777-77-77",
+          telephone: "+7 (708) 904-52-54",
           contactType: "customer service",
           areaServed: "KZ",
           availableLanguage: ["Russian", "Kazakh"],

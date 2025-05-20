@@ -27,10 +27,6 @@ i18n
     interpolation: {
       escapeValue: false,
     },
-    // Отключаем загрузку с сервера, т.к. теперь у нас ресурсы импортированы напрямую
-    // backend: {
-    //   loadPath: "/locales/{{lng}}/{{ns}}.json",
-    // },
     detection: {
       order: [
         "path",

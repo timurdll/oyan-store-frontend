@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo } from "react";
 import { Card } from "./Card";
 import styles from "@styles/products.module.scss";
 import { Product } from "types/types";
@@ -8,7 +8,7 @@ import { SkeletonCard } from "./UI/SkeletonCard";
 import { useTranslation } from "react-i18next";
 
 interface ProductListProps {
-  selectedType: number | null; // Ensure the type is number | null
+  selectedType: number | null;
 }
 
 const ProductList: React.FC<ProductListProps> = ({ selectedType }) => {
@@ -20,25 +20,19 @@ const ProductList: React.FC<ProductListProps> = ({ selectedType }) => {
   } = useFetchProductsQuery({
     language: i18n.language.toUpperCase(),
   });
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
-  useEffect(() => {
-    if (selectedType !== null) {
-      setFilteredProducts(
-        products?.filter(
-          (product: Product) => product.typeId === selectedType
-        ) || []
-      );
-    } else {
-      setFilteredProducts(products || []);
-    }
-  }, [selectedType, products]);
+  const filteredProducts = useMemo<Product[]>(() => {
+    if (!products) return [];
+    return selectedType !== null
+      ? products.filter((p: Product) => p.typeId === selectedType)
+      : products;
+  }, [products, selectedType]);
 
   if (isLoading) {
     return (
       <div className={styles.products}>
         <div className={styles.products_container}>
-          {[...Array(6)].map((_, index) => (
+          {[...Array(6)].map((_, index: number) => (
             <SkeletonCard key={index} />
           ))}
         </div>
@@ -56,9 +50,13 @@ const ProductList: React.FC<ProductListProps> = ({ selectedType }) => {
 
   return (
     <div className={styles.products}>
-      <motion.div className={styles.products_container} layout>
+      <motion.div
+        className={
+          styles.products_container
+        } /* remove layout if you don’t need it */
+      >
         <AnimatePresence mode="wait">
-          {filteredProducts.map((product, index) => (
+          {filteredProducts.map((product: Product, index: number) => (
             <motion.div
               key={product.id}
               className={styles.cardContainer}
@@ -66,21 +64,9 @@ const ProductList: React.FC<ProductListProps> = ({ selectedType }) => {
               animate={{
                 opacity: 1,
                 scale: 1,
-                transition: {
-                  duration: 0.3,
-                  delay: index * 0.05,
-                  ease: [0.43, 0.13, 0.23, 0.96],
-                },
+                transition: { duration: 0.3, delay: index * 0.05 },
               }}
-              exit={{
-                opacity: 0,
-                scale: 0.9,
-                transition: {
-                  duration: 0.2,
-                  ease: [0.43, 0.13, 0.23, 0.96],
-                },
-              }}
-              layout
+              exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
             >
               <Card product={product} />
             </motion.div>

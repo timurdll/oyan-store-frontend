@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const Footer: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <footer className={styles.footer}>
@@ -17,7 +17,9 @@ const Footer: React.FC = () => {
               <h6 className={styles.title}>{t("footer.company.title")}</h6>
               <ul className={styles.submenu}>
                 <li>
-                  <Link to="/about-us">{t("footer.company.about")}</Link>
+                  <Link to={`/${i18n.language}/about-us`}>
+                    {t("footer.company.about")}
+                  </Link>
                 </li>
                 <li>
                   <Link to="/">{t("footer.company.products")}</Link>

@@ -15,6 +15,7 @@ import { jwtDecode } from "jwt-decode";
 import { useTranslation } from "react-i18next";
 import ErrorBoundary from "./components/ErrorBoundary";
 import SEO from "@components/SEO";
+import Breadcrumbs from "@components/Breadcrumbs";
 
 function App() {
   const isMobile = useIsMobile();
@@ -75,6 +76,7 @@ function App() {
         <SEO />
         <div className="app-container">
           <Header />
+          {/* <Breadcrumbs /> */}
           <main className="content">
             <Routes>
               {/* Root redirects to current language */}

@@ -36,7 +36,7 @@ interface CardProps {
   product: Product;
 }
 
-export const Card: React.FC<CardProps> = ({ product }) => {
+export const CardComponent: React.FC<CardProps> = ({ product }) => {
   const { i18n } = useTranslation();
   const [deleteProduct] = useDeleteProductMutation();
   const [createPreOrder] = useCreatePreOrderMutation();
@@ -422,4 +422,4 @@ export const Card: React.FC<CardProps> = ({ product }) => {
   );
 };
 
-export default Card;
+export const Card = React.memo(CardComponent);

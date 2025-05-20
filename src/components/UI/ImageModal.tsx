@@ -65,7 +65,6 @@ const ImageModal: React.FC<ImageModalProps> = ({
             />
           ))}
         </div>
-
         <button className={styles.closeButton} onClick={onClose}>
           <img src={closeIcon} alt="Close" />
         </button>
