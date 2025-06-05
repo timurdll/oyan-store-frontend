@@ -23,6 +23,8 @@ const ProductList: React.FC<ProductListProps> = ({ selectedType }) => {
     ...(selectedType !== null ? { typeId: selectedType } : {}),
   });
 
+  console.log(products);
+
   if (isLoading) {
     return (
       <div className={styles.products}>
@@ -59,7 +61,13 @@ const ProductList: React.FC<ProductListProps> = ({ selectedType }) => {
               }}
               exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
             >
-              <Card product={product} />
+              <Card
+                product={{
+                  ...product,
+                  cover_image:
+                    import.meta.env.VITE_API_URL + product.cover_image,
+                }}
+              />
             </motion.div>
           ))}
         </AnimatePresence>

@@ -231,7 +231,13 @@ const ProductListPage: React.FC = () => {
           style={{ position: "relative" }}
         >
           {products.map((product, idx) => (
-            <Card key={product.id || idx} product={product} />
+            <Card
+              key={product.id || idx}
+              product={{
+                ...product,
+                cover_image: import.meta.env.VITE_API_URL + product.cover_image,
+              }}
+            />
           ))}
           {(isLoading || isFetching || pendingFilter) && offset === 0 && (
             <div
