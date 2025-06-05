@@ -3,16 +3,27 @@ import { baseApi } from "./baseApi";
 export const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     fetchProducts: builder.query({
-      query: (params) => {
-        const language = params?.language;
-        return language ? `/products?language=${language}` : "/products";
+      query: (params = {}) => {
+        const searchParams = new URLSearchParams();
+        if (params.typeId) searchParams.append("typeId", params.typeId);
+        if (params.limit) searchParams.append("limit", params.limit);
+        if (params.offset) searchParams.append("offset", params.offset);
+        if (params.sortBy) searchParams.append("sortBy", params.sortBy);
+        if (params.sortOrder)
+          searchParams.append("sortOrder", params.sortOrder);
+        if (params.language) searchParams.append("language", params.language);
+        if (params.minPrice !== undefined)
+          searchParams.append("minPrice", params.minPrice.toString());
+        if (params.maxPrice !== undefined)
+          searchParams.append("maxPrice", params.maxPrice.toString());
+        return `/products/filter?${searchParams.toString()}`;
       },
       providesTags: (result) =>
-        result
+        result && Array.isArray(result.products)
           ? [
-              ...result.map(({ id }: { id: number }) => ({
+              ...result.products.map((product: { id: number }) => ({
                 type: "Products" as const,
-                id,
+                id: product.id,
               })),
               { type: "Products", id: "LIST" },
             ]
@@ -42,7 +53,7 @@ export const productApi = baseApi.injectEndpoints({
         method: "PUT",
         body: formData,
       }),
-      invalidatesTags: (result, error, { id }) => [
+      invalidatesTags: ({ id }) => [
         { type: "Products", id },
         { type: "Products", id: "LIST" },
       ],

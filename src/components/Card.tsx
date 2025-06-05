@@ -307,20 +307,19 @@ export const CardComponent: React.FC<CardProps> = ({ product }) => {
           />
         )}
         <div className={styles.content}>
-          {isImageLoading && (
+          {isImageLoading ? (
             <div className={styles.skeleton}>
               <div className={styles.skeletonImage} />
             </div>
+          ) : (
+            <img
+              src={`${import.meta.env.VITE_API_URL}${product.cover_image}`}
+              alt={product.name}
+              className={styles.cover_image}
+              onClick={handleRedirect}
+              onLoad={handleImageLoad}
+            />
           )}
-          <img
-            src={`${import.meta.env.VITE_API_URL}${product.cover_image}`}
-            alt={product.name}
-            className={`${styles.cover_image} ${
-              isImageLoading ? styles.hidden : ""
-            }`}
-            onClick={handleRedirect}
-            onLoad={handleImageLoad}
-          />
           <div className={styles.info}>
             <h2 className={styles.title} onClick={handleRedirect}>
               {product.name}

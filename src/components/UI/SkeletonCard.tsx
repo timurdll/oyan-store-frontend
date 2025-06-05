@@ -1,7 +1,13 @@
 import React from "react";
 import Skeleton from "@mui/material/Skeleton";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export const SkeletonCard: React.FC = () => {
+  // Используем медиазапрос для мобильных
+  const isMobile = useMediaQuery("(max-width:768px)");
+  const imageHeight = isMobile ? 120 : 140;
+  const imageRadius = 8;
+
   return (
     <div
       style={{
@@ -18,9 +24,9 @@ export const SkeletonCard: React.FC = () => {
       <Skeleton
         variant="rectangular"
         width="100%"
-        height={150}
+        height={imageHeight}
         animation="wave"
-        style={{ borderRadius: "10px", marginBottom: "15px" }}
+        style={{ borderRadius: imageRadius, marginBottom: "15px" }}
       />
 
       {/* Skeleton for Info */}

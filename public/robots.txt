@@ -279,4 +279,4 @@ Disallow: /novemcentillionuple/
 Disallow: /octocentillionuple/
 Disallow: /novemcentillionuple/
 
-Sitemap: https://oyan-store.kz/sitemap.xml
+Sitemap: https://oyan-store.kz/api/sitemap.xml

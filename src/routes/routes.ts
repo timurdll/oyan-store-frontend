@@ -13,11 +13,16 @@ import AboutUsPage from "@pages/AboutUs";
 import StockManagement from "@components/AdminPanel/StockManagment";
 import TypesManager from "@components/AdminPanel/TypesManager";
 import CharacteristicsTranslationsPage from "@components/AdminPanel/CharacteristicsTranslationsPage";
+import ProductListPage from "@pages/ProductListPage";
 
 export const publicRoutes = [
   { path: "*", Component: Home },
   { path: "product/:slug", Component: ProductPage },
   { path: "about-us", Component: AboutUsPage },
+  {
+    path: "products",
+    Component: ProductListPage,
+  },
 ];
 
 export const userRoutes = [

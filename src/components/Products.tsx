@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Card } from "./Card";
 import styles from "@styles/products.module.scss";
 import { Product } from "types/types";
@@ -19,14 +19,9 @@ const ProductList: React.FC<ProductListProps> = ({ selectedType }) => {
     isLoading,
   } = useFetchProductsQuery({
     language: i18n.language.toUpperCase(),
+    limit: 20,
+    ...(selectedType !== null ? { typeId: selectedType } : {}),
   });
-
-  const filteredProducts = useMemo<Product[]>(() => {
-    if (!products) return [];
-    return selectedType !== null
-      ? products.filter((p: Product) => p.typeId === selectedType)
-      : products;
-  }, [products, selectedType]);
 
   if (isLoading) {
     return (
@@ -50,13 +45,9 @@ const ProductList: React.FC<ProductListProps> = ({ selectedType }) => {
 
   return (
     <div className={styles.products}>
-      <motion.div
-        className={
-          styles.products_container
-        } /* remove layout if you don’t need it */
-      >
+      <motion.div className={styles.products_container}>
         <AnimatePresence mode="wait">
-          {filteredProducts.map((product: Product, index: number) => (
+          {products?.products?.map((product: Product, index: number) => (
             <motion.div
               key={product.id}
               className={styles.cardContainer}
