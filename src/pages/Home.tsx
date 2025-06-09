@@ -4,10 +4,13 @@ import Navbar from "@components/NavBar";
 import BannerSlider from "@components/UI/SlickSlider";
 import SEO from "@components/SEO";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import Button from "@components/UI/Button";
 
 const Home = () => {
   const [selectedType, setSelectedType] = useState<number | null>(null);
-  const { i18n } = useTranslation();
+  const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -74,6 +77,19 @@ const Home = () => {
       <BannerSlider />
       <Navbar onTypeSelect={setSelectedType} />
       <ProductList selectedType={selectedType} />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          margin: "32px 0",
+        }}
+      >
+        <Button
+          label={t("common.viewAllProducts") || "Смотреть все товары"}
+          variant="primaryLarge"
+          onClick={() => navigate(`/${i18n.language}/products`)}
+        />
+      </div>
     </>
   );
 };

@@ -235,7 +235,6 @@ const ProductListPage: React.FC = () => {
               key={product.id || idx}
               product={{
                 ...product,
-                cover_image: import.meta.env.VITE_API_URL + product.cover_image,
               }}
             />
           ))}

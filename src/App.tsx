@@ -15,7 +15,7 @@ import { jwtDecode } from "jwt-decode";
 import { useTranslation } from "react-i18next";
 import ErrorBoundary from "./components/ErrorBoundary";
 import SEO from "@components/SEO";
-import Breadcrumbs from "@components/Breadcrumbs";
+// import Breadcrumbs from "@components/Breadcrumbs";
 
 function App() {
   const isMobile = useIsMobile();

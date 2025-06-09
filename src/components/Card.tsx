@@ -95,12 +95,6 @@ export const CardComponent: React.FC<CardProps> = ({ product }) => {
     }
   };
 
-  // console.log(
-  //   product.cover_image.startsWith("http")
-  //     ? product.cover_image
-  //     : `${import.meta.env.VITE_API_URL}${product.cover_image}`
-  // );
-
   const handleButtonClick = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -242,6 +236,7 @@ export const CardComponent: React.FC<CardProps> = ({ product }) => {
   };
 
   const handleImageLoad = () => {
+    console.log("Image loaded or error!", product.cover_image);
     setIsImageLoading(false);
   };
 
@@ -314,11 +309,7 @@ export const CardComponent: React.FC<CardProps> = ({ product }) => {
           />
         )}
         <div className={styles.content}>
-          {isImageLoading ? (
-            <div className={styles.skeleton}>
-              <div className={styles.skeletonImage} />
-            </div>
-          ) : (
+          <div className={styles.imageWrapper} style={{ position: "relative" }}>
             <img
               src={`https://oyan-store.kz${product.cover_image}`}
               alt={product.name}
@@ -326,8 +317,27 @@ export const CardComponent: React.FC<CardProps> = ({ product }) => {
               onClick={handleRedirect}
               onLoad={handleImageLoad}
               onError={handleImageLoad}
+              style={{
+                opacity: isImageLoading ? 0 : 1,
+                transition: "opacity 0.3s",
+              }}
             />
-          )}
+            {isImageLoading && (
+              <div
+                className={styles.skeleton}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  zIndex: 2,
+                }}
+              >
+                <div className={styles.skeletonImage} />
+              </div>
+            )}
+          </div>
           <div className={styles.info}>
             <h2 className={styles.title} onClick={handleRedirect}>
               {product.name}
