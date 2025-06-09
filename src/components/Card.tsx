@@ -95,6 +95,12 @@ export const CardComponent: React.FC<CardProps> = ({ product }) => {
     }
   };
 
+  console.log(
+    product.cover_image.startsWith("http")
+      ? product.cover_image
+      : `${import.meta.env.VITE_API_URL}${product.cover_image}`
+  );
+
   const handleButtonClick = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -313,11 +319,16 @@ export const CardComponent: React.FC<CardProps> = ({ product }) => {
             </div>
           ) : (
             <img
-              src={`${import.meta.env.VITE_API_URL}${product.cover_image}`}
+              src={
+                product.cover_image.startsWith("http")
+                  ? product.cover_image
+                  : `${import.meta.env.VITE_API_URL}${product.cover_image}`
+              }
               alt={product.name}
               className={styles.cover_image}
               onClick={handleRedirect}
               onLoad={handleImageLoad}
+              onError={handleImageLoad}
             />
           )}
           <div className={styles.info}>
