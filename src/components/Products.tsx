@@ -64,8 +64,6 @@ const ProductList: React.FC<ProductListProps> = ({ selectedType }) => {
               <Card
                 product={{
                   ...product,
-                  cover_image:
-                    import.meta.env.VITE_API_URL + product.cover_image,
                 }}
               />
             </motion.div>

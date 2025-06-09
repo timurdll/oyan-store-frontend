@@ -144,6 +144,7 @@ export const CardComponent: React.FC<CardProps> = ({ product }) => {
     navigate("/basket");
   };
 
+  console.log(`https://oyan-store.kz${product.cover_image}`);
   // Обработчик изменения номера телефона для предзаказа с форматированием
   const handlePreOrderPhoneChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -319,7 +320,7 @@ export const CardComponent: React.FC<CardProps> = ({ product }) => {
             </div>
           ) : (
             <img
-              src={`${product.cover_image}`}
+              src={`https://oyan-store.kz${product.cover_image}`}
               alt={product.name}
               className={styles.cover_image}
               onClick={handleRedirect}
