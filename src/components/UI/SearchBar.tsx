@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import styles from "@styles/searchbar.module.scss";
 import searchIcon from "@assets/images/mingcute_search-line.svg";
 import { useFetchProductsQuery } from "@redux/services";
@@ -24,24 +24,26 @@ const SearchBar: React.FC<SearchBarProps> = ({ isSearchOpen }) => {
   });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (query.trim()) {
-      const filteredProducts = products?.filter(
+  // Мемоизированная фильтрация
+  const filteredProducts = useMemo(() => {
+    if (!query.trim()) return [];
+    return (
+      products?.products?.filter(
         (product: ProductWithOriginal) =>
+          typeof product.name === "string" &&
           product.name.toLowerCase().includes(query.toLowerCase())
-      );
-      setSearchResults(filteredProducts || []);
-    } else {
-      setSearchResults([]);
-    }
+      ) || []
+    );
   }, [query, products]);
 
   useEffect(() => {
-    if (!isSearchOpen) {
+    if (isSearchOpen) {
+      setSearchResults(filteredProducts);
+    } else {
       setQuery("");
       setSearchResults([]);
     }
-  }, [isSearchOpen]);
+  }, [filteredProducts, isSearchOpen]);
 
   const handleNavigate = (product: ProductWithOriginal) => {
     const slug = createSlug(product.name, product.originalName);
