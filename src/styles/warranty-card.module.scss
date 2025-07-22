@@ -1,0 +1,239 @@
+.warrantyCard {
+  max-width: 210mm; // A4 width
+  margin: 0 auto;
+  padding: 20mm;
+  background-color: white;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 11pt;
+  line-height: 1.4;
+  color: #000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  @media print {
+    box-shadow: none;
+    margin: 0;
+    padding: 15mm;
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #000;
+
+  .title {
+    font-size: 16pt;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+    text-transform: uppercase;
+  }
+
+  .titleKz {
+    font-size: 14pt;
+    font-weight: bold;
+    margin: 0;
+    text-transform: uppercase;
+  }
+}
+
+.section {
+  margin-bottom: 30px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.sectionDivider {
+  height: 2px;
+  background-color: #000;
+  margin: 30px 0 20px 0;
+}
+
+.sectionTitle {
+  font-size: 14pt;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 0 15px 0;
+  text-transform: uppercase;
+}
+
+.warrantyTerms {
+  margin-bottom: 20px;
+}
+
+.term {
+  display: flex;
+  margin-bottom: 10px;
+  text-align: justify;
+
+  .number {
+    min-width: 20px;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+
+  .text {
+    flex: 1;
+  }
+}
+
+.exclusions {
+  margin-bottom: 25px;
+}
+
+.exclusionsTitle {
+  font-size: 12pt;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 0 15px 0;
+  text-transform: uppercase;
+  background-color: #f5f5f5;
+  padding: 8px;
+  border: 1px solid #000;
+}
+
+.exclusionsList {
+  margin-left: 0;
+}
+
+.exclusionItem {
+  display: flex;
+  margin-bottom: 8px;
+  text-align: justify;
+
+  .number {
+    min-width: 20px;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+
+  .text {
+    flex: 1;
+  }
+}
+
+.qualityProducts {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+}
+
+.qualityTitle {
+  font-size: 12pt;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  text-decoration: underline;
+}
+
+.qualityText {
+  margin: 0 0 10px 0;
+  text-align: justify;
+}
+
+.qualityList {
+  margin: 10px 0;
+  padding-left: 20px;
+
+  li {
+    margin-bottom: 5px;
+    text-align: justify;
+  }
+}
+
+.attention {
+  margin: 15px 0 0 0;
+  text-align: center;
+  font-size: 10pt;
+
+  strong {
+    font-weight: bold;
+  }
+}
+
+.footer {
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 2px solid #000;
+}
+
+.storeInfo {
+  text-align: center;
+
+  .storeName {
+    font-size: 14pt;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .address {
+    font-size: 12pt;
+    margin-bottom: 5px;
+  }
+
+  .phone {
+    font-size: 12pt;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .warrantyCard {
+    padding: 15px;
+    font-size: 10pt;
+  }
+
+  .header {
+    .title {
+      font-size: 14pt;
+    }
+
+    .titleKz {
+      font-size: 12pt;
+    }
+  }
+
+  .sectionTitle {
+    font-size: 12pt;
+  }
+
+  .exclusionsTitle {
+    font-size: 11pt;
+    padding: 6px;
+  }
+
+  .qualityTitle {
+    font-size: 11pt;
+  }
+
+  .footer {
+    .storeName {
+      font-size: 12pt;
+    }
+
+    .address,
+    .phone {
+      font-size: 11pt;
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .warrantyCard {
+    font-size: 10pt;
+    line-height: 1.3;
+  }
+
+  .exclusionsTitle {
+    background-color: #f0f0f0 !important;
+  }
+
+  .qualityProducts {
+    background-color: #f8f8f8 !important;
+  }
+}

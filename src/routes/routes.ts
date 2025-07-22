@@ -14,6 +14,7 @@ import StockManagement from "@components/AdminPanel/StockManagment";
 import TypesManager from "@components/AdminPanel/TypesManager";
 import CharacteristicsTranslationsPage from "@components/AdminPanel/CharacteristicsTranslationsPage";
 import ProductListPage from "@pages/ProductListPage";
+import WarrantyCard from "@pages/Warranty";
 
 export const publicRoutes = [
   { path: "*", Component: Home },
@@ -22,6 +23,10 @@ export const publicRoutes = [
   {
     path: "products",
     Component: ProductListPage,
+  },
+  {
+    path: "warranty",
+    Component: WarrantyCard,
   },
 ];
 
