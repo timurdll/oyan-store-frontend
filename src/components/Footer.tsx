@@ -39,7 +39,7 @@ const Footer: React.FC = () => {
                   <Link to="/">{t("footer.customers.help")}</Link>
                 </li>
                 <li>
-                  <Link to="/">{t("footer.customers.warranty")}</Link>
+                  <Link to="/warranty">{t("footer.customers.warranty")}</Link>
                 </li>
                 <li>
                   <Link to="/">{t("footer.customers.howToOrder")}</Link>
