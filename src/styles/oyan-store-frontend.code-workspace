@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"name": "oyan-store-backend",
+			"path": "../../../oyan-store-backend"
+		}
+	],
+	"settings": {}
+}

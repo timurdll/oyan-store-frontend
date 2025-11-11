@@ -20,6 +20,9 @@ import { openAuthModal } from "@redux/slices/authModalSlice";
 import Modal from "./UI/Modal";
 import { formatPhoneNumber } from "@components/Functions/phoneUtils";
 import { useTranslation } from "react-i18next";
+import kaspiIcon from "@assets/images/kaspi.svg";
+import halyqIcon from "@assets/images/halyk.svg";
+import satuIcon from "@assets/images/satu.svg";
 
 type Product = {
   id: number;
@@ -30,6 +33,10 @@ type Product = {
   price: number;
   rating?: number;
   stock: number;
+  // optional marketplace links
+  kaspiLink?: string;
+  halyqLink?: string;
+  satuLink?: string;
 };
 
 interface CardProps {
@@ -349,7 +356,26 @@ export const CardComponent: React.FC<CardProps> = ({ product }) => {
               <p className={styles.rating}>Оценки: {product.rating} ⭐</p>
             )}
           </div>
-          <div className={styles.buttons}>{renderActionButton()}</div>
+          <div className={styles.actionsRow}>
+            <div className={styles.buttons}>{renderActionButton()}</div>
+            <div className={styles.marketplaceIconsSmall} onClick={(e) => e.stopPropagation()}>
+              {product.kaspiLink && (
+                <a href={product.kaspiLink} target="_blank" rel="noopener noreferrer" aria-label="Купить на Kaspi">
+                  <img src={kaspiIcon} alt="Kaspi" />
+                </a>
+              )}
+              {product.halyqLink && (
+                <a href={product.halyqLink} target="_blank" rel="noopener noreferrer" aria-label="Купить на Halyk Market">
+                  <img src={halyqIcon} alt="Halyk Market" />
+                </a>
+              )}
+              {product.satuLink && (
+                <a href={product.satuLink} target="_blank" rel="noopener noreferrer" aria-label="Купить на Satu.kz">
+                  <img src={satuIcon} alt="Satu.kz" />
+                </a>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
