@@ -383,6 +383,7 @@ const ProductPage: React.FC = () => {
             name: "Oyan Store",
             url: "https://oyan-store.kz",
             logo: "https://oyan-store.kz/logo.png",
+            /* TODO: Адрес продавца (structured data для продукта) */
             address: {
               "@type": "PostalAddress",
               addressCountry: "KZ",
@@ -390,9 +391,10 @@ const ProductPage: React.FC = () => {
               postalCode: "050000",
               streetAddress: "ул. Абая, 150",
             },
+            /* TODO: Контактный телефон продавца (structured data для продукта) */
             contactPoint: {
               "@type": "ContactPoint",
-              telephone: "+7 (777) 777-77-77",
+              telephone: t("footer.contacts.phonePrimaryDisplay"),
               contactType: "customer service",
               areaServed: "KZ",
               availableLanguage: ["Russian", "Kazakh"],

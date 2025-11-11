@@ -197,9 +197,13 @@ const Header = () => {
                         </button>
                         <LanguageSwitcher className={styles.languageSwitcher} />
                       </div>
-                      <a href="tel:+77089045254" className={styles.callButton}>
-                        <img src={phoneIcon} alt={t("header.call")} />
-                      </a>
+                              {/* Контактный телефон (локализация) */}
+                              <a
+                                href={`tel:${t("footer.contacts.phonePrimaryHref")}`}
+                                className={styles.callButton}
+                              >
+                                <img src={phoneIcon} alt={t("header.call")} />
+                              </a>
                     </div>
                   </motion.div>
                 )}
@@ -220,7 +224,11 @@ const Header = () => {
               <div className={styles.navigation}>
                 <LanguageSwitcher className={styles.languageSwitcher} />
 
-                <a href="tel:+77088040354" className={styles.callButton}>
+                {/* Десктопный контактный телефон (локализация) */}
+                <a
+                  href={`tel:${t("footer.contacts.phoneSecondaryHref")}`}
+                  className={styles.callButton}
+                >
                   <img
                     src={phoneIcon}
                     alt={t("header.call")}

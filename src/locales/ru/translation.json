@@ -135,8 +135,20 @@
     },
     "contacts": {
       "title": "Оставайтесь на связи:",
-      "workingHours": "График работы",
-      "address": "Астана, ул. Б. Майлина 37, 4 этаж, 412 каб."
+      "workingHours": "График работы: Пн-Пт 10:00 - 18:00",
+      "address": "Астана, ул. Шалкоде 16, 2 этаж, 201 каб.",
+      "phonePrimaryDisplay": "+7 707 501 1535",
+      "phonePrimaryHref": "+77075011535",
+      "phoneSecondaryDisplay": "+7 708 804 0354",
+      "phoneSecondaryHref": "+77088040354",
+      "telegramUrl": "https://t.me/+77026942005",
+      "whatsappUrl": "https://api.whatsapp.com/send/?phone=77026942005&text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%0A%0A%D0%9F%D0%B8%D1%88%D1%83+%D1%81+%D1%81%D0%B0%D0%B9%D1%82%D0%B0+Oyan+Store.%0A%0A&type=phone_number&app_absent=0",
+      "structured": {
+        "addressLocality": "Астана",
+        "streetAddress": "ул. Шалкоде, 16",
+        "postalCode": "010000"
+      },
+      "_TODO": "TODO: здесь прописан адрес/телефон для футера и structured data"
     },
     "copyright": "Интернет-магазин Oyan Store. Oyan® Все права защищены"
   },

@@ -136,7 +136,18 @@
     "contacts": {
       "title": "Байланыста болыңыз:",
       "workingHours": "Жұмыс кестесі",
-      "address": "Астана, Б. Майлин көш. 37, 4 қабат, 412 каб."
+      "address": "Астана, Шалкөде көш. 16, 2 қабат, 201 каб.",
+      "phonePrimaryDisplay": "+7 707 501 1535",
+      "phonePrimaryHref": "+77075011535",
+      "phoneSecondaryDisplay": "+7 708 804 0354",
+      "phoneSecondaryHref": "+77088040354",
+      "telegramUrl": "https://t.me/+77026942005",
+      "whatsappUrl": "https://api.whatsapp.com/send/?phone=77026942005&text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%0A%0A%D0%9F%D0%B8%D1%88%D1%83+%D1%81+%D1%81%D0%B0%D0%B9%D1%82%D0%B0+Oyan+Store.%0A%0A&type=phone_number&app_absent=0",
+      "structured": {
+        "addressLocality": "Астана",
+        "streetAddress": "ул. Шалкөде, 16",
+        "postalCode": "010000"
+      }
     },
     "copyright": "Oyan Store интернет-дүкені. Oyan® Барлық құқықтар қорғалған"
   },

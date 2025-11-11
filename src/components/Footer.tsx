@@ -57,16 +57,22 @@ const Footer: React.FC = () => {
               <p>{t("footer.contacts.workingHours")}</p>
             </div>
             <div className={styles.contactItem}>
-              <a href="tel:+77089045254" className={styles.phone}>
-                +7 708 904 5254
+              {/* Контактный телефон (берётся из локализации) */}
+              <a
+                href={`tel:${t("footer.contacts.phonePrimaryHref")}`}
+                className={styles.phone}
+              >
+                {t("footer.contacts.phonePrimaryDisplay")}
               </a>
             </div>
             <div className={styles.contactItem}>
+              {/* Адрес магазина (локализация) */}
               <p>{t("footer.contacts.address")}</p>
             </div>
             <ul className={styles.socials}>
+              {/* TODO: Ссылка на Telegram (в URL прописан номер) */}
               <li>
-                <a href="https://t.me/+77026942005" target="_blank">
+                <a href={t("footer.contacts.telegramUrl")} target="_blank">
                   <img src={telegram} alt="Telegram" />
                 </a>
               </li>
@@ -79,11 +85,9 @@ const Footer: React.FC = () => {
                 </a>
               </li>
 
+              {/* TODO: Ссылка на WhatsApp (в URL прописан номер) */}
               <li>
-                <a
-                  href="https://api.whatsapp.com/send/?phone=77026942005&text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%0A%0A%D0%9F%D0%B8%D1%88%D1%83+%D1%81+%D1%81%D0%B0%D0%B9%D1%82%D0%B0+Oyan+Store.%0A%0A&type=phone_number&app_absent=0"
-                  target="_blank"
-                >
+                <a href={t("footer.contacts.whatsappUrl")} target="_blank">
                   <img src={whatsapp} alt="WhatsApp" />
                 </a>
               </li>

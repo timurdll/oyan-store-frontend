@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "@styles/warranty-card.module.scss";
+import { useTranslation } from "react-i18next";
 
 const WarrantyCard: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <div className={styles.warrantyCard}>
       {/* Header */}
@@ -267,12 +269,13 @@ const WarrantyCard: React.FC = () => {
 
       {/* Footer */}
       <div className={styles.footer}>
-        <div className={styles.storeInfo}>
+          <div className={styles.storeInfo}>
           <div className={styles.storeName}>Интернет магазин Oyan Store</div>
-          <div className={styles.address}>
-            г. Астана, ул. Беимбет Майлин, д. 31, ВП 38
+          {/* TODO: Адрес магазина (жёстко прописан здесь) */}
+          <div className={styles.address}>{t("footer.contacts.address")}</div>
+          <div className={styles.phone}>
+            {t("footer.contacts.phonePrimaryDisplay")}
           </div>
-          <div className={styles.phone}>+7 (708) 904-52-54</div>
         </div>
       </div>
     </div>

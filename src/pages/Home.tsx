@@ -42,13 +42,13 @@ const Home = () => {
         address: {
           "@type": "PostalAddress",
           addressCountry: "KZ",
-          addressLocality: "Астна",
-          postalCode: "010000",
-          streetAddress: "ул. Майлина, 31",
+          addressLocality: t("footer.contacts.structured.addressLocality"),
+          postalCode: t("footer.contacts.structured.postalCode"),
+          streetAddress: t("footer.contacts.structured.streetAddress"),
         },
         contactPoint: {
           "@type": "ContactPoint",
-          telephone: "+7 (708) 904-52-54",
+          telephone: t("footer.contacts.phonePrimaryDisplay"),
           contactType: "customer service",
           areaServed: "KZ",
           availableLanguage: ["Russian", "Kazakh"],
