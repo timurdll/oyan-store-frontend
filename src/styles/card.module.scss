@@ -184,7 +184,8 @@
       /* make the action button container flexible so it stretches up to marketplace icons */
       flex: 1 1 auto;
       align-items: center;
-      margin-top: auto;
+      /* ensure the buttons container is vertically centered inside .actionsRow */
+      align-self: center;
 
       /* inner button fills available horizontal space but keep natural height */
       button {
