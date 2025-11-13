@@ -353,3 +353,224 @@
     align-items: center;
   }
 }
+
+.telegramBotsManager {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  h2 {
+    font-size: 24px;
+    margin: 0;
+    color: #333;
+  }
+
+  h3 {
+    font-size: 18px;
+    margin: 0 0 16px;
+    color: #444;
+  }
+
+  .sectionDescription {
+    margin: 0;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  .botForm {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .formGroup {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      label {
+        font-weight: 500;
+        color: #333;
+      }
+
+      input {
+        padding: 10px 12px;
+        border-radius: 6px;
+        border: 1px solid #d0d5dd;
+        font-size: 14px;
+
+        &:focus {
+          outline: none;
+          border-color: var(--primary-color);
+          box-shadow: 0 0 0 2px rgba(24, 105, 255, 0.1);
+        }
+      }
+    }
+
+    .checkboxGroup {
+      label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: #333;
+
+        input {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+
+    .buttonGroup {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+
+      .saveButton {
+        background-color: #1869ff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 10px 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover:not(:disabled) {
+          background-color: #0f52d1;
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+
+      .cancelButton {
+        background-color: #e0e0e0;
+        color: #333;
+        border: none;
+        border-radius: 6px;
+        padding: 10px 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: #cacaca;
+        }
+      }
+    }
+
+    .errorMessage {
+      color: #d92d20;
+      background-color: rgba(217, 45, 32, 0.1);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+  }
+
+  .botsList {
+    background-color: #fefefe;
+    border-radius: 8px;
+    border: 1px solid #e4e7ec;
+    padding: 20px;
+
+    .listHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+
+      h3 {
+        margin: 0;
+      }
+
+      .statusLabel {
+        font-size: 14px;
+        color: #666;
+      }
+    }
+
+    .emptyState {
+      margin: 0;
+      color: #666;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .botItem {
+      background-color: #fff;
+      border: 1px solid #e4e7ec;
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+
+      h4 {
+        margin: 0 0 6px;
+        font-size: 16px;
+        color: #333;
+      }
+
+      p {
+        margin: 2px 0;
+        color: #555;
+        font-size: 14px;
+      }
+
+      .botActions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+
+        button {
+          padding: 8px 12px;
+          border: none;
+          border-radius: 6px;
+          font-size: 14px;
+          cursor: pointer;
+          transition: transform 0.1s ease, box-shadow 0.1s ease;
+
+          &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+          }
+        }
+
+        .editButton {
+          background-color: #f1f5f9;
+          color: #0f172a;
+        }
+
+        .secondaryButton {
+          background-color: #1869ff;
+          color: white;
+        }
+
+        .deleteButton {
+          background-color: #f97066;
+          color: white;
+        }
+      }
+    }
+  }
+}

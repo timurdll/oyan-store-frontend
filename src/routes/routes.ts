@@ -13,6 +13,7 @@ import AboutUsPage from "@pages/AboutUs";
 import StockManagement from "@components/AdminPanel/StockManagment";
 import TypesManager from "@components/AdminPanel/TypesManager";
 import CharacteristicsTranslationsPage from "@components/AdminPanel/CharacteristicsTranslationsPage";
+import TelegramBotsManager from "@components/AdminPanel/TelegramBotsManager";
 import ProductListPage from "@pages/ProductListPage";
 import WarrantyCard from "@pages/Warranty";
 
@@ -81,5 +82,9 @@ export const adminRoutes = [
   {
     path: "admin/characteristics-translations",
     Component: CharacteristicsTranslationsPage,
+  },
+  {
+    path: "admin/telegram-bots",
+    Component: TelegramBotsManager,
   },
 ];
