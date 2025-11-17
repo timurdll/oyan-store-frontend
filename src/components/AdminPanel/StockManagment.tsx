@@ -7,13 +7,12 @@ import { useTranslation } from "react-i18next";
 
 const StockManagement: React.FC = () => {
   const { i18n } = useTranslation();
-  const {
-    data: products,
-    error,
-    isLoading,
-  } = useFetchProductsQuery({
+  const { data, error, isLoading } = useFetchProductsQuery({
     language: i18n.language.toUpperCase(),
   });
+
+  // API returns an object like { products: [...], pagination, minPrice, maxPrice }
+  const products = data?.products ?? [];
   const [updateStock] = useUpdateStockMutation();
   const [alert, setAlert] = useState<{
     message: string;

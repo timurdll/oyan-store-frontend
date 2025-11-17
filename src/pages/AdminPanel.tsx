@@ -19,15 +19,15 @@ const AdminPanel = () => {
     (state: RootState) => state.user.currentUser?.role === "admin"
   );
 
+  // Используем либо параметр lang из URL, либо текущий язык из i18n
+  const currentLang = lang || i18n.language;
+
   // Проверяем права доступа при монтировании компонента
   useEffect(() => {
     if (!isAdmin) {
       navigate(`/${currentLang}/`);
     }
-  }, [isAdmin, navigate]);
-
-  // Используем либо параметр lang из URL, либо текущий язык из i18n
-  const currentLang = lang || i18n.language;
+  }, [isAdmin, navigate, currentLang]);
 
   const handleLogout = () => {
     // Очищаем состояние Redux
