@@ -21,6 +21,7 @@ export const baseApi = createApi({
     "User",
     "Orders",
     "Notifications",
+    "TelegramBots",
   ],
   endpoints: () => ({}),
 });

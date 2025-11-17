@@ -5,5 +5,6 @@ export * from "./basketApi";
 export * from "./typeApi";
 export * from "./ordersApi";
 export * from "./translationsApi";
+export * from "./telegramBotsApi";
 export { baseApi } from "./baseApi";
 export { typeApi } from "./typeApi";
