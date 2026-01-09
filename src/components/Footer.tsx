@@ -44,6 +44,11 @@ const Footer: React.FC = () => {
                   </Link>
                 </li>
                 <li>
+                  <Link to={`https://drive.google.com/drive/folders/15JjqJn_Bn9I-qogmqZOenXCC_DKBqeeO?usp=sharing`} target="_blank">
+                    {t("footer.customers.drivers")}
+                  </Link>
+                </li>
+                <li>
                   <Link to="/">{t("footer.customers.howToOrder")}</Link>
                 </li>
               </ul>
