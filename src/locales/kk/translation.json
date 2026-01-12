@@ -56,6 +56,7 @@
     "marketplaces": {
       "title": "Маркетплейстерде сатып алу"
     },
+    "downloadDriver": "Драйверді жүктеу",
     "quickPurchaseModal": {
       "title": "Жылдам сатып алу",
       "namePlaceholder": "Сіздің атыңыз",

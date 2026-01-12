@@ -356,108 +356,108 @@ const ProductPage: React.FC = () => {
 
   const structuredData = product
     ? {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        name: product.name,
-        description: product.productInfo?.description,
-        image: product.images?.[0]?.url,
-        brand: {
-          "@type": "Brand",
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: product.name,
+      description: product.productInfo?.description,
+      image: product.images?.[0]?.url,
+      brand: {
+        "@type": "Brand",
+        name: "Oyan Store",
+      },
+      offers: {
+        "@type": "Offer",
+        url: `https://oyan-store.kz/${i18n.language}/product/${slug}`,
+        priceCurrency: "KZT",
+        price: product.price,
+        priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+          .toISOString()
+          .split("T")[0],
+        availability:
+          product.stock > 0
+            ? "https://schema.org/InStock"
+            : "https://schema.org/OutOfStock",
+        itemCondition: "https://schema.org/NewCondition",
+        seller: {
+          "@type": "Organization",
           name: "Oyan Store",
-        },
-        offers: {
-          "@type": "Offer",
-          url: `https://oyan-store.kz/${i18n.language}/product/${slug}`,
-          priceCurrency: "KZT",
-          price: product.price,
-          priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-            .toISOString()
-            .split("T")[0],
-          availability:
-            product.stock > 0
-              ? "https://schema.org/InStock"
-              : "https://schema.org/OutOfStock",
-          itemCondition: "https://schema.org/NewCondition",
-          seller: {
-            "@type": "Organization",
-            name: "Oyan Store",
-            url: "https://oyan-store.kz",
-            logo: "https://oyan-store.kz/logo.png",
-            /* TODO: Адрес продавца (structured data для продукта) */
-            address: {
-              "@type": "PostalAddress",
-              addressCountry: "KZ",
-              addressLocality: "Алматы",
-              postalCode: "050000",
-              streetAddress: "ул. Абая, 150",
-            },
-            /* TODO: Контактный телефон продавца (structured data для продукта) */
-            contactPoint: {
-              "@type": "ContactPoint",
-              telephone: t("footer.contacts.phonePrimaryDisplay"),
-              contactType: "customer service",
-              areaServed: "KZ",
-              availableLanguage: ["Russian", "Kazakh"],
-            },
+          url: "https://oyan-store.kz",
+          logo: "https://oyan-store.kz/logo.png",
+          /* TODO: Адрес продавца (structured data для продукта) */
+          address: {
+            "@type": "PostalAddress",
+            addressCountry: "KZ",
+            addressLocality: "Алматы",
+            postalCode: "050000",
+            streetAddress: "ул. Абая, 150",
+          },
+          /* TODO: Контактный телефон продавца (structured data для продукта) */
+          contactPoint: {
+            "@type": "ContactPoint",
+            telephone: t("footer.contacts.phonePrimaryDisplay"),
+            contactType: "customer service",
+            areaServed: "KZ",
+            availableLanguage: ["Russian", "Kazakh"],
           },
         },
-        aggregateRating: product.rating
-          ? {
-              "@type": "AggregateRating",
-              ratingValue: product.rating,
-              reviewCount: product.reviews?.length || 0,
-              bestRating: "5",
-              worstRating: "1",
-            }
-          : undefined,
-        review:
-          product.reviews?.map((review: any) => ({
-            "@type": "Review",
-            reviewRating: {
-              "@type": "Rating",
-              ratingValue: review.rating,
-              bestRating: "5",
-              worstRating: "1",
-            },
-            author: {
-              "@type": "Person",
-              name: review.user?.name || "Анонимный пользователь",
-            },
-            datePublished: review.createdAt,
-            reviewBody: review.text,
-          })) || [],
-        category: "Ноутбуки",
-        keywords: `купить ${product.name}, ${product.name} цена, ${product.name} купить в Казахстане, ${product.name} купить в Алматы, ${product.name} купить в Астане, ${product.name} купить в Караганде, ${product.name} купить в Шымкенте, ${product.name} купить в Павлодаре, ${product.name} купить в Усть-Каменогорске, ${product.name} купить в Петропавловске, ${product.name} купить в Костанае, ${product.name} купить в Актау, ${product.name} купить в Атырау, ${product.name} купить в Уральске, ${product.name} купить в Таразе, ${product.name} купить в Кызылорде, ${product.name} купить в Актобе, ${product.name} купить в Талдыкоргане, ${product.name} купить в Кокшетау, ${product.name} купить в Туркестане, ${product.name} купить в Семее, ${product.name} купить в Экибастузе, ${product.name} купить в Жезказгане, ${product.name} купить в Капчагае, ${product.name} купить в Сатпаеве, ${product.name} купить в Ридере`,
-        sku: product.sku,
-        gtin: product.gtin,
-        mpn: product.mpn,
-        color: product.color,
-        material: product.material,
-        weight: product.weight,
-        depth: product.depth,
-        height: product.height,
-        width: product.width,
-        isAccessoryOrSparePartFor: product.isAccessoryOrSparePartFor,
-        isConsumableFor: product.isConsumableFor,
-        isRelatedTo: product.isRelatedTo,
-        isSimilarTo: product.isSimilarTo,
-        isVariantOf: product.isVariantOf,
-        model: product.model,
-        productID: product.id,
-        productionDate: product.productionDate,
-        purchaseDate: product.purchaseDate,
-        releaseDate: product.releaseDate,
-        serialNumber: product.serialNumber,
-        size: product.size,
-        slogan: product.slogan,
-        style: product.style,
-        url: `https://oyan-store.kz/${i18n.language}/product/${slug}`,
-        additionalProperty: product.additionalProperties?.map((prop: any) => ({
-          "@type": "PropertyValue",
-          name: prop.name,
-          value: prop.value,
-        })),
-      }
+      },
+      aggregateRating: product.rating
+        ? {
+          "@type": "AggregateRating",
+          ratingValue: product.rating,
+          reviewCount: product.reviews?.length || 0,
+          bestRating: "5",
+          worstRating: "1",
+        }
+        : undefined,
+      review:
+        product.reviews?.map((review: any) => ({
+          "@type": "Review",
+          reviewRating: {
+            "@type": "Rating",
+            ratingValue: review.rating,
+            bestRating: "5",
+            worstRating: "1",
+          },
+          author: {
+            "@type": "Person",
+            name: review.user?.name || "Анонимный пользователь",
+          },
+          datePublished: review.createdAt,
+          reviewBody: review.text,
+        })) || [],
+      category: "Ноутбуки",
+      keywords: `купить ${product.name}, ${product.name} цена, ${product.name} купить в Казахстане, ${product.name} купить в Алматы, ${product.name} купить в Астане, ${product.name} купить в Караганде, ${product.name} купить в Шымкенте, ${product.name} купить в Павлодаре, ${product.name} купить в Усть-Каменогорске, ${product.name} купить в Петропавловске, ${product.name} купить в Костанае, ${product.name} купить в Актау, ${product.name} купить в Атырау, ${product.name} купить в Уральске, ${product.name} купить в Таразе, ${product.name} купить в Кызылорде, ${product.name} купить в Актобе, ${product.name} купить в Талдыкоргане, ${product.name} купить в Кокшетау, ${product.name} купить в Туркестане, ${product.name} купить в Семее, ${product.name} купить в Экибастузе, ${product.name} купить в Жезказгане, ${product.name} купить в Капчагае, ${product.name} купить в Сатпаеве, ${product.name} купить в Ридере`,
+      sku: product.sku,
+      gtin: product.gtin,
+      mpn: product.mpn,
+      color: product.color,
+      material: product.material,
+      weight: product.weight,
+      depth: product.depth,
+      height: product.height,
+      width: product.width,
+      isAccessoryOrSparePartFor: product.isAccessoryOrSparePartFor,
+      isConsumableFor: product.isConsumableFor,
+      isRelatedTo: product.isRelatedTo,
+      isSimilarTo: product.isSimilarTo,
+      isVariantOf: product.isVariantOf,
+      model: product.model,
+      productID: product.id,
+      productionDate: product.productionDate,
+      purchaseDate: product.purchaseDate,
+      releaseDate: product.releaseDate,
+      serialNumber: product.serialNumber,
+      size: product.size,
+      slogan: product.slogan,
+      style: product.style,
+      url: `https://oyan-store.kz/${i18n.language}/product/${slug}`,
+      additionalProperty: product.additionalProperties?.map((prop: any) => ({
+        "@type": "PropertyValue",
+        name: prop.name,
+        value: prop.value,
+      })),
+    }
     : null;
 
   return (
@@ -465,10 +465,9 @@ const ProductPage: React.FC = () => {
       {product && (
         <SEO
           title={`${product.name} | Купить в Oyan Store`}
-          description={`${product.name} - ${
-            product.productInfo?.description?.slice(0, 150) ||
+          description={`${product.name} - ${product.productInfo?.description?.slice(0, 150) ||
             "Купить ноутбук по доступной цене с доставкой по Казахстану. Официальная гарантия, рассрочка, кредит."
-          }`}
+            }`}
           keywords={`купить ${product.name}, ${product.name} цена, ${product.name} купить в Казахстане, ${product.name} купить в Алматы, ${product.name} купить в Астане, ${product.name} купить в Караганде, ${product.name} купить в Шымкенте, ${product.name} купить в Павлодаре, ${product.name} купить в Усть-Каменогорске, ${product.name} купить в Петропавловске, ${product.name} купить в Костанае, ${product.name} купить в Актау, ${product.name} купить в Атырау, ${product.name} купить в Уральске, ${product.name} купить в Таразе, ${product.name} купить в Кызылорде, ${product.name} купить в Актобе, ${product.name} купить в Талдыкоргане, ${product.name} купить в Кокшетау, ${product.name} купить в Туркестане, ${product.name} купить в Семее, ${product.name} купить в Экибастузе, ${product.name} купить в Жезказгане, ${product.name} купить в Капчагае, ${product.name} купить в Сатпаеве, ${product.name} купить в Ридере`}
           image={product.images?.[0]?.url}
           type="product"
@@ -533,9 +532,8 @@ const ProductPage: React.FC = () => {
               className={styles.image}
               src={
                 isMobile
-                  ? `${import.meta.env.VITE_API_URL}${
-                      allImages[currentImageIndex]
-                    }`
+                  ? `${import.meta.env.VITE_API_URL}${allImages[currentImageIndex]
+                  }`
                   : `${import.meta.env.VITE_API_URL}${product.cover_image}`
               }
               alt={product.name}
@@ -568,9 +566,8 @@ const ProductPage: React.FC = () => {
                   {allImages.map((_: string, index: number) => (
                     <div
                       key={index}
-                      className={`${styles.dot} ${
-                        currentImageIndex === index ? styles.active : ""
-                      }`}
+                      className={`${styles.dot} ${currentImageIndex === index ? styles.active : ""
+                        }`}
                     />
                   ))}
                 </div>
@@ -594,8 +591,8 @@ const ProductPage: React.FC = () => {
                       isLoadingBasket
                         ? t("product.adding")
                         : isInBasket
-                        ? t("product.goToCart")
-                        : t("product.addToCart")
+                          ? t("product.goToCart")
+                          : t("product.addToCart")
                     }
                     onClick={handleButtonClick}
                     variant={isInBasket ? "outlined" : "primaryLarge"}
@@ -608,6 +605,16 @@ const ProductPage: React.FC = () => {
                 </>
               )}
             </div>
+
+            {product.driverLink && (
+              <div style={{ marginTop: "16px" }}>
+                <Button
+                  label={t("product.downloadDriver")}
+                  variant="outlined"
+                  onClick={() => window.open(product.driverLink, "_blank")}
+                />
+              </div>
+            )}
 
             {(product.halyqLink || product.kaspiLink || product.satuLink) && (
               <motion.div
@@ -670,17 +677,15 @@ const ProductPage: React.FC = () => {
 
         <div className={styles.sectionButtons}>
           <button
-            className={`${styles.sectionButton} ${
-              activeSection === "characteristics" ? styles.active : ""
-            } ${sectionDirection === "right" ? styles.slideRight : ""}`}
+            className={`${styles.sectionButton} ${activeSection === "characteristics" ? styles.active : ""
+              } ${sectionDirection === "right" ? styles.slideRight : ""}`}
             onClick={() => handleSectionChange("characteristics")}
           >
             {t("product.characteristics")}
           </button>
           <button
-            className={`${styles.sectionButton} ${
-              activeSection === "description" ? styles.active : ""
-            } ${sectionDirection === "left" ? styles.slideLeft : ""}`}
+            className={`${styles.sectionButton} ${activeSection === "description" ? styles.active : ""
+              } ${sectionDirection === "left" ? styles.slideLeft : ""}`}
             onClick={() => handleSectionChange("description")}
           >
             {t("product.description")}

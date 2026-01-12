@@ -48,6 +48,7 @@ const ProductAddForm = () => {
         price: "",
         typeId: "",
         stock: "", // Добавлено поле stock
+        driverLink: "",
         coverImage: null,
         images: [],
         productInfo: { title: "", description: "" },
@@ -64,6 +65,10 @@ const ProductAddForm = () => {
 
         // Преобразование stock в число перед отправкой
         formData.append("stock", values.stock);
+
+        if (values.driverLink) {
+          formData.append("driverLink", values.driverLink);
+        }
 
         // Append cover image
         if (values.coverImage) {
@@ -129,6 +134,16 @@ const ProductAddForm = () => {
             <Field name="stock" type="number" />
             <ErrorMessage
               name="stock"
+              component="div"
+              className={styles.errorMessage}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="driverLink">Ссылка на драйвер</label>
+            <Field name="driverLink" type="text" placeholder="https://..." />
+            <ErrorMessage
+              name="driverLink"
               component="div"
               className={styles.errorMessage}
             />

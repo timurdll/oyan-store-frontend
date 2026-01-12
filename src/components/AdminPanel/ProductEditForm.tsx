@@ -52,6 +52,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
     halyqLink: Yup.string().url("Введите корректный URL"),
     kaspiLink: Yup.string().url("Введите корректный URL"),
     satuLink: Yup.string().url("Введите корректный URL"),
+    driverLink: Yup.string().url("Введите корректный URL"),
   });
 
   const initialCharacteristics = product.productCharacteristics.map((char) => ({
@@ -92,6 +93,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
         halyqLink: product.halyqLink || "",
         kaspiLink: product.kaspiLink || "",
         satuLink: product.satuLink || "",
+        driverLink: product.driverLink || "",
       }}
       validationSchema={validationSchema}
       onSubmit={async (values, { setSubmitting, setErrors }) => {
@@ -132,6 +134,9 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
           }
           if (values.satuLink) {
             formData.append("satuLink", values.satuLink);
+          }
+          if (values.driverLink) {
+            formData.append("driverLink", values.driverLink);
           }
 
           // Добавляем изображения
@@ -201,10 +206,10 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
                 productInfo={
                   product.productInfo
                     ? {
-                        id: product.productInfo.id,
-                        title: product.productInfo.title,
-                        description: product.productInfo.description,
-                      }
+                      id: product.productInfo.id,
+                      title: product.productInfo.title,
+                      description: product.productInfo.description,
+                    }
                     : undefined
                 }
               />
@@ -287,6 +292,20 @@ const EditProductForm: React.FC<EditProductFormProps> = ({
               <Field name="satuLink" type="text" placeholder="https://..." />
               <ErrorMessage
                 name="satuLink"
+                component="div"
+                className={styles.errorMessage}
+              />
+            </div>
+
+            <div className={styles.field}>
+              <label htmlFor="driverLink">Ссылка на драйвер</label>
+              <Field
+                name="driverLink"
+                type="text"
+                placeholder="https://..."
+              />
+              <ErrorMessage
+                name="driverLink"
                 component="div"
                 className={styles.errorMessage}
               />

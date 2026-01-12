@@ -57,6 +57,7 @@ export interface Product {
   halyqLink?: string;
   kaspiLink?: string;
   satuLink?: string;
+  driverLink?: string;
 }
 
 export interface ProductInfo {
