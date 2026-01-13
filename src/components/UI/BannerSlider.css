@@ -12,11 +12,12 @@
 }
 
 .banner-image {
-  width: calc(100% - 4px);
+  width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
-  border-radius: 20px; /* 25px - 2px border */
+  box-sizing: border-box;
+  border-radius: 20px;
+  /* 25px - 2px border */
   border: 2px solid #e8e8e8;
 }
 
@@ -26,27 +27,34 @@
   margin-top: 8px;
   position: relative;
 }
+
 .banner-slider .slick-dots li {
-  margin: 0 1px; /* Уменьшенное расстояние между точками (было 5px по умолчанию) */
+  margin: 0 1px;
+  /* Уменьшенное расстояние между точками (было 5px по умолчанию) */
 }
 
 /* Стили для точек */
 .banner-slider .slick-dots li button:before {
-  color: #e8e8e8; /* Серый цвет для неактивных точек */
+  color: #e8e8e8;
+  /* Серый цвет для неактивных точек */
   font-size: 10px;
-  opacity: 1; /* Полная непрозрачность */
-  transition: color 0.3s ease; /* Плавный переход цвета */
+  opacity: 1;
+  /* Полная непрозрачность */
+  transition: color 0.3s ease;
+  /* Плавный переход цвета */
 }
 
 /* Стили для активной точки */
 .banner-slider .slick-dots li.slick-active button:before {
-  color: #1869ff; /* Синий цвет для активной точки */
+  color: #1869ff;
+  /* Синий цвет для активной точки */
   opacity: 1;
 }
 
 /* Стиль при наведении для более плавного взаимодействия */
 .banner-slider .slick-dots li button:hover:before {
-  color: #92b7ff; /* Промежуточный цвет при наведении */
+  color: #92b7ff;
+  /* Промежуточный цвет при наведении */
 }
 
 /* Стили для стрелок навигации */
@@ -120,7 +128,7 @@
 }
 
 /* Стили для эффекта fade */
-.banner-slider .slick-slide > div {
+.banner-slider .slick-slide>div {
   transition: opacity 0.8s ease-in-out;
 }
 

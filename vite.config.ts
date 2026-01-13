@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path-browserify";
 import svgr from "vite-plugin-svgr";
-import { visualizer } from "rollup-plugin-visualizer";
+
 import { compression } from "vite-plugin-compression2";
 
 export default defineConfig({
@@ -28,11 +28,7 @@ export default defineConfig({
       algorithm: "brotliCompress",
       exclude: [/\.(br)$/, /\.(gz)$/],
     }) as any,
-    visualizer({
-      open: true,
-      gzipSize: true,
-      brotliSize: true,
-    }) as any,
+
     VitePWA({
       registerType: "prompt",
       injectRegister: false,

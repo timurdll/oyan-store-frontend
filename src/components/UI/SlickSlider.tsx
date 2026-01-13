@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./BannerSlider.css";
 import { Skeleton } from "@mui/material";
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "@styles/card.module.scss";
 
@@ -111,8 +111,65 @@ const NextArrow = (props: any) => {
   );
 };
 
+const SlideItem = ({ slide, supportsWebP, priority }: { slide: any, supportsWebP: boolean, priority: boolean }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div className="slider-item" style={{ position: 'relative' }}>
+      <div style={{
+        position: 'relative',
+        width: '100%',
+        aspectRatio: `${slide.width}/${slide.height}`
+      }}>
+        {!loaded && (
+          <Skeleton
+            variant="rectangular"
+            sx={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              borderRadius: "20px",
+              backgroundColor: "#f4f4f4",
+              transform: "none",
+              border: "2px solid #e8e8e8",
+            }}
+          />
+        )}
+        <picture style={{
+          display: 'block',
+          width: '100%',
+          height: '100%',
+          opacity: loaded ? 1 : 0,
+          transition: 'opacity 0.3s ease-in-out'
+        }}>
+          {supportsWebP && (
+            <source srcSet={slide.src} type="image/webp" />
+          )}
+          <img
+            src={slide.src}
+            alt={slide.alt}
+            className="banner-image"
+            width={slide.width}
+            height={slide.height}
+            loading={priority ? "eager" : "lazy"}
+            decoding={priority ? "sync" : "async"}
+            fetchPriority={priority ? "high" : "low"}
+            onLoad={() => setLoaded(true)}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover'
+            }}
+          />
+        </picture>
+      </div>
+    </div>
+  );
+};
+
 const BannerSlider = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const { i18n } = useTranslation();
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
@@ -138,77 +195,35 @@ const BannerSlider = () => {
     const mobileImages =
       i18n.language === "kk"
         ? [
-            getImageSrc(vixivmkkWebp, vixivmkk),
-            getImageSrc(x14mkkWebp, x14mkk),
-            getImageSrc(x15mkkWebp, x15mkk),
-            getImageSrc(ktabmkkWebp, ktabmkk),
-          ]
+          getImageSrc(vixivmkkWebp, vixivmkk),
+          getImageSrc(x14mkkWebp, x14mkk),
+          getImageSrc(x15mkkWebp, x15mkk),
+          getImageSrc(ktabmkkWebp, ktabmkk),
+        ]
         : [
-            getImageSrc(vixivmWebp, vixivm),
-            getImageSrc(x14mWebp, x14m),
-            getImageSrc(x15mWebp, x15m),
-            getImageSrc(ktabmWebp, ktabm),
-          ];
+          getImageSrc(vixivmWebp, vixivm),
+          getImageSrc(x14mWebp, x14m),
+          getImageSrc(x15mWebp, x15m),
+          getImageSrc(ktabmWebp, ktabm),
+        ];
 
     const desktopImages =
       i18n.language === "kk"
         ? [
-            getImageSrc(vixivkkWebp, vixivkk),
-            getImageSrc(x14lkkWebp, x14lkk),
-            getImageSrc(x15lkkWebp, x15lkk),
-            getImageSrc(ktabkkWebp, ktabkk),
-          ]
+          getImageSrc(vixivkkWebp, vixivkk),
+          getImageSrc(x14lkkWebp, x14lkk),
+          getImageSrc(x15lkkWebp, x15lkk),
+          getImageSrc(ktabkkWebp, ktabkk),
+        ]
         : [
-            getImageSrc(vixivWebp, vixiv),
-            getImageSrc(x14lWebp, x14l),
-            getImageSrc(x15lWebp, x15l),
-            getImageSrc(ktabWebp, ktab),
-          ];
+          getImageSrc(vixivWebp, vixiv),
+          getImageSrc(x14lWebp, x14l),
+          getImageSrc(x15lWebp, x15l),
+          getImageSrc(ktabWebp, ktab),
+        ];
 
     return { mobileImages, desktopImages };
   }, [i18n.language, supportsWebP]);
-
-  // Оптимизированная функция загрузки изображений
-  const loadImage = useCallback((src: string): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => resolve();
-      img.onerror = reject;
-    });
-  }, []);
-
-  // Предзагрузка изображений с приоритетами
-  useEffect(() => {
-    const preloadImages = async () => {
-      const imagesToLoad = isMobile
-        ? imageSets.mobileImages
-        : imageSets.desktopImages;
-
-      try {
-        // Загружаем первое изображение с высоким приоритетом
-        await loadImage(imagesToLoad[0]);
-        setIsLoading(false);
-
-        // Загружаем остальные изображения с низким приоритетом
-        const remainingImages = imagesToLoad.slice(1);
-        if ("requestIdleCallback" in window) {
-          window.requestIdleCallback(() => {
-            Promise.all(remainingImages.map(loadImage)).catch(console.error);
-          });
-        } else {
-          setTimeout(() => {
-            Promise.all(remainingImages.map(loadImage)).catch(console.error);
-          }, 1000);
-        }
-      } catch (error) {
-        console.error("Error preloading images:", error);
-        setIsLoading(false);
-      }
-    };
-
-    preloadImages();
-  }, [isMobile, imageSets, loadImage]);
 
   // Мемоизируем слайды для оптимизации
   const slides = useMemo(() => {
@@ -219,11 +234,10 @@ const BannerSlider = () => {
 
     return currentImages.map((src, index) => ({
       src,
-      alt: `Banner ${isMobile ? "Mobile" : "Desktop"} ${index + 1}${
-        isKazakh ? " KK" : ""
-      }`,
-      width: isMobile ? 767 : 1920,
-      height: isMobile ? 180 : 400,
+      alt: `Banner ${isMobile ? "Mobile" : "Desktop"} ${index + 1}${isKazakh ? " KK" : ""
+        }`,
+      width: isMobile ? 1436 : 4440,
+      height: isMobile ? 1436 : 1760,
     }));
   }, [isMobile, imageSets, i18n.language]);
 
@@ -274,70 +288,18 @@ const BannerSlider = () => {
     [isMobile]
   );
 
-  if (isLoading) {
-    return (
-      <div className="banner-slider">
-        <div className="slider-item">
-          <Skeleton
-            variant="rectangular"
-            width="100%"
-            height={isMobile ? "180px" : "400px"}
-            sx={{
-              borderRadius: "20px",
-              backgroundColor: "#f4f4f4",
-              transform: "none",
-              border: "2px solid #e8e8e8",
-            }}
-          />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "8px",
-            marginTop: "8px",
-          }}
-        >
-          {[...Array(4)].map((_, index) => (
-            <Skeleton
-              key={index}
-              variant="circular"
-              width={10}
-              height={10}
-              sx={{
-                backgroundColor:
-                  index === 0 ? "var(--primary-color)" : "#e8e8e8",
-              }}
-            />
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
       <div className={styles["preload-banners"]} />
       <div className="banner-slider">
         <Slider {...settings}>
           {slides.map((slide, idx) => (
-            <div key={idx} className="slider-item">
-              <picture>
-                {supportsWebP && (
-                  <source srcSet={slide.src} type="image/webp" />
-                )}
-                <img
-                  src={slide.src}
-                  alt={slide.alt}
-                  className="banner-image"
-                  width={slide.width}
-                  height={slide.height}
-                  loading={idx === 0 ? "eager" : "lazy"}
-                  decoding={idx === 0 ? "sync" : "async"}
-                  fetchPriority={idx === 0 ? "high" : "low"}
-                />
-              </picture>
-            </div>
+            <SlideItem
+              key={`${slide.src}-${idx}`}
+              slide={slide}
+              supportsWebP={supportsWebP}
+              priority={idx === 0}
+            />
           ))}
         </Slider>
       </div>
