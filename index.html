@@ -1,70 +1,56 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
+
+<head>
+  <meta charset="UTF-8" />
   <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#ffffff" />
-    <meta
-      name="description"
-      content="Oyan Store - ваш надежный интернет-магазин с широким ассортиментом товаров. Быстрая доставка, качественные товары и отличный сервис."
-    />
-    <meta
-      name="keywords"
-      content="интернет-магазин, oyan store, покупки онлайн, доставка, товары, казахстан"
-    />
-    <meta name="author" content="Oyan Store" />
-    <meta name="robots" content="index, follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="description"
+    content="Oyan Store - ваш надежный интернет-магазин с широким ассортиментом товаров. Быстрая доставка, качественные товары и отличный сервис." />
+  <meta name="keywords" content="интернет-магазин, oyan store, покупки онлайн, доставка, товары, казахстан" />
+  <meta name="author" content="Oyan Store" />
+  <meta name="robots" content="index, follow" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://oyan-store.kz/" />
-    <meta property="og:title" content="Oyan Store - Интернет-магазин" />
-    <meta
-      property="og:description"
-      content="Oyan Store - ваш надежный интернет-магазин с широким ассортиментом товаров. Быстрая доставка, качественные товары и отличный сервис."
-    />
-    <meta property="og:image" content="/og-image.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://oyan-store.kz/" />
+  <meta property="og:title" content="Oyan Store - Интернет-магазин" />
+  <meta property="og:description"
+    content="Oyan Store - ваш надежный интернет-магазин с широким ассортиментом товаров. Быстрая доставка, качественные товары и отличный сервис." />
+  <meta property="og:image" content="/og-image.jpg" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://oyan-store.kz/" />
-    <meta property="twitter:title" content="Oyan Store - Интернет-магазин" />
-    <meta
-      property="twitter:description"
-      content="Oyan Store - ваш надежный интернет-магазин с широким ассортиментом товаров. Быстрая доставка, качественные товары и отличный сервис."
-    />
-    <meta property="twitter:image" content="/og-image.jpg" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://oyan-store.kz/" />
+  <meta property="twitter:title" content="Oyan Store - Интернет-магазин" />
+  <meta property="twitter:description"
+    content="Oyan Store - ваш надежный интернет-магазин с широким ассортиментом товаров. Быстрая доставка, качественные товары и отличный сервис." />
+  <meta property="twitter:image" content="/og-image.jpg" />
 
-    <!-- Preload critical assets -->
-    <link
-      rel="preload"
-      href="/fonts/roboto-regular.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/fonts/roboto-bold.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="preload" href="/logo.svg" as="image" type="image/svg+xml" />
+  <link rel="preload" href="/fonts/roboto-regular.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/roboto-bold.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/logo.svg" as="image" type="image/svg+xml" />
 
-  <!-- Favicon -->
-  <!-- Используем единственный доступный файл favicon.png в папке public -->
   <link rel="icon" href="/favicon.png" type="image/png" />
   <link rel="shortcut icon" href="/favicon.png" />
   <link rel="manifest" href="/site.webmanifest" />
-    <meta name="msapplication-TileColor" content="#ffffff" />
-    <meta name="theme-color" content="#ffffff" />
+  <meta name="msapplication-TileColor" content="#ffffff" />
+  <meta name="theme-color" content="#ffffff" />
 
-    <title>Oyan Store - Интернет-магазин</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <title>Oyan Store - Интернет-магазин</title>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17011905446"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'AW-17011905446');
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
